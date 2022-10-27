@@ -1,0 +1,16 @@
+*{
+    justify-content: center;
+    text-align: center;
+}
+
+.dashboard{
+    margin-top: 50px;
+    display: block;
+    justify-content: center;
+}
+.btn-viz {
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    
+}

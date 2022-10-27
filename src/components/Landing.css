@@ -1,0 +1,223 @@
+p {
+    font-size: 11pt;
+    font-family: "Poppins", sans-serif;
+    position: relative;
+    padding: 1px;
+}
+body {
+    max-height: 5000px;
+    display: none;
+}
+.landing {
+    padding: 30px;
+    width: 100%;
+    background: #f0f0ff;
+}
+.landing_image {
+    width: 125px;
+    height: 200px;
+    padding: 15px;
+    position: absolute;
+    top: 280px;
+    left: 110px;
+}
+.farm_image {
+    width: 250px;
+    height: 150px;
+}
+.lahan_pertanian {
+    width: 500px;
+    height: 375px;
+    padding: 10px;
+}
+.border {
+    background-color: white;
+    padding: 5px;
+    width: 100%;
+}
+.border_image {
+    padding: 10px;
+    background-color: whitesmoke;
+}
+.visi_misi {
+    background-color: #7f7df0;
+    padding: 10px 20px 10px 150px;
+}
+.visi {
+    font-size: 12pt;
+    font-weight: bold;
+}
+.misi {
+    font-size: 12pt;
+    font-weight: bold;
+}
+.form-authentication {
+    background-color: rgba(32, 192, 250, 0.9);
+    padding: 2px;
+    height: 120px;
+}
+.main_menu {
+    height: 100px;
+    background-color: rgba(35, 45, 240, 0.85);
+    padding: 2px;
+}
+.contact {
+    padding: 3px;
+    background-color: #cfcfe4;
+}
+li {
+    padding: 1px;
+}
+.sosmed {
+    width: 40px;
+    height: 40px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+}
+.landing-grid {
+    padding-top: 40px;
+}
+.menu-grid {
+    padding-top: 10px;
+}
+.home-grid {
+    position: absolute;
+    left: 40%;
+}
+.register-grid {
+    position: absolute;
+    left: 48%;
+}
+.login-grid {
+    position: absolute;
+    left: 56%;
+}
+.logout-grid {
+    top: 160px;
+    position: absolute;
+    left: 48%;
+}
+.profile {
+    position: absolute;
+    top: 10%;
+    left: 25%;
+    width: 850px;
+    background: linear-gradient(to right, #bcbcef, #8a91f4);
+}
+
+/* main {
+    display: flex;
+    flex-wrap: nowrap;
+    height: 200px;
+    max-height: 100vh;
+    overflow-y: auto;
+    overflow-y: hidden;
+} */
+
+/* *{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+} */
+
+/* .sidebar {
+    position: fixed;
+    left: -200px;
+    width: 200px;
+    height: 100%;
+    padding: 10px;
+    background: #15978a;
+    transition: all 0.5s ease;
+}
+
+.sidebar ul a {
+    display: block;
+    height: 100%;
+    width: 100%;
+    line-height: 45px;
+    font-size: 20px;
+    color: white;
+    padding-left: 40px;
+    box-sizing: border-box;
+    border-top: 1px solid rgba(6, 255, 251, 0.25);
+    border-bottom: 1px solid rgba(125, 134, 146, 0.279);
+    transition: all 0.8s ease;
+}
+
+ul li:hover a {
+    padding-left: 30px;
+    background: #efe7bc;
+    color: black;
+}
+
+.sidebar ul a i {
+    margin-right: 16px;
+}
+
+#check {
+    display: none;
+}
+
+label #btn {
+    position: absolute;
+    cursor: pointer;
+    background: white;
+    border-radius: 3px;
+}
+
+label #open {
+    position: absolute;
+    cursor: pointer;
+    background: #2a2ad4;
+    border-radius: 1px;
+    font-size: 30px
+}
+
+label #open {
+    left: 0;
+    top: 10;
+    font-size: 30px;
+    color: #7d8955;
+    padding: 6px 12px;
+    transition: all 0.5s ease;
+}
+
+label #btn {
+    z-index: 1111;
+    left: 195px;
+    top: 25px;
+    font-size: 20px;
+    color: black;
+    padding: 4px 9px;
+    transition: all 0.5s ease;
+}
+
+#check:checked~.sidebar {
+    left: 250px;
+}
+
+#check:checked~label #open {
+    left: 30px;
+    font-size: 20px;
+}
+
+#check:checked-label #btn {
+    left: 195px;
+}
+
+section {
+    background: white;
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+}
+
+section h1 {
+    text-align: center;
+    padding-top: 30px;
+    font-size: 30pt;
+    color: #19191f;
+} */

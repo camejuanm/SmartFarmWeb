@@ -1,0 +1,38 @@
+.container-chart{
+    margin-top: 50px;
+    justify-content: center;
+    text-align: center;
+}
+
+.chart {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.button-chart{
+    display: inline;
+    justify-content: center;
+    
+}
+
+.btn-humid{
+    margin-top: 30px;
+    margin-right: 10px;
+    width: 100px;
+    height: 30px;
+    border-radius: 10px;
+}
+
+.btn-temp{
+    width: 100px;
+    margin-right: 10px;
+    height: 30px;
+    border-radius: 10px;
+}
+
+.btn-wind{
+    width: 100px;
+    height: 30px;
+    border-radius: 10px;
+}
+
