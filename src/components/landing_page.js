@@ -69,7 +69,7 @@ const LandingPage = ({ imageSrc }) => {
             </div>
             <div className="border">
                 <div className="contact">
-                    <h3>Contact Us</h3>
+                    <h3>Hubungi Kami</h3>
                     <span>
                         <img src={Phone} className="sosmed" alt="nomorHP" />
                         <a class="fab fa-phone">5422 0808</a>
