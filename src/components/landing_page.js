@@ -45,7 +45,7 @@ const LandingPage = ({ imageSrc }) => {
             </div>
             <div class="border">
                 <h1>
-                    Pengembangan Web App sebagai Media Dashboard untuk Pemantauan Sistem Tumbuh Tanaman Memanfaatkan IoT
+                    Pengembangan Web App sebagai Media Pemantauan Sistem Tumbuh Tanaman Memanfaatkan IoT
                 </h1>
             </div>
             <div className="border">
