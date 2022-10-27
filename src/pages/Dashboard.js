@@ -45,15 +45,7 @@ function Dashboard() {
         </Dropdown.Menu>
       </Dropdown>
       </div>
-      
-      {/* {projectdata.map((item,index) => {
-      return (
-        <Dropdown.Item key={index}>
-          {item.name}
-                  </Dropdown.Item>
-        )
-      }
-    )} */}
+    
     {file && <img src={preview} alt={file.name} style={{width: "400px"}}/>}
     <div className='fileinput'>
     <input type="file" name="file" onChange={(e) => handleChange(e)}/>
