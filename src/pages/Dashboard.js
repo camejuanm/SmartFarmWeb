@@ -8,8 +8,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from '../components/Navbar';
 
 function Dashboard() {
-  
-  
   const [dropdown, setDropdown] = useState('Choose Project');
   const [file, setFile] = useState();
   const [preview, setPreview] = useState(); 
@@ -24,7 +22,7 @@ function Dashboard() {
  
   return (
     <>
-    <Navbar></Navbar>
+    {/* <Navbar></Navbar> */}
     <div className='dashboard'>
       <div className='project-picker'>
       <img src={pic} className='foto'/>
