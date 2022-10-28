@@ -1,11 +1,11 @@
 import React from 'react'
 import Navbar from '../components/Navbar';
+import '../components/Navbarstyle.css';
 
 function Gateway() {
   return (
     <div className='gateway'>
-      <Navbar />
-    <h1>Gateway</h1>
+      <h1 className="sidebar-position">Gateway</h1>
     </div>
   );
 }

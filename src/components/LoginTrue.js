@@ -15,5 +15,11 @@ export const LoginTrue = [
         path: '/dashboard',
         icon: <AiIcons.AiOutlineDashboard/>,
         cName: 'nav-text'
+    },
+    {
+        title: 'Log Out',
+        path: '/',
+        icon: <GrIcons.GrLogout/>,
+        cName: 'nav-text'
     }
 ]

@@ -556,8 +556,8 @@ console.log(chartState)
   return (
     <>
     <div className='container'>
-    <Link to='/'>
-          <button className='btn-back'>Back</button>
+    <Link to='/dashboard'>
+      <button className='btn-back'>Back</button>
     </Link>
     <div className='container-chart'>Visualize
       <div className='chart'>

@@ -14,7 +14,7 @@ body {
     padding: 5px;
 }
 .outer {
-    padding: 50px;
+    padding: 50px 260px 50px 260px;
     align-items: center;
     background: linear-gradient(to left, #e0e0ef 0%, #1b1bf2 100%);
 }
@@ -30,7 +30,7 @@ body {
 }
 .card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
-    padding: 20px 15px;
+    padding: 20px 25px;
     background-color: #dcdcef;
 }
 
