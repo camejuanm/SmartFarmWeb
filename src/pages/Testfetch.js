@@ -6,7 +6,9 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Testfetch() {
+  
   //status
+  let token = window.localStorage.getItem("token")
   const [datasets, setDatasets] = useState([])
   const [filtered, setFiltered] = useState([])
   const [chartstatus, setChartStatus] = useState('airhum')
@@ -69,7 +71,7 @@ const [optionData, setOptionData] = useState({
         fetch('https://smart-farm-backend.vercel.app/api/data-logs', {
             method:"GET",
             headers: {
-            'x-access-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2U5ZjU2ZTFiMDczY2Y0OGQ5ZjgxYyIsImlhdCI6MTY2NjgzODIxMywiZXhwIjoxNjY2OTI0NjEzfQ.6PwgceAoNqCPoWv5pZl526tEjNMV6puX3QpnPCH8CUQ' , 
+            'x-access-token': token, 
             'Content-Type':'application/json'}
         })
             .then(response => response.json())
@@ -457,15 +459,15 @@ const [optionData, setOptionData] = useState({
 
     //Click & OnChange function
     const airHumClick = () => {
-      
+      setdefaultlastdate();
       setChartStatus('airhum');
-      humchart();
+      chartData();
     }
 
     const airTempClick = () => {
       setdefaultlastdate();
       setChartStatus('airtemp'); 
-      tempchart();
+      chartData();
     }
 
     const onChangeChart = (e) => {
