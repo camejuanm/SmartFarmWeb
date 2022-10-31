@@ -18,9 +18,6 @@ import AddUser from "./pages/AddUser"
 import Visualize from "./pages/Visualize"
 import "./components/reset.css"
 import Testfetch from './pages/Testfetch';
-import UserContext from './UserContext';
-// import Index from './isLogin/index';
-// import About from './isLogin/about';
 
 function App() {
   const [isLogin, SetIsLogin] = useState(null);
@@ -42,35 +39,8 @@ function App() {
 
   return (
     <>
-    {/* <Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/dashboard">Dashboard</Link>
-            </li>
-          </ul>
-        </nav>
-        <UserContext.Provider value={value}>
-          <Route path="/" exact component={LandingPage} />
-          <Route path="/dashbaord" exact component={Dashboard} />
-        </UserContext.Provider>
-      </div>
-    </Router> */}
       <Router>
         <Navbar></Navbar>
-        {/* {isLogin ? (
-            <Login1 />
-          ) : (
-            <Navigation />
-          )} */}
-          <>
-          {/* <UserContext.Provider value={value}>
-            <Route path="/" exact component={LandingPage} />
-            <Route path="/dashbaord" exact component={Dashboard} /> */}
             <Routes>
               <Route exact path="/" element={<LandingPage />} />
               <Route exact path="/home" element={<LandingPage />} />
@@ -88,12 +58,7 @@ function App() {
               <Route exact path='/dashboard' element={<Dashboard />} />
               <Route path='/visualize' element={<Visualize/>}/>
               <Route path='/testfetch' element={<Testfetch/>}/>
-              <Route path='/userContext' element={<UserContext/>}/>
-              {/* <Route path='/index' element={<Index/>}/>
-              <Route path='/about' element={<About/>}/> */}
             </Routes>
-          {/* </UserContext.Provider> */}
-          </>
       </Router>
     </>
   );

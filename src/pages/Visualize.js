@@ -4,6 +4,7 @@ import LineChart from '../components/Chart/LineChart';
 import './Visualize.css'
 import TempData from '../components/Chart/Temp';
 import {Link} from 'react-router-dom';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 function Visualize() {
 
@@ -480,6 +481,7 @@ function Visualize() {
     const [lastDate, setLastDate] = useState();
     const [datePicker, setDatePicker] = useState('2006-04-20');
     const [datedef, setDatedef] = useState('2006-04-30');
+    const [dropdown, setDropdown] = useState();
     const [userData, setUserData] = useState({
         labels: [],
         datasets: [
@@ -557,7 +559,7 @@ console.log(chartState)
     <>
     <div className='container'>
     <Link to='/dashboard'>
-      <button className='btn-back'>Back</button>
+          <button className='btn-back'>Back</button>
     </Link>
     <div className='container-chart'>Visualize
       <div className='chart'>
@@ -568,6 +570,23 @@ console.log(chartState)
       <button className='btn-humid'onClick={onClickHum} >Humidity</button>
       <button className='btn-temp' onClick={onClickTemp}>Temp</button>
       <button className='btn-wind' onClick={onClickWind}>Wind</button> 
+      <Dropdown  className="d-inline mx-2">
+        <Dropdown.Toggle variant="success" id="dropdown-basic">
+        {dropdown}
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu>
+        <Dropdown.Item key='1' onClick={(e) => {setDropdown("1")}}>1
+        </Dropdown.Item>  
+        <Dropdown.Item key='2' onClick={(e) => {setDropdown("2")}}>2
+        </Dropdown.Item>
+        <Dropdown.Item key='3' onClick={(e) => {setDropdown("3")}}>3
+        </Dropdown.Item>  
+        <Dropdown.Item key='4' onClick={(e) => {setDropdown("4")}}>4
+        </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+      
       </div>
       
     </div>
