@@ -16,7 +16,6 @@ const Navbar = () => {
 
     return (
     <>
-        {/* <img src={LogoUMN} className="logo_UMN" /> */}
         <IconContext.Provider value={{color:'#fff'}}>
             <div className='navbar'>
                 <img src={LogoUMN} className="logo_UMN" />
