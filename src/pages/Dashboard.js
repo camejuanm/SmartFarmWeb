@@ -6,6 +6,7 @@ import { projectdata } from '../components/ProjectData'
 import Dropdown from 'react-bootstrap/Dropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from '../components/Navbar';
+import PrivateRoutes from '../utils/PrivateRoutes';
 
 function Dashboard() {
   
@@ -53,6 +54,7 @@ function Dashboard() {
     <Link to='/visualize'>
     <button className='btn-viz' onClick=''>Visualize</button>
     </Link>
+    <button className='btn-viz' onClick={() => {window.localStorage.setItem("auth", false); PrivateRoutes()}}>Auth</button>
     {/* <Link to='/'>
     <button className='btn-viz' onClick={logout}>Visualize</button>
     </Link> */}

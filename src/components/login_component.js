@@ -35,6 +35,7 @@ export default class Login extends Component {
         if (!data.message) {
           alert("login successful");
           window.localStorage.setItem("token", data.accessToken);
+          window.localStorage.setItem("auth", true)
           window.location.href = "./dashboard";
         } else {
           alert("invalid email or password");

@@ -18,6 +18,7 @@ import AddUser from"./pages/AddUser"
 import Visualize from"./pages/Visualize"
 import "./components/reset.css"
 import Testfetch from './pages/Testfetch';
+import PrivateRoutes from './utils/PrivateRoutes';
 // import Navigation from "./navbar/Navigation"
 
 function App() {
@@ -44,40 +45,20 @@ function App() {
         {/* <div className="App"> */}
         <Navbar />
         <Routes>
-          <Route exact path="/" element={<LandingPage />} />
-          <Route path='/gateway' element={<Gateway/>}/>
-          <Route path='/token' element={<Token/>}/>
-          <Route path='/adduser' element={<AddUser/>}/>
-          <Route exact path="/home" element={<LandingPage />} />
-          <Route path="/userDetails" element={<UserDetails />} />
-          <Route path="/reset" element={<Reset />} />
-          <Route exact path='/sign-up' element={<SignUp />} />
-          <Route exact path='/sign-in' element={<Login />} />
-        </Routes>
-        {/* <div className="auth-alternate"> */}
-          <Routes>
+          <Route element={<PrivateRoutes/>}>
+            <Route path='/gateway' element={<Gateway/>}/>
+            <Route path='/token' element={<Token/>}/>
+            <Route path='/adduser' element={<AddUser/>}/>
+            <Route exact path="/home" element={<LandingPage />}/>
             <Route exact path='/dashboard' element={<Dashboard />} />
             <Route path='/visualize' element={<Visualize/>}/>
             <Route path='/testfetch' element={<Testfetch/>}/>
+            <Route path="/reset" element={<Reset />}/>
+          </Route>
+          <Route exact path="/" element={<LandingPage />} />
+          <Route exact path='/sign-up' element={<SignUp />} />
+          <Route exact path='/sign-in' element={<Login />} />
           </Routes>
-          {/* <div className="auth-wrapper">
-            <div className="auth-inner"> */}
-              <Routes>
-                <Route path='/navbar' element={<Navbar/>}/>
-                {/* <Route exact path="/" element={<LandingPage />} />
-                <Route exact path="/home" element={<LandingPage />} />
-                <Route path="/userDetails" element={<UserDetails />} />
-                <Route path="/reset" element={<Reset />} />
-                <Route exact path='/dashboard' element={<Dashboard />} />
-                <Route exact path='/sign-up' element={<SignUp />} />
-                <Route exact path='/sign-in' element={<Login />} />
-                <Route path='/visualize' element={<Visualize/>}/>
-                <Route path='/navbar' element={<Navbar/>}/> */}
-              </Routes>
-            {/* </div>
-          </div>
-        </div> */}
-        {/* </div> */}
       </Router>
     </>
   );
