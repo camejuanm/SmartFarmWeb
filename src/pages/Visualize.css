@@ -18,6 +18,7 @@
 .btn-humid{
     margin-top: 30px;
     margin-right: 10px;
+    margin-left: 10px;
     width: 100px;
     height: 30px;
     border-radius: 10px;
@@ -36,3 +37,6 @@
     border-radius: 10px;
 }
 
+.dropdown{
+
+}

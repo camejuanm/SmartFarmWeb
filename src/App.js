@@ -42,7 +42,7 @@ function App() {
       <Router>
         
         {/* <div className="App"> */}
-      
+        <Navbar />
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
           <Route path='/gateway' element={<Gateway/>}/>

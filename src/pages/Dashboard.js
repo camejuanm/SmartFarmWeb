@@ -24,10 +24,10 @@ function Dashboard() {
  
   return (
     <>
-    <Navbar></Navbar>
     <div className='dashboard'>
       <div className='project-picker'>
-      <img src={pic} className='foto'/>
+      <img src={pic} className='foto' style={{width: "500px"}}/>
+      {file && <img src={preview} alt={file.name} style={{width: "500px"}}/>}
       <Dropdown>
         <Dropdown.Toggle variant="success" id="dropdown-basic">
         {dropdown}
@@ -46,7 +46,7 @@ function Dashboard() {
       </Dropdown>
       </div>
     
-    {file && <img src={preview} alt={file.name} style={{width: "400px"}}/>}
+    
     <div className='fileinput'>
     <input type="file" name="file" onChange={(e) => handleChange(e)}/>
     </div>
