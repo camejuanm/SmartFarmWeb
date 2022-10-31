@@ -55,7 +55,6 @@ const LandingPage = ({ imageSrc }) => {
                     // </button>
                     <Navigation />
             )}
-                <img src={LogoUMN} className="landing_image" />
             </div> */}
             <div class="border">
                 <h1>

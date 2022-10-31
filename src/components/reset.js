@@ -1,6 +1,7 @@
 // import { sendPasswordResetEmail } from 'firebase/auth';
 import React, {Component} from 'react';
 import "./reset.css";
+import "./Authentication.css";
 // import "bootstrap/dist/css/bootstrap.min.css";
 
 // export default class Reset extends Component {
@@ -284,7 +285,7 @@ export default class Reset extends Component {
             <div className="text-success">
               {this.state.msg.confirmPassword}
             </div>
-            <input type="submit" className="btn btn-success" value="submit" />
+            <input type="submit" className="btn btn-success" value="Submit" />
           </form>
         </div>
       </div>
