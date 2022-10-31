@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./reset.css";
 import "./Authentication.css";
 import { SidebarDataAdmin } from "./SidebarDataAdmin";
+import { SidebarDataUser } from "./SidebarDataUser";
 
 export default class Login extends Component {
   constructor(props) {
@@ -39,7 +40,10 @@ export default class Login extends Component {
           window.localStorage.setItem("isAuth", true)
           window.location.href = "/dashboard";
           if (data.role == "admin") {
-          window.localStorage.setItem(SidebarDataAdmin)
+          window.localStorage.setItem("role","admin")
+          }
+          else {
+          window.localStorage.setItem("role","user")
           }
           
         } else {

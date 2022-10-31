@@ -19,13 +19,14 @@ import Visualize from "./pages/Visualize"
 import "./components/reset.css"
 import Testfetch from './pages/Testfetch';
 import PrivateRoutes from './utils/PrivateRoutes';
+import Sidebar from './components/Sidebar';
 // import Navigation from "./navbar/Navigation"
 
 function App() {
   return (
     <>
       <Router>
-      <Navbar/>
+      <Navbar/> 
         <Routes>
           <Route element={<PrivateRoutes  />}>
           <Route path='/gateway' element={<Gateway/>}/>

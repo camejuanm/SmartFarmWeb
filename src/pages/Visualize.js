@@ -193,7 +193,8 @@ function Visualize() {
             ticks : {
                 callback: function(value, index, ticks) {
                     return  value + '%';
-            }  
+            },
+            stepSize: 20
         }
         },
         x: {
@@ -330,7 +331,8 @@ function Visualize() {
             ticks : {
                 callback: function(value, index, ticks) {
                     return  value + '°C';
-            }  
+            },
+            stepSize: 20  
         }
         },
         x: {
@@ -395,10 +397,12 @@ function Visualize() {
         y: {
             beginAtZero: true,
             max:100,
+
             ticks : {
                 callback: function(value, index, ticks) {
                     return  value + '%';
-            }  
+            },
+            stepSize: 20  
         }
         },
         x: {
@@ -506,7 +510,8 @@ function Visualize() {
             ticks : {
                 callback: function(value, index, ticks) {
                     return  value + '%';
-            }  
+            },
+            stepSize: 20
         }
         },
         x: {
@@ -557,11 +562,10 @@ console.log(chartState)
   
   return (
     <>
-    <div className='container'>
+    <div className='container-chart'>
     <Link to='/dashboard'>
           <button className='btn-back'>Back</button>
     </Link>
-    <div className='container-chart'>Visualize
       <div className='chart'>
         <LineChart chartData={userData} chartOption={optionData} />
       </div>
@@ -590,7 +594,7 @@ console.log(chartState)
       </div>
       
     </div>
-    </div>
+  
     
     
     </>

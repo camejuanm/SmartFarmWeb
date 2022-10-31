@@ -10,6 +10,7 @@ import { Outlet } from 'react-router-dom';
 import LogoUMN from "../images/logo_umn.jpg";
 
 const Navbar = () => {
+    let role = window.localStorage.getItem("role")
     const [sidebar, setSidebar] = useState(false);
 
     const showSidebar = () => setSidebar(!sidebar);
