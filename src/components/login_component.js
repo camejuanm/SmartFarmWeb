@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./reset.css";
 import "./Authentication.css";
+import { SidebarDataAdmin } from "./SidebarDataAdmin";
 
 export default class Login extends Component {
   constructor(props) {
@@ -35,11 +36,12 @@ export default class Login extends Component {
         if (!data.message) {
           alert("login successful");
           window.localStorage.setItem("token", data.accessToken);
-          window.localStorage.setItem("IsAuth", true)
+          window.localStorage.setItem("isAuth", true)
+          window.location.href = "/dashboard";
           if (data.role == "admin") {
-        
+          window.localStorage.setItem(SidebarDataAdmin)
           }
-          window.location.href = "./dashboard";
+          
         } else {
           alert("invalid email or password");
         }

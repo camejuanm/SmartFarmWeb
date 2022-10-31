@@ -18,6 +18,7 @@ import AddUser from "./pages/AddUser"
 import Visualize from "./pages/Visualize"
 import "./components/reset.css"
 import Testfetch from './pages/Testfetch';
+import PrivateRoutes from './utils/PrivateRoutes';
 // import Navigation from "./navbar/Navigation"
 
 function App() {
@@ -26,18 +27,20 @@ function App() {
       <Router>
       <Navbar/>
         <Routes>
-          <Route exact path="/" element={<LandingPage />} />
+          <Route element={<PrivateRoutes  />}>
           <Route path='/gateway' element={<Gateway/>}/>
           <Route path='/token' element={<Token/>}/>
           <Route path='/adduser' element={<AddUser/>}/>
           <Route path="/home" element={<LandingPage />} />
           <Route path="/userDetails" element={<UserDetails />} />
-          <Route path="/reset" element={<Reset />} />
-          <Route path='/sign-up' element={<SignUp />} />
-          <Route path='/sign-in' element={<Login />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/visualize' element={<Visualize/>}/>
           <Route path='/testfetch' element={<Testfetch/>}/>
+          </Route>
+          <Route exact path="/" element={<LandingPage />} />
+          <Route path="/reset" element={<Reset />} />
+          <Route path='/sign-up' element={<SignUp />} />
+          <Route path='/sign-in' element={<Login />} />
         </Routes>
       </Router>
     </>

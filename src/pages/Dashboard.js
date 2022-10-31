@@ -53,7 +53,6 @@ function Dashboard() {
     <Link to='/visualize'>
     <button className='btn-viz' onClick=''>Visualize</button>
     </Link>
-    <button className='btn-viz' onClick={() => {window.localStorage.setItem("auth", false); PrivateRoutes()}}>Auth</button>
     {/* <Link to='/'>
     <button className='btn-viz' onClick={logout}>Visualize</button>
     </Link> */}
