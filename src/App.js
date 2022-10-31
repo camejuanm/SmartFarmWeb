@@ -16,7 +16,7 @@ import Gateway from "./pages/Gateway"
 import Token from "./pages/Token"
 import AddUser from "./pages/AddUser"
 import Visualize from "./pages/Visualize"
-import "./components/reset.css"
+import "./components/Authentication.css"
 import Testfetch from './pages/Testfetch';
 
 function App() {
