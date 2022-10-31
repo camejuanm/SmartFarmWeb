@@ -4,7 +4,8 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 export default function ConfirmPassword() {
   const formSchema = Yup.object().shape({
-    email: Yup.string(),
+    email: Yup.string()
+      .required('Email can not be blank'),
     password: Yup.string()
       .required('Password is mendatory')
       .min(6, 'Password must be at least 6 char long'),
@@ -22,15 +23,15 @@ export default function ConfirmPassword() {
   return (
     <div className="outer">
       <div className="container mt-5">
-        <h2>React Confirm Password Validation Example</h2>
+        <h2>Forgot Password</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group">
             <label>Email</label>
             <input
               name="email"
               type="email"
-              className="form-control"
-              placeholder="input email"
+              className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+              placeholder="Input Your Email"
             />
           </div>
           <div className="form-group">
@@ -40,7 +41,7 @@ export default function ConfirmPassword() {
               type="password"
               {...register('password')}
               className={`form-control ${errors.password ? 'is-invalid' : ''}`}
-              placeholder="input new password"
+              placeholder="Input New Password"
             />
             <div className="invalid-feedback">{errors.password?.message}</div>
           </div>
@@ -51,7 +52,7 @@ export default function ConfirmPassword() {
               type="password"
               {...register('confirmPwd')}
               className={`form-control ${errors.confirmPwd ? 'is-invalid' : ''}`}
-              placeholder="retype new password"
+              placeholder="Retype New Password"
             />
             <div className="invalid-feedback">{errors.confirmPwd?.message}</div>
           </div>
