@@ -46,7 +46,7 @@ function Dashboard() {
       </Dropdown>
       </div>
     
-    
+
     <div className='fileinput'>
     <input type="file" name="file" onChange={(e) => handleChange(e)}/>
     </div>
