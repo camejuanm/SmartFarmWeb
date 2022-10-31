@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import app from "./firebase_config";
 import "./reset.css";
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import Dropdown from '../dropdown/Dropdown';
 
 const auth = getAuth(app);
 
@@ -11,6 +12,7 @@ export default class SignUp extends Component {
     this.state = {
       name: "",
       email: "",
+      role: "",
       mobile: "",
       password: "",
       verifyButton: false,
@@ -21,7 +23,6 @@ export default class SignUp extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onSignInSubmit = this.onSignInSubmit.bind(this);
     this.verifyCode = this.verifyCode.bind(this);
-    // this.passwordRequirement = this.passwordRequirement.bind(this);
   }
 
   onCaptchVerify() {
@@ -86,8 +87,8 @@ export default class SignUp extends Component {
   handleSubmit(e) {
     e.preventDefault();
     if(this.state.verified) {
-      const { name, email, mobile, password } = this.state;
-      console.log(name, email, mobile, password);
+      const { name, email, role, mobile, password } = this.state;
+      console.log(name, email, role, mobile, password);
       fetch("http://localhost:5000/register", {
         method: "POST",
         crossDomain: true,
@@ -99,6 +100,7 @@ export default class SignUp extends Component {
         body: JSON.stringify({
           name,
           email,
+          role,
           mobile,
           password,
         }),
@@ -115,7 +117,7 @@ export default class SignUp extends Component {
   }
   render() {
     return (
-      <>
+      <div className="outer">
         <div className="card">
           <form onSubmit={this.handleSubmit}>
             <h3>Sign Up</h3>
@@ -140,6 +142,11 @@ export default class SignUp extends Component {
                 onChange={(e) => this.setState({ email: e.target.value })}
                 required
               />
+            </div>
+
+            <div className="mb-3">
+              <label>Role</label>
+              <Dropdown />
             </div>
 
             <div className="mb-3">
@@ -216,7 +223,7 @@ export default class SignUp extends Component {
             </p>
           </form>
         </div>
-      </>
+      </div>
     );
   }
 }

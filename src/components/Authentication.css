@@ -4,7 +4,7 @@
 body {
   background: #fff !important;
   min-height: 100vh;
-  padding: 25px 50px 25px 50px;
+  width: 100%;
   display: flex;
   font-weight: 400;
   font-family: "Fira Sans", sans-serif;

@@ -1,6 +1,6 @@
 .navbar {
     background-color: #060b26;
-    height: 80px;
+    height: 120px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -22,6 +22,14 @@
     top: 0;
     left: -100%;
     transition: 850ms;
+  }
+  .logo_UMN {
+    position: absolute;
+    top: 7px;
+    height: 105px;
+    width: 10%;
+    padding-bottom: 1px;
+    right: 5%;
   }
   
   .nav-menu.active {
@@ -69,4 +77,9 @@
   
   span {
     margin-left: 16px;
+  }
+  .sidebar-position {
+    padding-top: 350px;
+    align-items: center;
+    text-align: center;
   }
