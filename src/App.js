@@ -23,19 +23,19 @@ import Testfetch from './pages/Testfetch';
 function App() {
   return (
     <>
-    <Navbar/>
       <Router>
+      <Navbar/>
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
           <Route path='/gateway' element={<Gateway/>}/>
           <Route path='/token' element={<Token/>}/>
           <Route path='/adduser' element={<AddUser/>}/>
-          <Route exact path="/home" element={<LandingPage />} />
+          <Route path="/home" element={<LandingPage />} />
           <Route path="/userDetails" element={<UserDetails />} />
           <Route path="/reset" element={<Reset />} />
-          <Route exact path='/sign-up' element={<SignUp />} />
-          <Route exact path='/sign-in' element={<Login />} />
-          <Route exact path='/dashboard' element={<Dashboard />} />
+          <Route path='/sign-up' element={<SignUp />} />
+          <Route path='/sign-in' element={<Login />} />
+          <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/visualize' element={<Visualize/>}/>
           <Route path='/testfetch' element={<Testfetch/>}/>
         </Routes>

@@ -8,10 +8,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function Testfetch() {
   
   //status
-  let token = window.localStorage.getItem("token")
-  const [datasets, setDatasets] = useState([])
-  const [filtered, setFiltered] = useState([])
-  const [chartstatus, setChartStatus] = useState('airhum')
+  let token = window.localStorage.getItem("token");
+  const [datasets, setDatasets] = useState([]);
+  const [filtered, setFiltered] = useState([]);
+  const [chartstatus, setChartStatus] = useState('airhum');
   const [nodestate, setNodeState] = useState(1);
   const [lastDate, setLastDate] = useState();
   const [datedef, setDatedef] = useState();
@@ -339,16 +339,13 @@ const [optionData, setOptionData] = useState({
         return new Date(elem.timestamp)
       })
 
-      const lastdate = datex[datex.length -1]
-
-      lastdate.setDate(datex[datex.length-1].getDate() - 5)
-
-
+      
         var filteredData = filtered.filter(function(a){
             var aDate = new Date(a.timestamp);
             var aNode = a.idNode
-            return aDate >= lastdate && aNode == nodestate;
+            return aDate >= lastDate && aNode == nodestate;
         });
+        
 
         const fDate = filteredData.map(function(elem) {
           return new Date(elem.timestamp).toISOString()
@@ -392,25 +389,15 @@ const [optionData, setOptionData] = useState({
       }});
       }
 
-      
- 
-      
- 
- 
-     
       const tempchart = () => {
         const datex = filtered.map(function(elem) {
           return new Date(elem.timestamp);
         })
-
-        const lastdate = datex[datex.length -1]
-
-      lastdate.setDate(datex[datex.length-1].getDate() - 5);
       
         var filteredData = filtered.filter(function(a){
             var aDate = new Date(a.timestamp);
             var aNode = a.idNode
-            return aDate >= lastdate && aNode == nodestate;
+            return aDate >= lastDate && aNode == nodestate;
         });
 
         const fDate = filteredData.map(function(elem) {
@@ -461,13 +448,13 @@ const [optionData, setOptionData] = useState({
     const airHumClick = () => {
       setdefaultlastdate();
       setChartStatus('airhum');
-      chartData();
+      humchart();
     }
 
     const airTempClick = () => {
       setdefaultlastdate();
       setChartStatus('airtemp'); 
-      chartData();
+      tempchart();
     }
 
     const onChangeChart = (e) => {
@@ -479,7 +466,6 @@ const [optionData, setOptionData] = useState({
     
     const changenode1 = () => {
       setNodeState(1)
-      
       if(chartstatus=='airhum') {
         airHumClick();
       }
@@ -490,7 +476,6 @@ const [optionData, setOptionData] = useState({
 
     const changenode2 = () => {
       setNodeState(2)
-      
       if(chartstatus=='airhum') {
         airHumClick();
       }

@@ -25,10 +25,9 @@ function Dashboard() {
  
   return (
     <>
-    <Navbar></Navbar>
     <div className='dashboard'>
       <div className='project-picker'>
-      <img src={pic} className='foto'/>
+      <img src={pic} className='foto' style={{width: "400px"}}/>
       {file && <img src={preview} alt={file.name} style={{width: "400px"}}/>}
       <Dropdown>
         <Dropdown.Toggle variant="success" id="dropdown-basic">
