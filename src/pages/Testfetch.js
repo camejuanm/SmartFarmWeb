@@ -478,7 +478,7 @@ const [optionData, setOptionData] = useState({
     
     const changenode1 = () => {
       setNodeState(1)
-      if(chartstatus=='airhum') {
+      if(chartstatus==='airhum') {
         airHumClick();
       }
       else {
@@ -488,7 +488,7 @@ const [optionData, setOptionData] = useState({
 
     const changenode2 = () => {
       setNodeState(2)
-      if(chartstatus=='airhum') {
+      if(chartstatus==='airhum') {
         airHumClick();
       }
       else {
