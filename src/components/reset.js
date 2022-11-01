@@ -1,161 +1,144 @@
-import React, {Link} from 'react'
-import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import * as Yup from 'yup'
-export default function ConfirmPassword() {
-  const formSchema = Yup.object().shape({
-    email: Yup.string()
-      .required('Email can not be blank'),
-    password: Yup.string()
-      .required('Password is mendatory')
-      .min(6, 'Password must be at least 6 char long'),
-    confirmPwd: Yup.string()
-      .required('Password is mendatory')
-      .oneOf([Yup.ref('password')], 'Passwords does not match'),
-  })
-  const formOptions = { resolver: yupResolver(formSchema) }
-  const { register, handleSubmit, reset, formState } = useForm(formOptions)
-  const { errors } = formState
-  function onSubmit(data) {
-    console.log(JSON.stringify(data, null, 4))
-    return false
-  }
-  return (
-    <div className="outer">
-      <div className="container mt-5">
-        <h2>Forgot Password</h2>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="form-group">
-            <label>Email</label>
-            <input
-              name="email"
-              type="email"
-              className={`form-control ${errors.email ? 'is-invalid' : ''}`}
-              placeholder="Input Your Email"
-            />
-          </div>
-          <div className="form-group">
-            <label>Password</label>
-            <input
-              name="password"
-              type="password"
-              {...register('password')}
-              className={`form-control ${errors.password ? 'is-invalid' : ''}`}
-              placeholder="Input New Password"
-            />
-            <div className="invalid-feedback">{errors.password?.message}</div>
-          </div>
-          <div className="form-group">
-            <label>Confirm Password</label>
-            <input
-              name="confirmPwd"
-              type="password"
-              {...register('confirmPwd')}
-              className={`form-control ${errors.confirmPwd ? 'is-invalid' : ''}`}
-              placeholder="Retype New Password"
-            />
-            <div className="invalid-feedback">{errors.confirmPwd?.message}</div>
-          </div>
-          <div className="mt-3">
-            <button type="submit" className="btn btn-primary">
-              Submit
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  )
+import React, { Component } from 'react';
+import './Authentication.css';
+  
+export default class Reset extends Component {
+    constructor(props) {
+    super(props);
+    this.state = {
+      input: {},
+      errors: {}
+    };
+     
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
 }
-
-// import React, {Component} from 'react';
-// import "./reset.css";
-// import "bootstrap/dist/css/bootstrap.min.css";
-
-// export default class Reset extends Component {
+     
+    handleChange(e) {
+        let input = this.state.input;
+        input[e.target.name] = e.target.value;
     
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             email: "",
-//             password: "",
-//             cpassword: "",
-//         };
-//         this.handleSubmit = this.handleSubmit.bind(this);
-//     }
-
-//     handleSubmit(e) {
-//         e.preventDefault();
-//         const { email, password, cpassword } = this.state;
-//         console.log(email, password, cpassword);
-//         fetch("http://localhost:5000/forgot-password", {
-//           method: "POST",
-//           crossDomain: true,
-//           headers: {
-//             "Content-Type": "application/json",
-//             Accept: "application/json",
-//             "Access-Control-Allow-Origin": "*",
-//           },
-//           body: JSON.stringify({
-//             email,
-//             password,
-//             cpassword
-//           }),
-//         })
-//           .then((res) => res.json())
-//           .then((data) => {
-//             console.log(data, "userRegister");
-//             if (data.status == "ok") {
-//               alert("password changes");
-//               window.localStorage.setItem("token", data.data);
-//               window.location.href = "./sign-in";
-//             } else {
-//               alert("Invalid password");
-//             }
-//         });
-//     }
-
-//     render() {
-//         return(
-//           <div className="outer">            
-//             <form onSubmit={this.onSubmit}>
-//                 <h3>Forgot Password</h3>
-//                 <div className="mb-3">
-//                     <label>Email Address</label>
-//                     <input
-//                         type="email"
-//                         className="form-control"
-//                         placeholder="Enter email"
-//                         onChange={(e) => this.setState({ email: e.target.value })}
-//                     />
-//                 </div>
-
-//                 <div className="mb-3">
-//                     <label>New Password</label>
-//                     <input
-//                         type="password"
-//                         className="form-control"
-//                         placeholder="New Password"
-//                         onChange={(e) => this.setState({ password: e.target.value })}
-//                     />
-//                 </div>
-
-//                 <div className="mb-3">
-//                     <label>Confirm Password</label>
-//                     <input
-//                         type="password"
-//                         className="form-control"
-//                         placeholder="Confirm Password"
-//                         onChange={(e) => this.setState({ cpassword: e.target.value })}
-//                         required
-//                     />
-//                 </div>
-//                 <div className="d-grid">
-//                     <button type="submit" className="btn btn-success">
-//                         Submit
-//                     </button>
-//                 </div>  
-//             </form>
-//           </div>
-//         );
-//     }
-// }
+        this.setState({
+            input
+        });
+    }
+        
+    handleSubmit(e) {
+        e.preventDefault();
+    
+        if(this.validate()){
+            console.log(this.state);
+    
+            let input = {};
+            input["email"] = "";
+            input["password"] = "";
+            input["confirm_password"] = "";
+            this.setState({input:input});
+    
+            alert('Password changes successful');
+            window.location.href="/sign-in";
+        }
+    }
+  
+    validate(){
+        let input = this.state.input;
+        let errors = {};
+        let isValid = true;
+    
+        if (!input["email"]) {
+            isValid = false;
+            errors["email"] = "Please enter your email Address.";
+        }
+    
+        if (typeof input["email"] !== "undefined") {
+            
+            var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+            if (!pattern.test(input["email"])) {
+            isValid = false;
+            errors["email"] = "Please enter valid email address.";
+            }
+        }
+    
+        if (!input["password"]) {
+            isValid = false;
+            errors["password"] = "Please enter your password.";
+        }
+    
+        if (!input["confirm_password"]) {
+            isValid = false;
+            errors["confirm_password"] = "Please enter your confirm password.";
+        }
+    
+        if (typeof input["password"] !== "undefined" && typeof input["confirm_password"] !== "undefined") {
+            
+            if (input["password"] != input["confirm_password"]) {
+            isValid = false;
+            errors["password"] = "Passwords don't match.";
+            }
+        } 
+    
+        this.setState({
+            errors: errors
+        });
+    
+        return isValid;
+    }
+     
+    render() {
+        return (
+            <div className="outer">
+                <div className="card">
+                    <h1>Reset Password</h1>
+                    <form onSubmit={this.handleSubmit}>
+            
+                        <div class="form-group">
+                            <label for="email">Email Address:</label>
+                            <input 
+                                type="text" 
+                                name="email" 
+                                value={this.state.input.email}
+                                onChange={this.handleChange}
+                                class="form-control" 
+                                placeholder="Enter email" 
+                                id="email" 
+                            />
+                
+                            <div className="text-danger">{this.state.errors.email}</div>
+                        </div>
+                
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input 
+                                type="password" 
+                                name="password"
+                                minLength={6} 
+                                value={this.state.input.password}
+                                onChange={this.handleChange}
+                                class="form-control" 
+                                placeholder="Enter password" 
+                                id="password" 
+                            />
+                
+                            <div className="text-danger">{this.state.errors.password}</div>
+                        </div>
+                
+                        <div class="form-group">
+                            <label for="password">Confirm Password:</label>
+                            <input 
+                                type="password" 
+                                name="confirm_password" 
+                                value={this.state.input.confirm_password}
+                                onChange={this.handleChange}
+                                class="form-control" 
+                                placeholder="Enter confirm password" 
+                                id="confirm_password" 
+                            />
+                
+                            <div className="text-danger">{this.state.errors.confirm_password}</div>
+                        </div>    
+                        <input type="submit" value="Submit" class="btn btn-success" />
+                    </form>
+                </div>
+            </div>
+        );
+    }
+}

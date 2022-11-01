@@ -8,6 +8,7 @@ import Login from "./components/login_component";
 import SignUp from "./components/signup_component";
 import UserDetails from "./components/userDetails";
 import Reset from "./components/reset";
+import Forgot from "./components/forgot";
 import Navbar from "./components/Navbar";
 import Navigation from "./navbar/Navigation";
 import Login1 from './navbar/Login';
@@ -52,6 +53,7 @@ function App() {
               <Route exact path="/home" element={<LandingPage />} />
               <Route path="/userDetails" element={<UserDetails />} />
               <Route path="/reset" element={<Reset />} />
+              <Route path="/forgot" element={<Forgot />} />
               <Route exact path='/dashboard' element={<Dashboard />} />
               <Route path='/visualize' element={<Visualize/>}/>
               <Route path='/testfetch' element={<Testfetch/>}/>

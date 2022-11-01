@@ -129,3 +129,10 @@ html,
   font-weight: bold;
   box-sizing: border-box;
 }
+.profile {
+  position: absolute;
+  top: 15%;
+  left: 25%;
+  width: 50%;
+  background: linear-gradient(to right, #bcbcef, #8a91f4);
+}

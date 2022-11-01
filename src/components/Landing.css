@@ -1,9 +1,3 @@
-p {
-    font-size: 11pt;
-    font-family: "Poppins", sans-serif;
-    position: relative;
-    padding: 1px;
-}
 body {
     max-height: 5000px;
     display: none;
@@ -14,13 +8,8 @@ body {
     background: #f0f0ff;
 }
 .farm_image {
-    width: 45%;
-    height: 35%;
-}
-.lahan_pertanian {
-    width: 500px;
-    height: 375px;
-    padding: 10px;
+    width: 40%;
+    height: 30%;
 }
 .border {
     background-color: white;
@@ -28,20 +17,8 @@ body {
     width: 100%;
 }
 .border_image {
-    padding: 10px;
+    padding: 5px;
     background-color: whitesmoke;
-}
-.visi_misi {
-    background-color: #7f7df0;
-    padding: 10px 20px 10px 150px;
-}
-.visi {
-    font-size: 12pt;
-    font-weight: bold;
-}
-.misi {
-    font-size: 12pt;
-    font-weight: bold;
 }
 .form-authentication {
     background-color: rgba(32, 192, 250, 0.9);
@@ -57,19 +34,9 @@ body {
     padding: 3px;
     background-color: #cfcfe4;
 }
-li {
-    padding: 1px;
-}
 .sosmed {
     width: 40px;
     height: 40px;
     padding-right: 5px;
     padding-bottom: 5px;
-}
-.profile {
-    position: absolute;
-    top: 10%;
-    left: 25%;
-    width: 850px;
-    background: linear-gradient(to right, #bcbcef, #8a91f4);
 }

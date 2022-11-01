@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./Profile.css";
+import "./Authentication.css";
 
 export default class UserDetails extends Component {
   constructor(props) {
