@@ -4,10 +4,12 @@ import "./Landing.css";
 import FarmImage from "../images/travel1.PNG";
 import Email from "../images/email.jpg";
 import Phone from "../images/phone.jpg";
+import NavbarAlt from './NavbarAlt';
 
 const LandingPage = ({ imageSrc }) => {
 
     return (
+        <>
         <div className="landing">
             <div class="border">
                 <h1>
@@ -31,6 +33,8 @@ const LandingPage = ({ imageSrc }) => {
                 </div>
             </div>
         </div>
+        </>
+        
     );
 }
 

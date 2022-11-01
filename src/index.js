@@ -4,14 +4,14 @@ import './index.css'
 import App from './App'
 // import Navigate from './Navigation'
 import reportWebVitals from './reportWebVitals'
+import NavbarAlt from './components/NavbarAlt'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
-    <div>
       <App />
       {/* <Navigate /> */}
-    </div>
+    
   </React.StrictMode>,
   // <React.StrictMode>
   //   <Navigate />

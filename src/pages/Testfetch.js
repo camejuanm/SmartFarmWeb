@@ -91,75 +91,77 @@ const [optionData, setOptionData] = useState({
     // empty dependency array means this effect will only run once (like componentDidMount in classes)
     }, []);
 
-   useEffect(() => {
+//    useEffect(() => {
 
-    const fetchPrices = async () => {
-      const res = await fetch('https://smart-farm-backend.vercel.app/api/data-logs', {
-        method:"GET",
-        headers: {
-        'x-access-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2U5ZjU2ZTFiMDczY2Y0OGQ5ZjgxYyIsImlhdCI6MTY2NjgzODIxMywiZXhwIjoxNjY2OTI0NjEzfQ.6PwgceAoNqCPoWv5pZl526tEjNMV6puX3QpnPCH8CUQ' , 
-        'Content-Type':'application/json'}
-    })
-      const data = await res.json()
-
-
-    const datex = filtered.map(function(elem) {
-      return new Date(elem.timestamp)
-    })
-
-    const lastdate = datex[datex.length -1]
-
-    setLastDate(lastdate.setDate(datex[datex.length-1].getDate() - 5))
+//     const fetchPrices = async () => {
+//       const res = await fetch('https://smart-farm-backend.vercel.app/api/data-logs', {
+//         method:"GET",
+//         headers: {
+//         'x-access-token': token , 
+//         'Content-Type':'application/json'}
+//     })
+//       const data = await res.json()
 
 
-      var filteredData = filtered.filter(function(a){
-          var aDate = new Date(a.timestamp);
-          var aNode = a.idNode
-          return aDate >= lastdate && aNode == nodestate;
-      });
+//     const datex = filtered.map(function(elem) {
+//       return new Date(elem.timestamp)
+//     })
 
-      const fDate = filteredData.map(function(elem) {
-        return new Date(elem.timestamp).toISOString()
-      })
+//     const lastdate = datex[datex.length -1]
 
-      const fHum = filteredData.map(function(elem) {
-        return elem.airHum
-      })
+//     setLastDate(lastdate.setDate(datex[datex.length-1].getDate() - 5))
 
-      setUserData({
-        labels: fDate,
-        datasets: [
-          {
-            label: "% of Humidity",
-            data: fHum,
-            backgroundColor: [
-              "#FF0000",
-            ],
-            borderWidth: 1,
-            showLine: false
-          }
-        ]
-      });
 
-      setOptionData({
-        scales: {
-        y: {
-            beginAtZero: true,
-            max:100,
-            ticks : {
-                callback: function(value, index, ticks) {
-                    return  value + '%';
-            }  
-        }
-        },
-        x: {
-            ticks:{
-                maxTicksLimit: 5.1
-            }
-        }
-    }});
+//       var filteredData = filtered.filter(function(a){
+//           var aDate = new Date(a.timestamp);
+//           var aNode = a.idNode
+//           return aDate >= lastdate && aNode == nodestate;
+//       });
 
-  }})
+//       const fDate = filteredData.map(function(elem) {
+//         return new Date(elem.timestamp).toISOString()
+//       })
+
+//       const fHum = filteredData.map(function(elem) {
+//         return elem.airHum
+//       })
+
+//       setUserData({
+//         labels: fDate,
+//         datasets: [
+//           {
+//             label: "% of Humidity",
+//             data: fHum,
+//             backgroundColor: [
+//               "#FF0000",
+//             ],
+//             borderWidth: 1,
+//             showLine: false
+//           }
+//         ]
+//       });
+
+//       setOptionData({
+//         scales: {
+//         y: {
+//             beginAtZero: true,
+//             max:100,
+//             ticks : {
+//                 callback: function(value, index, ticks) {
+//                     return  value + '%';
+//             }  
+//         }
+//         },
+//         x: {
+//             ticks:{
+//                 maxTicksLimit: 5.1
+//             }
+//         }
+//     }}, []);
+
+//   }
+//   fetchPrices()
+// })
 
     // useEffect(() => {
     //   const datex = filtered.map(function(elem) {
@@ -355,15 +357,25 @@ const [optionData, setOptionData] = useState({
           return elem.airHum
         })
 
+        const bgc = [];
+        const max = Math.max(...fHum);
+        const min = Math.min(...fHum);
+        const highestValueColor = fHum.map((datapoint, index) => {
+          const color = datapoint === max ? '#FF0000' : 'Black';
+          bgc.push(color)
+        })
+        
+
+        
+        
+
         setUserData({
           labels: fDate,
           datasets: [
             {
               label: "% of Humidity",
               data: fHum,
-              backgroundColor: [
-                "#FF0000",
-              ],
+              backgroundColor: bgc,
               borderWidth: 1,
               showLine: false
             }
