@@ -64,7 +64,6 @@ const [optionData, setOptionData] = useState({
     }
 }
 })
-  
 
     useEffect(() => {
         // GET request using fetch inside useEffect React hook

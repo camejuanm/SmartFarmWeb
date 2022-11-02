@@ -21,7 +21,7 @@ function Dashboard() {
   const [file, setFile] = useState();
   const [preview, setPreview] = useState(); 
   const [pic, setPic] = useState();
-  const [node, setNode] = useState('2');
+  const [nodes, setNodes] = useState('102');
   const handleChange = (event) => {
     const selectedFile = event.target.files[0]
     setFile(selectedFile)
@@ -30,9 +30,12 @@ function Dashboard() {
   }
 
   useEffect(() => {
-    // GET request using fetch inside useEffect React hook
-    const fetchData =  async () => {
+    fetchnodes(nodes)
+  }, [nodes]);
 
+
+  useEffect(() => {
+    // GET request using fetch inside useEffect React hook
       fetch('https://smart-farm-backend.vercel.app/api/data-logs', {
         method:"GET",
         headers: {
@@ -40,59 +43,76 @@ function Dashboard() {
         'Content-Type':'application/json'}
     })
         .then(response => response.json())
-        .then(data => setDatasets(data));
-    
-  console.log(datasets)
+        .then(data => setDatasets(data.filter((data) => {
+          return data.airTemp != null && data.airHum != null
+        })));
+}, []);
 
-    function Nonull(datasets) {
-    return datasets.airTemp != null && datasets.airHum != null && datasets.idNode === node
-  }
+  useEffect(() => {
+    // GET request using fetch inside useEffect React hook
+    const fetchData =  async () => {
 
-  setFiltered(datasets.filter(Nonull));
+      
 
+      const fetchsmart = await fetch('https://smart-farm-backend.vercel.app/api/data-logs', {
+        method:"GET",
+        headers: {
+        'x-access-token': token, 
+        'Content-Type':'application/json'}
+    })
+        const data = await fetchsmart.json()
 
-  console.log(filtered)
+        const dataset = data.filter((data) => {
+          return data.airTemp != null && data.airHum != null
+        })
 
-  setDatax(filtered[filtered.length - 1]);
-  setAirHum(Math.round(datax.airHum,2));
-  setAirTemp(Math.round(datax.airTemp, 2));
-
-  console.log(airHums)
-
+        setAirHum(Math.round(dataset[dataset.length -1].airHum,2));
+        setAirTemp(Math.round(dataset[dataset.length -1].airTemp, 2));
+        console.log(airHums)
+        console.log(airTemps)
 }
 fetchData();
     // empty dependency array means this effect will only run once (like componentDidMount in classes)
 }, []);
+
+const fetchnodes = () => {
+    const datasetfix = datasets.filter((data) => {
+      return data.idNode == nodes
+    })
+
+    setAirHum(Math.round(datasetfix[datasetfix.length -1].airHum,2));
+    setAirTemp(Math.round(datasetfix[datasetfix.length -1].airTemp, 2));
+    console.log(airHums);
+    console.log(airTemps)
+}
+
   
-const handleClickAreas = () => {
-  setNode(2)
-  console.log(node)
-}
-const handleClickArea = (e) => {
-  setNode(1)
-  console.log(node)
-}
+
 
 const handleOnClick1 = (e) => {
   e.preventDefault();
-  setNode('1');
-  console.log(node);
+  setNodes('102');
+  fetchnodes();
+ 
 }
 
 const handleOnClick2 = (e) => {
   e.preventDefault();
-  setNode('2');
-  console.log(node);
+  setNodes('103');
+  fetchnodes();
+  
 }
 const handleOnClick3 = (e) => {
   e.preventDefault();
-  setNode('3');
-  console.log(node);
+  setNodes('202');
+  fetchnodes();
+ 
 }
 const handleOnClick4 = (e) => {
   e.preventDefault();
-  setNode('4');
-  console.log(node);
+  setNodes('203');
+  fetchnodes();
+  
 }
  
   return (
@@ -101,12 +121,12 @@ const handleOnClick4 = (e) => {
       <div className='cards'>
       
           <div className="nav-card">
-                  <h1>{airHums}</h1>
+                  <h1>{airHums}%</h1>
                   <span>Air Humidity</span>
           </div>
 
           <div className='nav-card'>
-              <h1>{airTemps}</h1>
+              <h1>{airTemps}°C</h1>
             <span>Air Temperature</span>
           </div>
 
