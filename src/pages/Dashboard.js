@@ -53,9 +53,6 @@ function Dashboard() {
     <Link to='/visualize'>
     <button className='btn-viz' onClick=''>Visualize</button>
     </Link>
-    {/* <Link to='/'>
-    <button className='btn-viz' onClick={logout}>Visualize</button>
-    </Link> */}
     </div>
     </>
   );

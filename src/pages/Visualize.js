@@ -566,7 +566,7 @@ console.log(chartState)
         <LineChart chartData={userData} chartOption={optionData} />
       </div>
       <div className='button-chart'>
-      <input onChange={onChangeChart} type="date" className='enddate' value={datedef}></input>
+      <input type="date" className='enddate' value="2022-10-31"></input>
       <button className='btn-humid'onClick={onClickHum} >Humidity</button>
       <button className='btn-temp' onClick={onClickTemp}>Temp</button>
       <button className='btn-wind' onClick={onClickWind}>Wind</button> 

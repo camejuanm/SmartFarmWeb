@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./reset.css";
 import "./Authentication.css";
 
 export default class Login extends Component {
@@ -40,6 +39,35 @@ export default class Login extends Component {
           alert("invalid email or password");
         }
       });
+  }
+  validate() {
+    let input = this.state.input;
+    let errors = {};
+    let isValid = false;
+
+    if (!input["email"]) {
+      isValid = false;
+      errors["email"] = "Please enter your email Address.";
+    }
+
+    if (typeof input["email"] !== "undefined") {
+        
+        var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+        if (!pattern.test(input["email"])) {
+        isValid = false;
+        errors["email"] = "Please enter valid email address.";
+        }
+    }
+
+    if (!input["password"]) {
+        isValid = false;
+        errors["password"] = "Please enter your password.";
+    }
+
+    this.setState({
+      errors: errors
+    });
+    return isValid;
   }
   render() {
     return (

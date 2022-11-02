@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom';
 import {SidebarData} from './SidebarData';
 import { IconContext} from 'react-icons'
 import { Outlet } from 'react-router-dom';
-import LogoUMN from "../images/logo_umn.jpg";
+import LogoUMN from "../images/logo_umn.png";
 
 const Navbar = () => {
     const [sidebar, setSidebar] = useState(false);
