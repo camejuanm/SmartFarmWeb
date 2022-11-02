@@ -21,7 +21,7 @@ function Dashboard() {
   const [file, setFile] = useState();
   const [preview, setPreview] = useState(); 
   const [pic, setPic] = useState();
-  const [nodes, setNodes] = useState('102');
+  const [nodes, setNodes] = React.useState('102');
   const handleChange = (event) => {
     const selectedFile = event.target.files[0]
     setFile(selectedFile)
@@ -29,91 +29,97 @@ function Dashboard() {
     setPreview(filePreview)
   }
 
-  useEffect(() => {
-    fetchnodes(nodes)
-  }, [nodes]);
+ 
 
-
-  useEffect(() => {
-    // GET request using fetch inside useEffect React hook
-      fetch('https://smart-farm-backend.vercel.app/api/data-logs', {
-        method:"GET",
-        headers: {
-        'x-access-token': token, 
-        'Content-Type':'application/json'}
-    })
-        .then(response => response.json())
-        .then(data => setDatasets(data.filter((data) => {
-          return data.airTemp != null && data.airHum != null
-        })));
-}, []);
+//   useEffect(() => {
+//     // GET request using fetch inside useEffect React hook
+//       fetch('https://smart-farm-backend.vercel.app/api/data-logs', {
+//         method:"GET",
+//         headers: {
+//         'x-access-token': token, 
+//         'Content-Type':'application/json'}
+//     })
+//         .then(response => response.json())
+//         .then(data => setDatasets(data.filter((data) => {
+//           return data.airTemp != null && data.airHum != null
+//         })));
+// }, []);
 
   useEffect(() => {
     // GET request using fetch inside useEffect React hook
     const fetchData =  async () => {
 
-      
-
-      const fetchsmart = await fetch('https://smart-farm-backend.vercel.app/api/data-logs', {
+      fetch('https://smart-farm-backend.vercel.app/api/data-logs', {
         method:"GET",
         headers: {
         'x-access-token': token, 
         'Content-Type':'application/json'}
-    })
-        const data = await fetchsmart.json()
+    }).then(response => response.json())
+    .then(data => setDatasets(data))
 
-        const dataset = data.filter((data) => {
-          return data.airTemp != null && data.airHum != null
-        })
+      const dataset = datasets.filter((data) => {
+        return data.airTemp != null && data.airHum != null && data.idNode == nodes
+      })
 
-        setAirHum(Math.round(dataset[dataset.length -1].airHum,2));
-        setAirTemp(Math.round(dataset[dataset.length -1].airTemp, 2));
-        console.log(airHums)
-        console.log(airTemps)
+      setAirHum(Math.round(dataset[dataset.length -1].airHum,2));
+      setAirTemp(Math.round(dataset[dataset.length -1].airTemp, 2));
+      
 }
 fetchData();
     // empty dependency array means this effect will only run once (like componentDidMount in classes)
-}, []);
+}, [nodes]);
 
 const fetchnodes = () => {
-    const datasetfix = datasets.filter((data) => {
-      return data.idNode == nodes
-    })
+  const datasetfix = datasets.filter((data) => {
+    return data.idNode == nodes
+  })
 
-    setAirHum(Math.round(datasetfix[datasetfix.length -1].airHum,2));
-    setAirTemp(Math.round(datasetfix[datasetfix.length -1].airTemp, 2));
-    console.log(airHums);
-    console.log(airTemps)
+  setAirHum(Math.round(datasetfix[datasetfix.length -1].airHum,2));
+  setAirTemp(Math.round(datasetfix[datasetfix.length -1].airTemp, 2));
+
 }
 
-  
-
+useEffect(() => {
+  console.log(nodes)
+}, [nodes])
 
 const handleOnClick1 = (e) => {
   e.preventDefault();
   setNodes('102');
-  fetchnodes();
+  // fetchnodes();
  
 }
 
 const handleOnClick2 = (e) => {
   e.preventDefault();
   setNodes('103');
-  fetchnodes();
+  // fetchnodes();
   
 }
 const handleOnClick3 = (e) => {
   e.preventDefault();
   setNodes('202');
-  fetchnodes();
+  // fetchnodes();
  
 }
 const handleOnClick4 = (e) => {
   e.preventDefault();
   setNodes('203');
-  fetchnodes();
+  // fetchnodes(nodes);
   
 }
+
+useEffect(() => {
+  console.log(nodes)
+  }, [nodes])
+
+  useEffect(() => {
+  console.log(airHums)
+  }, [airHums])
+  
+  useEffect(() => {
+  console.log(airTemps)
+  }, [airTemps])
  
   return (
     <>
