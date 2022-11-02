@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import app from "./firebase_config";
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
-import Dropdown from '../dropdown/Dropdown';
+import Dropdown from '../dropdown/DropMenu';
 
 const auth = getAuth(app);
 

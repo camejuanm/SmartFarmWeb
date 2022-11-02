@@ -36,6 +36,8 @@ export default class Reset extends Component {
     
             alert('Password changes successful');
             window.location.href="/sign-in";
+        } else {
+            alert('Password changes failed');
         }
     }
   
@@ -46,7 +48,7 @@ export default class Reset extends Component {
     
         if (!input["email"]) {
             isValid = false;
-            errors["email"] = "Please enter your email Address.";
+            errors["email"] = "Email can not be blank.";
         }
     
         if (typeof input["email"] !== "undefined") {
@@ -60,12 +62,12 @@ export default class Reset extends Component {
     
         if (!input["password"]) {
             isValid = false;
-            errors["password"] = "Please enter your password.";
+            errors["password"] = "Password can not be blank.";
         }
     
         if (!input["confirm_password"]) {
             isValid = false;
-            errors["confirm_password"] = "Please enter your confirm password.";
+            errors["confirm_password"] = "Confirm Password can not be blank.";
         }
     
         if (typeof input["password"] !== "undefined" && typeof input["confirm_password"] !== "undefined") {
@@ -98,7 +100,7 @@ export default class Reset extends Component {
                                 value={this.state.input.email}
                                 onChange={this.handleChange}
                                 class="form-control" 
-                                placeholder="Enter email" 
+                                placeholder="Please Enter your Email" 
                                 id="email" 
                             />
                 
@@ -114,7 +116,7 @@ export default class Reset extends Component {
                                 value={this.state.input.password}
                                 onChange={this.handleChange}
                                 class="form-control" 
-                                placeholder="Enter password" 
+                                placeholder="Please Enter your Password" 
                                 id="password" 
                             />
                 
@@ -129,13 +131,13 @@ export default class Reset extends Component {
                                 value={this.state.input.confirm_password}
                                 onChange={this.handleChange}
                                 class="form-control" 
-                                placeholder="Enter confirm password" 
+                                placeholder="Please Enter your Confirm Password" 
                                 id="confirm_password" 
                             />
                 
                             <div className="text-danger">{this.state.errors.confirm_password}</div>
                         </div>    
-                        <input type="submit" value="Submit" class="btn btn-success" />
+                        <input type="submit" value="Update Password" class="btn btn-success" />
                     </form>
                 </div>
             </div>
