@@ -85,7 +85,8 @@ useEffect(() =>{
     var datex = datasets.map(function(elem) {
         return new Date(elem.timestamp)
     })
-    setLastDate(datex[datex.length -1])
+    const lastdate = datex[datex.length -1]
+    setLastDate(lastdate.setDate(lastdate.getDate() - 5))
     console.log(datex)
     chartData();
 }, [datasets])
@@ -108,7 +109,7 @@ useEffect(() => {
         var filteredData = datasets.filter(function(a){
             var aDate = new Date(a.timestamp);
             var aNode = a.idNode
-            return aDate <= lastDate && aNode == nodestate;
+            return aDate >= lastDate && aNode == nodestate;
         });
 
         const fDate = filteredData.map(function(elem) {
