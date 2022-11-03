@@ -4,6 +4,7 @@ import "./Landing.css";
 import FarmImage from "../images/travel1.PNG";
 import Email from "../images/email.jpg";
 import Phone from "../images/phone.jpg";
+import { SiMomenteo } from 'react-icons/si';
 
 const LandingPage = ({ imageSrc }) => {
 

@@ -108,6 +108,7 @@ export default class SignUp extends Component {
         .then((data) => {
           console.log(data, "userRegister");
           alert("User has been registered");
+          window.location.href="./sign-in";
         });
     } else {
       alert("Please Verify Mobile");

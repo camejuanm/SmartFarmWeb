@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Authentication.css';
+// import Dropdown from './dropdown/DropMenu';
   
 export default class Reset extends Component {
     constructor(props) {
@@ -29,6 +30,7 @@ export default class Reset extends Component {
             console.log(this.state);
     
             let input = {};
+            input["role"] = "";
             input["email"] = "";
             input["password"] = "";
             input["confirm_password"] = "";
@@ -45,6 +47,15 @@ export default class Reset extends Component {
         let input = this.state.input;
         let errors = {};
         let isValid = true;
+
+        if(input["role"] != "admin" && input["role"] != "Admin") {
+            isValid = false;
+            errors["role"] = "Role must be admin";
+            if(!input["role"]) {
+                isValid = false;
+                errors["role"] = "Role can not be blank";
+            }
+        }
     
         if (!input["email"]) {
             isValid = false;
@@ -55,14 +66,18 @@ export default class Reset extends Component {
             
             var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
             if (!pattern.test(input["email"])) {
-            isValid = false;
-            errors["email"] = "Please enter valid email address.";
+                isValid = false;
+                errors["email"] = "Please enter valid email address.";
             }
         }
-    
-        if (!input["password"]) {
+
+        if(input["password"].length < 6) {
             isValid = false;
-            errors["password"] = "Password can not be blank.";
+            errors["password"] = "Password must be at least 6 characters";
+            if (!input["password"]) {
+                isValid = false;
+                errors["password"] = "Password can not be blank.";
+            }
         }
     
         if (!input["confirm_password"]) {
@@ -73,8 +88,8 @@ export default class Reset extends Component {
         if (typeof input["password"] !== "undefined" && typeof input["confirm_password"] !== "undefined") {
             
             if (input["password"] != input["confirm_password"]) {
-            isValid = false;
-            errors["password"] = "Passwords don't match.";
+                isValid = false;
+                errors["password"] = "Passwords don't match.";
             }
         } 
     
@@ -91,6 +106,20 @@ export default class Reset extends Component {
                 <div className="card">
                     <h1>Reset Password</h1>
                     <form onSubmit={this.handleSubmit}>
+
+                        <div class="form-group">
+                            <label for="role">Role:</label>
+                            <input
+                            type="text" 
+                            name="role" 
+                            value={this.state.input.role}
+                            onChange={this.handleChange}
+                            class="form-control" 
+                            placeholder="Type role" 
+                            id="role" />
+                
+                            <div className="text-danger">{this.state.errors.role}</div>
+                        </div>
             
                         <div class="form-group">
                             <label for="email">Email Address:</label>
@@ -112,7 +141,6 @@ export default class Reset extends Component {
                             <input 
                                 type="password" 
                                 name="password"
-                                minLength={6} 
                                 value={this.state.input.password}
                                 onChange={this.handleChange}
                                 class="form-control" 
