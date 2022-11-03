@@ -41,7 +41,7 @@ const Navbar = () => {
                             </li>
                         )
                     })}
-                    <li className='nav-logout' onClick={() => {window.localStorage.removeItem("isAuth"); window.location.reload()}}><Link to="/"><AiIcons.AiOutlineLogout/><span>Logout</span></Link></li>
+                    <li className='nav-logout' onClick={() => {window.localStorage.clear(); window.location.reload()}}><Link to="/"><AiIcons.AiOutlineLogout/><span>Logout</span></Link></li>
                 </ul>
             </nav>
         </IconContext.Provider>

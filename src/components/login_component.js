@@ -40,12 +40,8 @@ export default class Login extends Component {
           window.localStorage.setItem("isAuth", true)
           window.location.href = "/dashboard";
           if (data.role == "admin") {
-          window.localStorage.setItem("role","admin")
+          window.localStorage.setItem("isAdmin",true)
           }
-          else {
-          window.localStorage.setItem("role","user")
-          }
-          
         } else {
           alert("invalid email or password");
         }

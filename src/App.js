@@ -18,7 +18,10 @@ import AddUser from "./pages/AddUser"
 import Visualize from "./pages/Visualize"
 import "./components/reset.css"
 import Testfetch from './pages/Testfetch';
+import Testfetch2 from './pages/Testfetch2';
+
 import PrivateRoutes from './utils/PrivateRoutes';
+import PrivateRoutesAdmin from './utils/PrivateRoutesAdmin';
 import NavbarAlt from './components/NavbarAlt';
 // import Navigation from "./navbar/Navigation"
 
@@ -29,19 +32,21 @@ function App() {
       <Navbar/>
         <Routes>
           <Route element={<PrivateRoutes  />}>
-          <Route path='/gateway' element={<Gateway/>}/>
-          <Route path='/token' element={<Token/>}/>
-          <Route path='/adduser' element={<AddUser/>}/>
-          <Route path="/home" element={<LandingPage />} />
-          <Route path="/userDetails" element={<UserDetails />} />
-          <Route path='/dashboard' element={<Dashboard />} />
-          <Route path='/visualize' element={<Visualize/>}/>
-          <Route path='/testfetch' element={<Testfetch/>}/>
+            <Route path="/userDetails" element={<UserDetails />} />
+            <Route path='/dashboard' element={<Dashboard />} />
+            <Route path='/visualize' element={<Visualize/>}/>
+            <Route path='/testfetch' element={<Testfetch/>}/>
+            <Route element={<PrivateRoutesAdmin/>}>
+              <Route path='/gateway' element={<Gateway/>}/>
+              <Route path='/token' element={<Token/>}/>
+              <Route path='/adduser' element={<AddUser/>}/>
+            </Route>
           </Route>
           <Route exact path="/" element={<LandingPage />} />
           <Route path="/reset" element={<Reset />} />
           <Route path='/sign-up' element={<SignUp />} />
           <Route path='/sign-in' element={<Login />} />
+          <Route path='/testfetch2' element={<Testfetch2 />} />
         </Routes>
       </Router>
     </>

@@ -45,6 +45,32 @@ function Dashboard() {
 //         })));
 // }, []);
 
+
+
+useEffect(() => {
+  // GET request using fetch inside useEffect React hook
+  const fetchData =  async () => {
+
+    const fetchcoba = await fetch('https://smart-farm-backend.vercel.app/api/data-logs', {
+      method:"GET",
+      headers: {
+      'x-access-token': token, 
+      'Content-Type':'application/json'}
+  })
+  const datas = await fetchcoba.json()
+
+  const datafilter = await datas.filter((data) => {
+    return data.airTemp != null && data.airHum != null && data.idNode == nodes
+  })
+
+  console.log(datas)
+  setAirHum(Math.round(datafilter[datafilter.length -1].airHum,2));
+  setAirTemp(Math.round(datafilter[datafilter.length -1].airTemp, 2));
+}
+fetchData();
+  // empty dependency array means this effect will only run once (like componentDidMount in classes)
+},[]);
+
   useEffect(() => {
     // GET request using fetch inside useEffect React hook
     const fetchData =  async () => {
@@ -69,44 +95,22 @@ fetchData();
     // empty dependency array means this effect will only run once (like componentDidMount in classes)
 }, [nodes]);
 
-const fetchnodes = () => {
-  const datasetfix = datasets.filter((data) => {
-    return data.idNode == nodes
-  })
-
-  setAirHum(Math.round(datasetfix[datasetfix.length -1].airHum,2));
-  setAirTemp(Math.round(datasetfix[datasetfix.length -1].airTemp, 2));
-
-}
-
-useEffect(() => {
-  console.log(nodes)
-}, [nodes])
-
 const handleOnClick1 = (e) => {
   e.preventDefault();
   setNodes('102');
-  // fetchnodes();
- 
 }
 
 const handleOnClick2 = (e) => {
   e.preventDefault();
   setNodes('103');
-  // fetchnodes();
-  
 }
 const handleOnClick3 = (e) => {
   e.preventDefault();
   setNodes('202');
-  // fetchnodes();
- 
 }
 const handleOnClick4 = (e) => {
   e.preventDefault();
   setNodes('203');
-  // fetchnodes(nodes);
-  
 }
 
 useEffect(() => {
