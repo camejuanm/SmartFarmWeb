@@ -14,6 +14,7 @@ function Testfetch2() {
   const [chartstatus, setChartStatus] = useState('airhum');
   const [nodestate, setNodeState] = useState(102);
   const [lastDate, setLastDate] = useState();
+  const [blastDate, setblastDate] = useState(null);
   const [datedef, setDatedef] = useState();
   const [dropdown, setDropdown] = useState();
   
@@ -77,18 +78,20 @@ useEffect(() => {
             .then(data => setDatasets( data.filter((data) => {
                 return data.airHum != null && data.airTemp != null;
                } )));
-
-   
-}, [] )
+}, [])
 
 useEffect(() =>{
+
+  console.log(datasets)
     var datex = datasets.map(function(elem) {
         return new Date(elem.timestamp)
     })
-    const lastdate = datex[datex.length -1]
-    setLastDate(lastdate.setDate(lastdate.getDate() - 5))
-    console.log(datex)
-    chartData();
+    let lastdate = new Date(datex[datex.length -1])
+    let blastdate = new Date(datex[datex.length -1])
+    console.log(lastdate)
+    setblastDate(lastdate)
+    setLastDate(blastdate.setDate(blastdate.getDate() - 5))
+    console.log(lastdate)
 }, [datasets])
 // useEffect(() => {
 // console.log
@@ -97,8 +100,9 @@ useEffect(() =>{
 
 useEffect(() => {
     chartData();
+    console.log(lastDate)
 // empty dependency array means this effect will only run once (like componentDidMount in classes)
-}, [nodestate, chartstatus, lastDate]);
+}, [nodestate, chartstatus, lastDate, blastDate]);
 
 
     const chartData = () => {
@@ -106,11 +110,17 @@ useEffect(() => {
       const datex = datasets.map(function(elem) {
         return new Date(elem.timestamp)
       })
+     
         var filteredData = datasets.filter(function(a){
-            var aDate = new Date(a.timestamp);
-            var aNode = a.idNode
-            return aDate >= lastDate && aNode == nodestate;
-        });
+          var aDate = new Date(a.timestamp);
+          var aNode = a.idNode
+          return aDate <= blastDate && aDate >= lastDate  && aNode == nodestate;
+      });
+      console.log(new Date(blastDate))
+      console.log(new Date(lastDate))
+      console.log(filteredData)
+      
+       
 
         const fDate = filteredData.map(function(elem) {
           return new Date(elem.timestamp).toISOString()
@@ -212,10 +222,11 @@ useEffect(() => {
     }
 
     const onChangeChart = (e) => {
-
-      setLastDate(new Date(e.target.value));
-      setDatedef(e.target.values);
-      chartData();
+      const lastdate = new Date(e.target.value)
+      const blastDate = new Date(e.target.value)
+      setblastDate(lastdate.setDate(lastdate.getDate() + 1))
+      console.log(lastdate)
+      setLastDate(blastDate.setDate(lastdate.getDate() - 5));
     }
 
   return (
@@ -225,7 +236,7 @@ useEffect(() => {
         <LineChart chartData={userData} chartOption={optionData} />
       </div>
       <div className='button-chart'>
-        <input onChange={onChangeChart} type="date" className='enddate' value={datedef}></input>
+        <input onChange={onChangeChart} type="date" className='enddate' value={lastDate}></input>
         <button className='btn-humid'onClick={airHumClick} >Humidity</button>
         <button className='btn-temp' onClick={airTempClick}>Temp</button>
         <button onClick={chartData}></button>

@@ -63,13 +63,19 @@ useEffect(() => {
     return data.airTemp != null && data.airHum != null && data.idNode == nodes
   })
 
-  console.log(datas)
+  console.log(datafilter)
   setAirHum(Math.round(datafilter[datafilter.length -1].airHum,2));
   setAirTemp(Math.round(datafilter[datafilter.length -1].airTemp, 2));
 }
 fetchData();
   // empty dependency array means this effect will only run once (like componentDidMount in classes)
 },[]);
+
+
+useEffect(() => {
+  console.log(airHums)
+  console.log(airTemps)
+}, [airHums, airTemps])
 
   useEffect(() => {
     // GET request using fetch inside useEffect React hook
