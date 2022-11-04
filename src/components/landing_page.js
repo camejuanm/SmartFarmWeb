@@ -5,6 +5,7 @@ import FarmImage from "../images/travel1.PNG";
 import Email from "../images/email.jpg";
 import Phone from "../images/phone.jpg";
 import { SiMomenteo } from 'react-icons/si';
+// import Time from '../time/time';
 
 const LandingPage = ({ imageSrc }) => {
 
@@ -31,6 +32,9 @@ const LandingPage = ({ imageSrc }) => {
                     </span>
                 </div>
             </div>
+            {/* <div className="time">
+                <Time />
+            </div> */}
         </div>
     );
 }

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './Authentication.css';
-// import Dropdown from './dropdown/DropMenu';
   
 export default class Reset extends Component {
     constructor(props) {

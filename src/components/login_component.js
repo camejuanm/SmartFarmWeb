@@ -5,6 +5,8 @@ export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      input: {},
+      errors: {},
       email: "",
       password: "",
     };
@@ -82,8 +84,10 @@ export default class Login extends Component {
                 type="email"
                 className="form-control"
                 placeholder="Enter email"
+                value={this.state.input.email}
                 onChange={(e) => this.setState({ email: e.target.value })}
               />
+              <div className="text-danger">{this.state.errors.email}</div>
             </div>
 
             <div className="mb-3">
@@ -92,8 +96,10 @@ export default class Login extends Component {
                 type="password"
                 className="form-control"
                 placeholder="Enter password"
+                value = {this.state.input.password}
                 onChange={(e) => this.setState({ password: e.target.value })}
               />
+              <div className="text-danger">{this.state.errors.password}</div>
             </div>
             <p className="forgot-password text-right">
               Forgot <a href="/reset">password?</a>

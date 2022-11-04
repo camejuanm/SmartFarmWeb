@@ -136,3 +136,8 @@ html,
   width: 50%;
   background: linear-gradient(to right, #bcbcef, #8a91f4);
 }
+.footer {
+  position: absolute;
+  bottom: 5%;
+  right: 2%;
+}

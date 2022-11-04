@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./Authentication.css";
+import Time from '../time/time';
 
 export default class UserDetails extends Component {
   constructor(props) {
@@ -29,10 +30,15 @@ export default class UserDetails extends Component {
   }
   render() {
     return (
-      <div className="profile">
-        Name<h1>{this.state.userData.name}</h1>
-        Email <h1>{this.state.userData.email}</h1>
-      </div>
+      <>
+        <div className="profile">
+          Name<h1>{this.state.userData.name}</h1>
+          Email <h1>{this.state.userData.email}</h1>
+        </div>
+        <div className="footer">
+          <Time />
+        </div>
+      </>
     );
   }
 }
