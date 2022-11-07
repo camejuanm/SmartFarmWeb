@@ -117,6 +117,9 @@ html,
 .label {
   font-size: 15px;
 }
+button {
+  transition: 0.5s all ease;
+}
 .input-field {
   width: 100%;
   padding: 10px;

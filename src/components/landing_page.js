@@ -4,38 +4,39 @@ import "./Landing.css";
 import FarmImage from "../images/travel1.PNG";
 import Email from "../images/email.jpg";
 import Phone from "../images/phone.jpg";
+import Home from "../navbar/Home";
 import { SiMomenteo } from 'react-icons/si';
 // import Time from '../time/time';
 
-const LandingPage = ({ imageSrc }) => {
+const LandingPage = () => {
 
     return (
-        <div className="landing">
-            <div class="border">
-                <h1>
-                    Pengembangan Web App sebagai Media Pemantauan Sistem Tumbuh Tanaman Memanfaatkan IoT
-                </h1>
-            </div>
-            <div className="border_image">
-                <img src={FarmImage} className="farm_image" />
-            </div>
-            <div className="border">
-                <div className="contact">
-                    <h3>Hubungi Kami</h3>
-                    <span>
-                        <img src={Phone} className="sosmed" alt="nomorHP" />
-                        <a class="fab fa-phone">5422 0808</a>
-                    </span>
-                    <span>
-                        <img src={Email} className="sosmed" alt="email" />
-                        <a class="fab fa-envelope-o">fti@umn.ac.id</a>
-                    </span>
+        <>
+            <Home />
+            <div className="landing">
+                <div class="border">
+                    <h1>
+                        Pengembangan Web App sebagai Media Pemantauan <br /> Sistem Tumbuh Tanaman Memanfaatkan IoT
+                    </h1>
+                </div>
+                <div className="border_image">
+                    <img src={FarmImage} className="farm_image" />
+                </div>
+                <div className="border">
+                    <div className="contact">
+                        <h3>Hubungi Kami</h3>
+                        <span>
+                            <img src={Phone} className="sosmed" alt="nomorHP" />
+                            <a class="fab fa-phone">5422 0808</a>
+                        </span>
+                        <span>
+                            <img src={Email} className="sosmed" alt="email" />
+                            <a class="fab fa-envelope-o">fti@umn.ac.id</a>
+                        </span>
+                    </div>
                 </div>
             </div>
-            {/* <div className="time">
-                <Time />
-            </div> */}
-        </div>
+        </>
     );
 }
 

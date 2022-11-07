@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import app from "./firebase_config";
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import Dropdown from '../dropdown/DropMenu';
+import Authentication from '../navbar/Authentication';
 
 const auth = getAuth(app);
 
@@ -117,113 +118,116 @@ export default class SignUp extends Component {
   }
   render() {
     return (
-      <div className="outer">
-        <div className="card">
-          <form onSubmit={this.handleSubmit}>
-            <h3>Sign Up</h3>
-            <div id="recaptcha-container"></div>
-            <div className="mb-3">
-              <label>Name</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Enter name"
-                onChange={(e) => this.setState({ name: e.target.value })}
-                required
-              />
-            </div>
+      <>
+        <Authentication />
+        <div className="outer">
+          <div className="card">
+            <form onSubmit={this.handleSubmit}>
+              <h3>Sign Up</h3>
+              <div id="recaptcha-container"></div>
+              <div className="mb-3">
+                <label>Name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Enter name"
+                  onChange={(e) => this.setState({ name: e.target.value })}
+                  required
+                />
+              </div>
 
-            <div className="mb-3">
-              <label>Email address</label>
-              <input
-                type="email"
-                className="form-control"
-                placeholder="Enter email"
-                onChange={(e) => this.setState({ email: e.target.value })}
-                required
-              />
-            </div>
+              <div className="mb-3">
+                <label>Email address</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  placeholder="Enter email"
+                  onChange={(e) => this.setState({ email: e.target.value })}
+                  required
+                />
+              </div>
 
-            <div className="mb-3">
-              <label>Role</label>
-              <Dropdown />
-            </div>
+              <div className="mb-3">
+                <label>Role</label>
+                <Dropdown />
+              </div>
 
-            <div className="mb-3">
-              <label>Mobile Phone</label>
-              <input
-                type="number"
-                className="form-control"
-                placeholder="(+62) Enter mobile"
-                onChange={(e) => this.changeMobile(e)}
-              />
-              {this.state.verifyButton? (
-              <input
-                type="button"
-                value= {this.state.verified ? "verified": "verify"}
-                onClick={this.onSignInSubmit}
-                style={{
-                  backgroundColor: "blue",
-                  width: "100%",
-                  padding: 8,
-                  color: "white",
-                  border:"none",
-                }}
-              />
-              ):null}
-            </div>
+              <div className="mb-3">
+                <label>Mobile Phone</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  placeholder="(+62) Enter mobile"
+                  onChange={(e) => this.changeMobile(e)}
+                />
+                {this.state.verifyButton? (
+                <input
+                  type="button"
+                  value= {this.state.verified ? "verified": "verify"}
+                  onClick={this.onSignInSubmit}
+                  style={{
+                    backgroundColor: "blue",
+                    width: "100%",
+                    padding: 8,
+                    color: "white",
+                    border:"none",
+                  }}
+                />
+                ):null}
+              </div>
 
-            {this.state.verifyOtp? (
-            <div className="mb-3">
-              <label>OTP</label>
-              <input
-                type="number"
-                className="form-control"
-                placeholder="Enter OTP"
-                onChange={(e) => this.setState({ otp: e.target.value })}
-              />
-              <input
-                type="button"
-                value="OTP"
-                onClick={this.verifyCode}
-                style={{
-                  backgroundColor: "blue",
-                  width: "100%",
-                  padding: 5,
-                  color: "white",
-                  border:"none",
-                }}
-              />
-            </div>
-            ) :null}
+              {this.state.verifyOtp? (
+              <div className="mb-3">
+                <label>OTP</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  placeholder="Enter OTP"
+                  onChange={(e) => this.setState({ otp: e.target.value })}
+                />
+                <input
+                  type="button"
+                  value="OTP"
+                  onClick={this.verifyCode}
+                  style={{
+                    backgroundColor: "blue",
+                    width: "100%",
+                    padding: 5,
+                    color: "white",
+                    border:"none",
+                  }}
+                />
+              </div>
+              ) :null}
 
-            <div className="mb-3">
-              <label>Password</label>
-              <input
-                type="password"
-                className="form-control"
-                placeholder="Enter password"
-                minLength = {6}
-                maxLength = {25}
-                onChange={(e) => this.setState({ password: e.target.value })}
-                required
-              />
-            </div>
+              <div className="mb-3">
+                <label>Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  placeholder="Enter password"
+                  minLength = {6}
+                  maxLength = {25}
+                  onChange={(e) => this.setState({ password: e.target.value })}
+                  required
+                />
+              </div>
 
-            <div className="d-grid">
-              <button 
-                type="submit" 
-                className="btn btn-primary" 
-              >
-                Sign Up
-              </button>
-            </div>
-            <p className="forgot-password text-right">
-              Already registered <a href="/sign-in">sign in?</a>
-            </p>
-          </form>
+              <div className="d-grid">
+                <button 
+                  type="submit" 
+                  className="btn btn-success" 
+                >
+                  Sign Up
+                </button>
+              </div>
+              <p className="forgot-password text-right">
+                Already registered <a href="/sign-in">sign in?</a>
+              </p>
+            </form>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 }

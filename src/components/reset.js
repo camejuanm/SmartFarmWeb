@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Authentication.css';
+import Home from '../navbar/Home';
   
 export default class Reset extends Component {
     constructor(props) {
@@ -101,73 +102,76 @@ export default class Reset extends Component {
      
     render() {
         return (
-            <div className="outer">
-                <div className="card">
-                    <h1>Reset Password</h1>
-                    <form onSubmit={this.handleSubmit}>
+            <>
+                <Home />
+                <div className="outer">
+                    <div className="card">
+                        <h1>Reset Password</h1>
+                        <form onSubmit={this.handleSubmit}>
 
-                        <div class="form-group">
-                            <label for="role">Role:</label>
-                            <input
-                            type="text" 
-                            name="role" 
-                            value={this.state.input.role}
-                            onChange={this.handleChange}
-                            class="form-control" 
-                            placeholder="Type role" 
-                            id="role" />
-                
-                            <div className="text-danger">{this.state.errors.role}</div>
-                        </div>
-            
-                        <div class="form-group">
-                            <label for="email">Email Address:</label>
-                            <input 
+                            <div class="form-group">
+                                <label for="role">Role:</label>
+                                <input
                                 type="text" 
-                                name="email" 
-                                value={this.state.input.email}
+                                name="role" 
+                                value={this.state.input.role}
                                 onChange={this.handleChange}
                                 class="form-control" 
-                                placeholder="Please Enter your Email" 
-                                id="email" 
-                            />
+                                placeholder="Type role" 
+                                id="role" />
+                    
+                                <div className="text-danger">{this.state.errors.role}</div>
+                            </div>
                 
-                            <div className="text-danger">{this.state.errors.email}</div>
-                        </div>
-                
-                        <div class="form-group">
-                            <label for="password">Password:</label>
-                            <input 
-                                type="password" 
-                                name="password"
-                                value={this.state.input.password}
-                                onChange={this.handleChange}
-                                class="form-control" 
-                                placeholder="Please Enter your Password" 
-                                id="password" 
-                            />
-                
-                            <div className="text-danger">{this.state.errors.password}</div>
-                        </div>
-                
-                        <div class="form-group">
-                            <label for="password">Confirm Password:</label>
-                            <input 
-                                type="password" 
-                                name="confirm_password" 
-                                value={this.state.input.confirm_password}
-                                onChange={this.handleChange}
-                                class="form-control" 
-                                placeholder="Please Enter your Confirm Password" 
-                                id="confirm_password" 
-                            />
-                
-                            <div className="text-danger">{this.state.errors.confirm_password}</div>
-                        </div>    
-                        <input type="submit" value="Update Password" class="btn btn-success" />
-                    </form>
+                            <div class="form-group">
+                                <label for="email">Email Address:</label>
+                                <input 
+                                    type="email" 
+                                    name="email" 
+                                    value={this.state.input.email}
+                                    onChange={this.handleChange}
+                                    class="form-control" 
+                                    placeholder="Please Enter your Email" 
+                                    id="email" 
+                                />
+                    
+                                <div className="text-danger">{this.state.errors.email}</div>
+                            </div>
+                    
+                            <div class="form-group">
+                                <label for="password">Password:</label>
+                                <input 
+                                    type="password" 
+                                    name="password"
+                                    value={this.state.input.password}
+                                    onChange={this.handleChange}
+                                    class="form-control" 
+                                    placeholder="Please Enter your Password" 
+                                    id="password" 
+                                />
+                    
+                                <div className="text-danger">{this.state.errors.password}</div>
+                            </div>
+                    
+                            <div class="form-group">
+                                <label for="password">Confirm Password:</label>
+                                <input 
+                                    type="password" 
+                                    name="confirm_password" 
+                                    value={this.state.input.confirm_password}
+                                    onChange={this.handleChange}
+                                    class="form-control" 
+                                    placeholder="Please Enter your Confirm Password" 
+                                    id="confirm_password" 
+                                />
+                    
+                                <div className="text-danger">{this.state.errors.confirm_password}</div>
+                            </div>    
+                            <input type="submit" value="Update Password" class="btn btn-success" />
+                        </form>
+                    </div>
                 </div>
-            </div>
+            </>
         );
     }
 }

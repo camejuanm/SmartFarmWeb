@@ -1,5 +1,12 @@
 @import url("https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800");
 
+.logo_UMN {
+  position: absolute;
+  top: 10px;
+  height: 100px;
+  width: 100px;
+  right: 5%;
+}
 /* * {
   box-sizing: border-box;
 }
