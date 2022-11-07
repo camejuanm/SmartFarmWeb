@@ -11,12 +11,13 @@ import LogoUMN from "../images/logo_umn.jpg";
 
 const Navbar = () => {
     let role = window.localStorage.getItem("role")
-    const [sidebar, setSidebar] = useState(false);
+    const [sidebar, setSidebar] = useState();
 
     const showSidebar = () => setSidebar(!sidebar);
 
-    
+    useEffect(() => {
 
+    }, [sidebar])
     return (
     <>
         <IconContext.Provider value={{color:'#fff'}}>

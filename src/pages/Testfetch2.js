@@ -15,7 +15,8 @@ function Testfetch2() {
   const [nodestate, setNodeState] = useState(102);
   const [lastDate, setLastDate] = useState();
   const [blastDate, setblastDate] = useState(null);
-  const [datedef, setDatedef] = useState();
+  const [datedef, setDatedef] = useState(new Date());
+  const [datePicker, setDatePicker] = useState();
   const [dropdown, setDropdown] = useState();
   
   //datastate
@@ -44,173 +45,183 @@ function Testfetch2() {
   }, 
   );
 
-const [optionData, setOptionData] = useState({
-  scales: {
-    y: {
-        beginAtZero: true,
-        max:100,
-        ticks : {
-            callback: function(value, index, ticks) {
-                return  value + '%';
-        }  
-    }
-    },
-    x: {
-        grid:{
-          display:false
-        },
-        ticks:{
-            maxTicksLimit: 5.1
-        }
-    }
-}
-})
+  const [optionData, setOptionData] = useState({
+    scales: {
+      y: {
+          beginAtZero: true,
+          max:100,
+          ticks : {
+              callback: function(value, index, ticks) {
+                  return  value + '%';
+          }  
+      }
+      },
+      x: {
+          grid:{
+            display:false
+          },
+          ticks:{
+              maxTicksLimit: 5.1
+          }
+      }
+  }
+  })
 
-useEffect(() => {
-    
-    fetch('https://smart-farm-backend.vercel.app/api/data-logs', {
-            method:"GET",
-            headers: {
-            'x-access-token': token, 
-            'Content-Type':'application/json'}
-        })
-            .then(response => response.json())
-            .then(data => setDatasets( data.filter((data) => {
-                return data.airHum != null && data.airTemp != null;
-               } )));
-}, [])
-
-useEffect(() =>{
-
-  console.log(datasets)
-    var datex = datasets.map(function(elem) {
-        return new Date(elem.timestamp)
-    })
-    let lastdate = new Date(datex[datex.length -1])
-    let blastdate = new Date(datex[datex.length -1])
-    console.log(lastdate)
-    setblastDate(lastdate)
-    setLastDate(blastdate.setDate(blastdate.getDate() - 5))
-    console.log(lastdate)
-}, [datasets])
-// useEffect(() => {
-// console.log
-// setLastDate(new Date(datasets[datasets.length -1].timestamp))
-// }, [datasets])
-
-useEffect(() => {
-    chartData();
-    console.log(lastDate)
-// empty dependency array means this effect will only run once (like componentDidMount in classes)
-}, [nodestate, chartstatus, lastDate, blastDate]);
-
-
-    const chartData = () => {
-
-      const datex = datasets.map(function(elem) {
-        return new Date(elem.timestamp)
-      })
-     
-        var filteredData = datasets.filter(function(a){
-          var aDate = new Date(a.timestamp);
-          var aNode = a.idNode
-          return aDate <= blastDate && aDate >= lastDate  && aNode == nodestate;
-      });
-      console.log(new Date(blastDate))
-      console.log(new Date(lastDate))
-      console.log(filteredData)
+  // FETCH Data 
+  useEffect(() => {
       
-       
+      fetch('https://smart-farm-backend.vercel.app/api/data-logs', {
+              method:"GET",
+              headers: {
+              'x-access-token': token, 
+              'Content-Type':'application/json'}
+          })
+              .then(response => response.json())
+              .then(data => setDatasets( data.filter((data) => {
+                  return data.airHum != null && data.airTemp != null;
+                } )));
+  }, [])
 
-        const fDate = filteredData.map(function(elem) {
-          return new Date(elem.timestamp).toISOString()
-        })
+  // Set lastDate and blastDate after datasets is set
+  useEffect(() =>{
 
-     
-        const fHum = filteredData.map(function(elem) {
-            return elem.airHum
-            })
+    console.log(datasets)
+      var datex = datasets.map(function(elem) {
+          return new Date(elem.timestamp)
+      })
+      let lastdate = new Date(datex[datex.length -1])
+      let blastdate = new Date(datex[datex.length -1])
+      console.log(lastdate)
+      setblastDate(lastdate)
+      setLastDate(blastdate.setDate(blastdate.getDate() - 5))
+      console.log(lastdate)
+  }, [datasets])
 
-        const fTemp = filteredData.map(function(elem) {
-            return elem.airTemp
-            })
+
+  // Render the ChartData function when nodestate, chartstatus, lastDate, blastDate is change
+  useEffect(() => {
+      chartData();
+      console.log(lastDate)
+  // empty dependency array means this effect will only run once (like componentDidMount in classes)
+  }, [nodestate, chartstatus, lastDate, blastDate]);
+
+
+  useEffect(() => {
+    console.log(datedef)
+  }, [datedef])
+  // Function to set the Chart Value with some parameter
+  const chartData = () => {
+
+    const datex = datasets.map(function(elem) {
+      return new Date(elem.timestamp)
+    })
+    
+      var filteredData = datasets.filter(function(a){
+        var aDate = new Date(a.timestamp);
+        var aNode = a.idNode
+        return aDate <= blastDate && aDate >= lastDate  && aNode == nodestate;
+    });
+    console.log(new Date(blastDate))
+    console.log(new Date(lastDate))
+    console.log(filteredData)
+    
+      
+
+      const fDate = filteredData.map(function(elem) {
+        return new Date(elem.timestamp).toISOString()
+      })
+
+    
+      const fHum = filteredData.map(function(elem) {
+          return elem.airHum
+          })
+
+      const fTemp = filteredData.map(function(elem) {
+          return elem.airTemp
+          })
+      
+      // console.log(filteredData)
+
+      if (chartstatus == 'airhum') {
         
-        // console.log(filteredData)
-
-        if (chartstatus == 'airhum') {
-         
-          setUserData({
-            labels: fDate,
-            datasets: [
-              {
-                label: "% of Humidity",
-                data: fHum,
-                backgroundColor: [
-                  "#FF0000",
-                ],
-                borderWidth: 1,
-                showLine: false
-              }
-            ]
-          });
-
-          setOptionData({
-            scales: {
-            y: {
-                beginAtZero: true,
-                max:100,
-                ticks : {
-                    callback: function(value, index, ticks) {
-                        return  value + '%';
-                }  
+        setUserData({
+          labels: fDate,
+          datasets: [
+            {
+              label: "% of Humidity",
+              data: fHum,
+              backgroundColor: [
+                "#FF0000",
+              ],
+              borderWidth: 1,
+              showLine: false
             }
+          ]
+        });
+
+        setOptionData({
+          scales: {
+          y: {
+              beginAtZero: true,
+              max:100,
+              ticks : {
+                  callback: function(value, index, ticks) {
+                      return  value + '%';
+              }  
+          }
+          },
+          x: {
+            grid:{
+              display:false
             },
-            x: {
-                ticks:{
-                    maxTicksLimit: 5.1
-                }
-            }
-        }});
-
-        }
-        
-        else if (chartstatus == 'airtemp') {
-          setUserData({
-            labels: fDate,
-            datasets: [
-              {
-                label: "°C of Temperature",
-                data: fTemp,
-                backgroundColor: [
-                  "#FF0000",
-                ],
-                borderWidth: 1,
-                showLine: false
+              ticks:{
+                  maxTicksLimit: 5.1
               }
-            ]
-          });
+          }
+      }});
 
-          setOptionData({
-            scales: {
-            y: {
-                beginAtZero: true,
-                max:100,
-                ticks : {
-                    callback: function(value, index, ticks) {
-                        return  value + '°C';
-                }  
+      }
+      
+      else if (chartstatus == 'airtemp') {
+        setUserData({
+          labels: fDate,
+          datasets: [
+            {
+              label: "°C of Temperature",
+              data: fTemp,
+              backgroundColor: [
+                "#FF0000",
+              ],
+              borderWidth: 1,
+              showLine: false
             }
+          ]
+        });
+
+        setOptionData({
+          scales: {
+          y: {
+              beginAtZero: true,
+              max:100,
+              ticks : {
+                  callback: function(value, index, ticks) {
+                      return  value + '°C';
+              }  
+          }
+          },
+          x: {
+            grid:{
+              display:false
             },
-            x: {
-                ticks:{
-                    maxTicksLimit: 5.1
-                }
-            }
-        }});
-        }
-    }
+              ticks:{
+                  maxTicksLimit: 5.1
+              }
+          }
+      }});
+      }
+  }
 
-    //Click & OnChange function
+    //Handle click to change the chartstatus
     const airHumClick = () => {
       setChartStatus('airhum');
       chartData();
@@ -221,7 +232,9 @@ useEffect(() => {
       chartData();
     }
 
+    //set the blastDate and lastDate with the date picker
     const onChangeChart = (e) => {
+      setDatedef(e.target.values)
       const lastdate = new Date(e.target.value)
       const blastDate = new Date(e.target.value)
       setblastDate(lastdate.setDate(lastdate.getDate() + 1))
@@ -236,12 +249,10 @@ useEffect(() => {
         <LineChart chartData={userData} chartOption={optionData} />
       </div>
       <div className='button-chart'>
-        <input onChange={onChangeChart} type="date" className='enddate' value={lastDate}></input>
+        <input onChange={onChangeChart} type="date" className='enddate' value={datedef}></input>
         <button className='btn-humid'onClick={airHumClick} >Humidity</button>
         <button className='btn-temp' onClick={airTempClick}>Temp</button>
-        <button onClick={chartData}></button>
-
-        <Dropdown>
+        <Dropdown className="d-inline mx-2">
         <Dropdown.Toggle variant="success" id="dropdown-basic">
         {dropdown}
         </Dropdown.Toggle>

@@ -3,6 +3,10 @@
     text-align: center;
 }
 
+.dashboard{
+    background-color: #e3e3e3;
+}
+
 .img-all{
     margin-top: 50px;
     display: block;
@@ -24,10 +28,11 @@
 }
 
 .foto {
-    margin-right: 1rem;
+    margin-bottom: 1rem;
 }
 
 .image-container {
+    display: block;
     margin-bottom: 10px;
 }
 .fileinput {

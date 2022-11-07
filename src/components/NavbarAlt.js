@@ -1,65 +1,41 @@
-import React from 'react'
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import * as SiIcons from "react-icons/si";
+import * as AiIcons from "react-icons/ai";
+import * as FaIcons from "react-icons/fa";
+import './NavbarAlt.css';
+import {Link} from 'react-router-dom';
+import {SidebarDataAdmin} from './SidebarDataAdmin';
+import { IconContext} from 'react-icons'
+import { Outlet } from 'react-router-dom';
+import LogoUMN from "../images/logo_umn.jpg";
 
 function NavbarAlt() {
-    const [open, setOpen] = useState(true);
-    const Menus = [
-      { title: "Dashboard", src: "Chart_fill" },
-      { title: "Inbox", src: "Chat" },
-      { title: "Accounts", src: "User", gap: true },
-      { title: "Schedule ", src: "Calendar" },
-      { title: "Search", src: "Search" },
-      { title: "Analytics", src: "Chart" },
-      { title: "Files ", src: "Folder", gap: true },
-      { title: "Setting", src: "Setting" },
-    ];
-  
-    return (
-      
-        <div
-          className={` ${
-            open ? "w-72" : "w-20 "
-          } bg-dark-purple h-screen p-5  pt-8 relative duration-300`}
-        >
-          <img
-            src="./src/assets/control.png"
-            className={`absolute cursor-pointer -right-3 top-9 w-7 border-dark-purple
-             border-2 rounded-full  ${!open && "rotate-180"}`}
-            onClick={() => setOpen(!open)}
-          />
-          <div className="flex gap-x-4 items-center">
-            <img
-              src="./src/assets/logo.png"
-              className={`cursor-pointer duration-500 ${
-                open && "rotate-[360deg]"
-              }`}
-            />
-            <h1
-              className={`text-white origin-left font-medium text-xl duration-200 ${
-                !open && "scale-0"
-              }`}
-            >
-              Designer
-            </h1>
-          </div>
-          <ul className="pt-6">
-            {Menus.map((Menu, index) => (
-              <li
-                key={index}
-                className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 
-                ${Menu.gap ? "mt-9" : "mt-2"} ${
-                  index === 0 && "bg-light-white"
-                } `}
-              >
-                <img src={`./src/assets/${Menu.src}.png`} />
-                <span className={`${!open && "hidden"} origin-left duration-200`}>
-                  {Menu.title}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
+    let role = window.localStorage.getItem("role")
+    const [sidebar, setSidebar] = useState(SidebarDataAdmin);
 
-    );
+    return (
+    <>
+        <IconContext.Provider value={{color:'#fff'}}>
+        
+            <nav className='nav-menu'>
+            <img src={LogoUMN} className="logo_UMN" />
+                <ul className='nav-menu-items'>
+                    {SidebarDataAdmin.map((item, index) => {
+                        return (
+                            <li key={index} className={item.cName}>
+                                <Link to={item.path}>
+                                    {item.icon}
+                                    <span>{item.title}</span>
+                                </Link>
+                            </li>
+                        )
+                    })}
+                    <li className='nav-logout' onClick={() => {window.localStorage.clear(); window.location.reload()}}><Link to="/"><AiIcons.AiOutlineLogout/><span>Logout</span></Link></li>
+                </ul>
+            </nav>
+        </IconContext.Provider>
+        <Outlet/>
+    </>
+  )
   };
 export default NavbarAlt

@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from '../components/Navbar';
 import PrivateRoutes from '../utils/PrivateRoutes';
 import { data } from 'autoprefixer';
+import { setRandomFallback } from 'bcryptjs';
 
 function Dashboard() {
   
@@ -22,114 +23,82 @@ function Dashboard() {
   const [preview, setPreview] = useState(); 
   const [pic, setPic] = useState();
   const [nodes, setNodes] = React.useState('102');
+  
+
+// FETCH data from API datalogs and show the airHum and airTemp to the Dashboard
+  useEffect(() => {
+    const fetchData =  async () => {
+
+      const fetchcoba = await fetch('https://smart-farm-backend.vercel.app/api/data-logs', {
+        method:"GET",
+        headers: {
+        'x-access-token': token, 
+        'Content-Type':'application/json'}
+    })
+    const datas = await fetchcoba.json()
+
+    const datafilter = await datas.filter((data) => {
+      return data.airTemp != null && data.airHum != null && data.idNode == nodes
+    })
+    console.log(datas)
+    setAirHum(Math.round(datafilter[datafilter.length -1].airHum,2));
+    setAirTemp(Math.round(datafilter[datafilter.length -1].airTemp, 2));
+  }
+  fetchData();
+  },[]);
+
+  // Console log when airHums and airTemps set or change
+  useEffect(() => {
+    console.log(airHums)
+    console.log(airTemps)
+  }, [airHums, airTemps])
+
+  // FETCH the data from the API and change when the node is change
+    useEffect(() => {
+      const fetchData =  async () => {
+
+        fetch('https://smart-farm-backend.vercel.app/api/data-logs', {
+          method:"GET",
+          headers: {
+          'x-access-token': token, 
+          'Content-Type':'application/json'}
+      }).then(response => response.json())
+      .then(data => setDatasets(data))
+
+        const dataset = datasets.filter((data) => {
+          return data.airTemp != null && data.airHum != null && data.idNode == nodes
+        })
+        setAirHum(Math.round(dataset[dataset.length -1].airHum,2));
+        setAirTemp(Math.round(dataset[dataset.length -1].airTemp, 2));  
+  }
+  fetchData();
+  }, [nodes]);
+
+
+  // Handle CLick on the image pixel
+  const handleOnClick1 = (e) => {
+    e.preventDefault(); // prevent the href in <map> to functioning so the page doesn't change
+    setNodes('102');
+  }
+  const handleOnClick2 = (e) => {
+    e.preventDefault();
+    setNodes('103');
+  }
+  const handleOnClick3 = (e) => {
+    e.preventDefault();
+    setNodes('202');
+  }
+  const handleOnClick4 = (e) => {
+    e.preventDefault();
+    setNodes('203');
+  }
+  //preview the file
   const handleChange = (event) => {
     const selectedFile = event.target.files[0]
     setFile(selectedFile)
     const filePreview = URL.createObjectURL(selectedFile)
     setPreview(filePreview)
   }
-
- 
-
-//   useEffect(() => {
-//     // GET request using fetch inside useEffect React hook
-//       fetch('https://smart-farm-backend.vercel.app/api/data-logs', {
-//         method:"GET",
-//         headers: {
-//         'x-access-token': token, 
-//         'Content-Type':'application/json'}
-//     })
-//         .then(response => response.json())
-//         .then(data => setDatasets(data.filter((data) => {
-//           return data.airTemp != null && data.airHum != null
-//         })));
-// }, []);
-
-
-
-useEffect(() => {
-  // GET request using fetch inside useEffect React hook
-  const fetchData =  async () => {
-
-    const fetchcoba = await fetch('https://smart-farm-backend.vercel.app/api/data-logs', {
-      method:"GET",
-      headers: {
-      'x-access-token': token, 
-      'Content-Type':'application/json'}
-  })
-  const datas = await fetchcoba.json()
-
-  const datafilter = await datas.filter((data) => {
-    return data.airTemp != null && data.airHum != null && data.idNode == nodes
-  })
-
-  console.log(datafilter)
-  setAirHum(Math.round(datafilter[datafilter.length -1].airHum,2));
-  setAirTemp(Math.round(datafilter[datafilter.length -1].airTemp, 2));
-}
-fetchData();
-  // empty dependency array means this effect will only run once (like componentDidMount in classes)
-},[]);
-
-
-useEffect(() => {
-  console.log(airHums)
-  console.log(airTemps)
-}, [airHums, airTemps])
-
-  useEffect(() => {
-    // GET request using fetch inside useEffect React hook
-    const fetchData =  async () => {
-
-      fetch('https://smart-farm-backend.vercel.app/api/data-logs', {
-        method:"GET",
-        headers: {
-        'x-access-token': token, 
-        'Content-Type':'application/json'}
-    }).then(response => response.json())
-    .then(data => setDatasets(data))
-
-      const dataset = datasets.filter((data) => {
-        return data.airTemp != null && data.airHum != null && data.idNode == nodes
-      })
-
-      setAirHum(Math.round(dataset[dataset.length -1].airHum,2));
-      setAirTemp(Math.round(dataset[dataset.length -1].airTemp, 2));
-      
-}
-fetchData();
-    // empty dependency array means this effect will only run once (like componentDidMount in classes)
-}, [nodes]);
-
-const handleOnClick1 = (e) => {
-  e.preventDefault();
-  setNodes('102');
-}
-
-const handleOnClick2 = (e) => {
-  e.preventDefault();
-  setNodes('103');
-}
-const handleOnClick3 = (e) => {
-  e.preventDefault();
-  setNodes('202');
-}
-const handleOnClick4 = (e) => {
-  e.preventDefault();
-  setNodes('203');
-}
-
-useEffect(() => {
-  console.log(nodes)
-  }, [nodes])
-
-  useEffect(() => {
-  console.log(airHums)
-  }, [airHums])
-  
-  useEffect(() => {
-  console.log(airTemps)
-  }, [airTemps])
  
   return (
     <>
@@ -155,7 +124,7 @@ useEffect(() => {
       <div className='img-all'>
       <div className='project-picker'>
       <div className='image-container'>
-      <img src={pic} className='foto' style={{width: "800px"}} useMap="#node-map"/>
+      <img src={window.sessionStorage.getItem("pic")} className='foto' style={{width: "800px"}} useMap="#node-map"/>
       <map id="node-map" name='node-map'>
         
         <area shape='circle'
@@ -190,7 +159,7 @@ useEffect(() => {
         <Dropdown.Menu>
         {projectdata.map((item,index) => {
       return (
-        <Dropdown.Item key={index} onClick={() => {setDropdown(item.name);setPic(item.url);}}>
+        <Dropdown.Item key={index} onClick={() => {setDropdown(item.name);window.sessionStorage.setItem("pic",item.url)}}>
           {item.name}
         </Dropdown.Item>
         )
@@ -207,10 +176,6 @@ useEffect(() => {
     <button className='btn-viz' onClick=''>Visualize</button>
     </Link>
       </div>
-      
-    {/* <Link to='/'>
-    <button className='btn-viz' onClick={logout}>Visualize</button>
-    </Link> */}
     </div>
     </>
   );
