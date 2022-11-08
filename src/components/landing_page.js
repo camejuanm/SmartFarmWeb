@@ -5,8 +5,6 @@ import FarmImage from "../images/travel1.PNG";
 import Email from "../images/email.jpg";
 import Phone from "../images/phone.jpg";
 import Home from "../navbar/Home";
-import { SiMomenteo } from 'react-icons/si';
-// import Time from '../time/time';
 
 const LandingPage = () => {
 

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import app from "./firebase_config";
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import Dropdown from '../dropdown/DropMenu';
-import Authentication from '../navbar/Authentication';
+import Home from '../navbar/Home';
 
 const auth = getAuth(app);
 
@@ -119,14 +119,14 @@ export default class SignUp extends Component {
   render() {
     return (
       <>
-        <Authentication />
+        <Home />
         <div className="outer">
           <div className="card">
             <form onSubmit={this.handleSubmit}>
               <h3>Sign Up</h3>
               <div id="recaptcha-container"></div>
               <div className="mb-3">
-                <label>Name</label>
+                <label for="name">Name</label>
                 <input
                   type="text"
                   className="form-control"
@@ -137,7 +137,7 @@ export default class SignUp extends Component {
               </div>
 
               <div className="mb-3">
-                <label>Email address</label>
+                <label for="email">Email address</label>
                 <input
                   type="email"
                   className="form-control"
@@ -148,12 +148,12 @@ export default class SignUp extends Component {
               </div>
 
               <div className="mb-3">
-                <label>Role</label>
+                <label for="role">Role</label>
                 <Dropdown />
               </div>
 
               <div className="mb-3">
-                <label>Mobile Phone</label>
+                <label for="mobile">Mobile Phone</label>
                 <input
                   type="number"
                   className="form-control"
@@ -178,7 +178,7 @@ export default class SignUp extends Component {
 
               {this.state.verifyOtp? (
               <div className="mb-3">
-                <label>OTP</label>
+                <label for="otp">OTP</label>
                 <input
                   type="number"
                   className="form-control"
@@ -201,13 +201,12 @@ export default class SignUp extends Component {
               ) :null}
 
               <div className="mb-3">
-                <label>Password</label>
+                <label for="password">Password</label>
                 <input
                   type="password"
                   className="form-control"
                   placeholder="Enter password"
                   minLength = {6}
-                  maxLength = {25}
                   onChange={(e) => this.setState({ password: e.target.value })}
                   required
                 />

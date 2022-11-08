@@ -8,4 +8,5 @@ select {
 .value {
     font-size: 11pt;
     text-transform: lowercase;
+    margin-bottom: 3px;
 }

@@ -109,7 +109,7 @@ export default class Reset extends Component {
                         <h1>Reset Password</h1>
                         <form onSubmit={this.handleSubmit}>
 
-                            <div class="form-group">
+                            <div class="form-reset">
                                 <label for="role">Role:</label>
                                 <input
                                 type="text" 
@@ -123,7 +123,7 @@ export default class Reset extends Component {
                                 <div className="text-danger">{this.state.errors.role}</div>
                             </div>
                 
-                            <div class="form-group">
+                            <div class="form-reset">
                                 <label for="email">Email Address:</label>
                                 <input 
                                     type="email" 
@@ -138,7 +138,7 @@ export default class Reset extends Component {
                                 <div className="text-danger">{this.state.errors.email}</div>
                             </div>
                     
-                            <div class="form-group">
+                            <div class="form-reset">
                                 <label for="password">Password:</label>
                                 <input 
                                     type="password" 
@@ -153,7 +153,7 @@ export default class Reset extends Component {
                                 <div className="text-danger">{this.state.errors.password}</div>
                             </div>
                     
-                            <div class="form-group">
+                            <div class="form-reset">
                                 <label for="password">Confirm Password:</label>
                                 <input 
                                     type="password" 

@@ -144,3 +144,9 @@ button {
   bottom: 5%;
   right: 2%;
 }
+.form-reset {
+  margin-bottom: 10px;
+}
+.form-control {
+  margin-bottom: 3px;
+}

@@ -6,14 +6,11 @@ import * as GrIcons from 'react-icons/gr';
 import * as CgIcons from "react-icons/cg";
 import './Navigation_style.css';
 import {Link} from 'react-router-dom';
-import {LoginTrue} from '../components/LoginTrue.js';
+import {LoginTrue} from '../components/LoginTrue';
 import { IconContext} from 'react-icons'
 import { Outlet } from 'react-router-dom';
-// import { Context } from './Context';
-import { async } from '@firebase/util';
 
 const Login = () => {
-    // const { user, setUser } = useContext(Context);
 
     const [sidebar, setSidebar] = useState(false);
 

@@ -10,8 +10,6 @@ import UserDetails from "./components/userDetails";
 import Reset from "./components/reset";
 import Forgot from "./components/forgot";
 import Navbar from "./components/Navbar";
-import Authentication from "./navbar/Authentication";
-import Login1 from './navbar/Login';
 import Dashboard from "./pages/Dashboard"
 import Gateway from "./pages/Gateway"
 import Token from "./pages/Token"

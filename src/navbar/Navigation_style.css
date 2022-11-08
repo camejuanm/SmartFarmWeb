@@ -20,7 +20,7 @@
     justify-content: center;
     position: fixed;
     top: 0;
-    left: -100%;
+    left: -50%;
     transition: 850ms;
   }
   
@@ -73,8 +73,8 @@
 
   .logo_UMN {
     position: absolute;
-    top: 120px;
+    top: 110px;
+    right: 5%;
     height: 100px;
     width: 100px;
-    right: 5%;
   }

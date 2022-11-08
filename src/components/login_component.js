@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./Authentication.css";
-import Authentication from '../navbar/Authentication';
+import Home from '../navbar/Home';
 
 export default class Login extends Component {
   constructor(props) {
@@ -43,66 +43,33 @@ export default class Login extends Component {
         }
       });
   }
-  validate() {
-    let input = this.state.input;
-    let errors = {};
-    let isValid = true;
-
-    if (!input["email"]) {
-      isValid = false;
-      errors["email"] = "Please enter your email Address.";
-    }
-
-    if (typeof input["email"] !== "undefined") {
-        
-        var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
-        if (!pattern.test(input["email"])) {
-          isValid = false;
-          errors["email"] = "Please enter valid email address.";
-        }
-    }
-
-    if (!input["password"]) {
-        isValid = false;
-        errors["password"] = "Please enter your password.";
-    }
-
-    this.setState({
-      errors: errors
-    });
-    return isValid;
-  }
   render() {
     return (
       <>
-        <Authentication />
+        <Home />
         <div className="outer">
           <div className="card">
             <form onSubmit={this.handleSubmit}>
               <h3>Sign In</h3>
 
               <div className="mb-3">
-                <label>Email address</label>
+                <label for="email">Email address</label>
                 <input
                   type="email"
                   className="form-control"
                   placeholder="Enter email"
-                  value={this.state.input.email}
                   onChange={(e) => this.setState({ email: e.target.value })}
                 />
-                <div className="text-danger">{this.state.errors.email}</div>
               </div>
 
               <div className="mb-3">
-                <label>Password</label>
+                <label for="password">Password</label>
                 <input
                   type="password"
                   className="form-control"
                   placeholder="Enter password"
-                  value = {this.state.input.password}
                   onChange={(e) => this.setState({ password: e.target.value })}
                 />
-                <div className="text-danger">{this.state.errors.password}</div>
               </div>
               <p className="forgot-password text-right">
                 <a href="/forgot">Forgot password</a>?
@@ -113,9 +80,9 @@ export default class Login extends Component {
                   <input
                     type="checkbox"
                     className="custom-control-input"
-                    id="customCheck1"
+                    id="rememberMe"
                   />
-                  <label className="custom-control-label" htmlFor="customCheck1">
+                  <label className="custom-control-label" htmlFor="rememberMe">
                     Remember me
                   </label>
                 </div>
