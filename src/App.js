@@ -19,6 +19,7 @@ import Visualize from "./pages/Visualize"
 import "./components/reset.css"
 import Testfetch from './pages/Testfetch';
 import Testfetch2 from './pages/Testfetch2';
+import Testfetch3 from './pages/Testfetch3';
 
 import PrivateRoutes from './utils/PrivateRoutes';
 import PrivateRoutesAdmin from './utils/PrivateRoutesAdmin';
@@ -29,7 +30,7 @@ function App() {
   return (
     <>
       <Router>
-      <Navbar/>
+      <Navbar />
         <Routes>
           <Route element={<PrivateRoutes  />}>
             <Route path="/userDetails" element={<UserDetails />} />
@@ -47,6 +48,7 @@ function App() {
           <Route path='/sign-up' element={<SignUp />} />
           <Route path='/sign-in' element={<Login />} />
           <Route path='/testfetch2' element={<Testfetch2 />} />
+          <Route path='/testfetch3' element={<Testfetch3 />} />
         </Routes>
       </Router>
     </>

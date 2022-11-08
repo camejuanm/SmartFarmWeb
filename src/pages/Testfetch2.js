@@ -171,11 +171,17 @@ function Testfetch2() {
           }
           },
           x: {
+              type: 'time', // menampilkan grafik perjam
+              time: {
+                displayFormats: {hour: 'DD HH:mm'}
+              },
             grid:{
               display:false
             },
               ticks:{
-                  maxTicksLimit: 5.1
+                  maxTicksLimit: 5.4  
+                  // maxTicksLimit: 6  
+                  // source: 'labels' //pake kalo data udah rapi
               }
           }
       }});
