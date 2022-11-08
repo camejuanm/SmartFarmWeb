@@ -7,7 +7,7 @@ export default class Reset extends Component {
     super(props);
     this.state = {
       input: {},
-      errors: {}
+      errors: {},
     };
      
     this.handleChange = this.handleChange.bind(this);
@@ -109,7 +109,7 @@ export default class Reset extends Component {
                         <h1>Reset Password</h1>
                         <form onSubmit={this.handleSubmit}>
 
-                            <div class="form-reset">
+                            <div class="form-group">
                                 <label for="role">Role:</label>
                                 <input
                                 type="text" 
@@ -123,7 +123,7 @@ export default class Reset extends Component {
                                 <div className="text-danger">{this.state.errors.role}</div>
                             </div>
                 
-                            <div class="form-reset">
+                            <div class="form-group">
                                 <label for="email">Email Address:</label>
                                 <input 
                                     type="email" 
@@ -138,7 +138,7 @@ export default class Reset extends Component {
                                 <div className="text-danger">{this.state.errors.email}</div>
                             </div>
                     
-                            <div class="form-reset">
+                            <div class="form-group">
                                 <label for="password">Password:</label>
                                 <input 
                                     type="password" 
@@ -153,7 +153,7 @@ export default class Reset extends Component {
                                 <div className="text-danger">{this.state.errors.password}</div>
                             </div>
                     
-                            <div class="form-reset">
+                            <div class="form-group">
                                 <label for="password">Confirm Password:</label>
                                 <input 
                                     type="password" 

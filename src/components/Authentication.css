@@ -79,9 +79,6 @@ html,
   color: #167bff;
 }
 
-.form-group {
-  padding: 5px;
-}
 .outer {
   padding: 50px 260px 50px 260px;
   align-items: center;
@@ -144,9 +141,9 @@ button {
   bottom: 5%;
   right: 2%;
 }
-.form-reset {
-  margin-bottom: 10px;
+.form-group {
+  margin-bottom: 15px;
 }
 .form-control {
-  margin-bottom: 3px;
+  margin-bottom: 5px;
 }
