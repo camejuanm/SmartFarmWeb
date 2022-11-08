@@ -1,10 +1,12 @@
-.main {
-    margin-top: 5px;
-}
 input {
     height: 30%;
     width: 20%;
 }
+select {
+    width: 10%;
+}
 .value {
     font-size: 11pt;
+    text-transform: lowercase;
+    margin-bottom: 3px;
 }

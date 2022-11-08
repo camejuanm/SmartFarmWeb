@@ -79,9 +79,6 @@ html,
   color: #167bff;
 }
 
-.form-group {
-  padding: 5px;
-}
 .outer {
   padding: 50px 260px 50px 260px;
   align-items: center;
@@ -117,6 +114,9 @@ html,
 .label {
   font-size: 15px;
 }
+button {
+  transition: 0.5s all ease;
+}
 .input-field {
   width: 100%;
   padding: 10px;
@@ -135,4 +135,15 @@ html,
   left: 25%;
   width: 50%;
   background: linear-gradient(to right, #bcbcef, #8a91f4);
+}
+.footer {
+  position: absolute;
+  bottom: 5%;
+  right: 2%;
+}
+.form-group {
+  margin-bottom: 15px;
+}
+.form-control {
+  margin-bottom: 5px;
 }

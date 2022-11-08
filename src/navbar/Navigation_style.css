@@ -1,5 +1,5 @@
 .navigation_bar {
-    background-color: #3f653f;
+    background-color: #2d1e3a;
     height: 100px;
     display: flex;
     justify-content: flex-start;
@@ -20,7 +20,7 @@
     justify-content: center;
     position: fixed;
     top: 0;
-    left: -100%;
+    left: -50%;
     transition: 850ms;
   }
   
@@ -69,4 +69,12 @@
   
   span {
     margin-left: 16px;
+  }
+
+  .logo_UMN {
+    position: absolute;
+    top: 110px;
+    right: 5%;
+    height: 100px;
+    width: 100px;
   }

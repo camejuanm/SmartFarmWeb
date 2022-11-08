@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import "./Authentication.css";
+import Home from '../navbar/Home';
 
 export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      input: {},
+      errors: {},
       email: "",
       password: "",
     };
@@ -40,89 +43,63 @@ export default class Login extends Component {
         }
       });
   }
-  validate() {
-    let input = this.state.input;
-    let errors = {};
-    let isValid = false;
-
-    if (!input["email"]) {
-      isValid = false;
-      errors["email"] = "Please enter your email Address.";
-    }
-
-    if (typeof input["email"] !== "undefined") {
-        
-        var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
-        if (!pattern.test(input["email"])) {
-        isValid = false;
-        errors["email"] = "Please enter valid email address.";
-        }
-    }
-
-    if (!input["password"]) {
-        isValid = false;
-        errors["password"] = "Please enter your password.";
-    }
-
-    this.setState({
-      errors: errors
-    });
-    return isValid;
-  }
   render() {
     return (
-      <div className="outer">
-        <div className="card">
-          <form onSubmit={this.handleSubmit}>
-            <h3>Sign In</h3>
+      <>
+        <Home />
+        <div className="outer">
+          <div className="card">
+            <form onSubmit={this.handleSubmit}>
+              <h3>Sign In</h3>
 
-            <div className="mb-3">
-              <label>Email address</label>
-              <input
-                type="email"
-                className="form-control"
-                placeholder="Enter email"
-                onChange={(e) => this.setState({ email: e.target.value })}
-              />
-            </div>
-
-            <div className="mb-3">
-              <label>Password</label>
-              <input
-                type="password"
-                className="form-control"
-                placeholder="Enter password"
-                onChange={(e) => this.setState({ password: e.target.value })}
-              />
-            </div>
-            <p className="forgot-password text-right">
-              Forgot <a href="/reset">password?</a>
-            </p>
-
-            <div className="mb-3">
-              <div className="custom-control custom-checkbox">
+              <div className="mb-3">
+                <label for="email">Email address</label>
                 <input
-                  type="checkbox"
-                  className="custom-control-input"
-                  id="customCheck1"
+                  type="email"
+                  className="form-control"
+                  placeholder="Enter email"
+                  onChange={(e) => this.setState({ email: e.target.value })}
                 />
-                <label className="custom-control-label" htmlFor="customCheck1">
-                  Remember me
-                </label>
               </div>
-            </div>
 
-            <div className="d-grid">
-              <button type="submit" className="btn btn-success">
-                Submit
-              </button>
-            </div>
-            <p className="forgot-password text-right">
-              <a href="/sign-up">Sign Up</a>
-            </p>
-          </form>
+              <div className="mb-3">
+                <label for="password">Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  placeholder="Enter password"
+                  onChange={(e) => this.setState({ password: e.target.value })}
+                />
+              </div>
+              <p className="forgot-password text-right">
+                <a href="/forgot">Forgot password</a>?
+              </p>
+
+              <div className="mb-3">
+                <div className="custom-control custom-checkbox">
+                  <input
+                    type="checkbox"
+                    className="custom-control-input"
+                    id="rememberMe"
+                  />
+                  <label className="custom-control-label" htmlFor="rememberMe">
+                    Remember me
+                  </label>
+                </div>
+              </div>
+
+              <div className="d-grid">
+                <button type="submit" className="btn btn-success">
+                  Submit
+                </button>
+              </div>
+              <p className="forgot-password text-right">
+                <a href="/sign-up">Sign Up</a>
+              </p>
+            </form>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 }
