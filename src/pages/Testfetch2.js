@@ -4,6 +4,7 @@ import LineChart from '../components/Chart/LineChart';
 import './Visualize.css'
 import Dropdown from 'react-bootstrap/Dropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'chartjs-plugin-annotation';
 
 function Testfetch2() {
   
@@ -67,6 +68,8 @@ function Testfetch2() {
       }
   }
   })
+
+  // const [annotationData, setAnnotationData] = useState()
 
   // FETCH Data 
   useEffect(() => {
@@ -162,30 +165,59 @@ function Testfetch2() {
 
         setOptionData({
           scales: {
-          y: {
-              beginAtZero: true,
-              max:100,
-              ticks : {
-                  callback: function(value, index, ticks) {
-                      return  value + '%';
-              }  
-          }
-          },
-          x: {
-              // type: 'time', // menampilkan grafik perjam
-              // time: {
-              //   displayFormats: {hour: 'DD HH:mm'}
-              // },
-            grid:{
-              display:false
+            y: {
+                beginAtZero: true,
+                max:100,
+                ticks : {
+                    callback: function(value, index, ticks) {
+                        return  value + '%';
+                }  
+            }
             },
-              ticks:{
-                  maxTicksLimit: 5.4  
-                  // maxTicksLimit: 6  
-                  // source: 'labels' //pake kalo data udah rapi
-              }
+            x: {
+                // type: 'time', // menampilkan grafik perjam
+                // time: {
+                //   displayFormats: {hour: 'DD HH:mm'}
+                // },
+              grid:{
+                display:false
+              },
+                ticks:{
+                    maxTicksLimit: 5.4  
+                    // maxTicksLimit: 6  
+                    // source: 'labels' //pake kalo data udah rapi
+                }
+            }
+          },
+          plugins :{
+            annotation: {
+              annotations: [{
+                type: 'line',
+                mode: 'horizontal',
+                scaleID: 'y',
+                value: 70,
+                borderColor: 'red',
+                borderWidth: 2,
+                label: {
+                  enabled: false,
+                  content: 'Test label'
+                }
+              },{
+                type: 'line',
+                mode: 'horizontal',
+                scaleID: 'y',
+                value: 40,
+                borderColor: 'yellow',
+                borderWidth: 2,
+                label: {
+                  enabled: false,
+                  content: 'Test label'
+                }
+              }]
           }
-      }});
+          
+          }
+    });
 
       }
       
@@ -311,7 +343,7 @@ function Testfetch2() {
     <>
     <div className='container-chart'>Visualize
       <div className='chart'>
-        <LineChart chartData={userData} chartOption={optionData} />
+        <LineChart chartData={userData} chartOption={optionData}/>
       </div>
       <div className='button-chart'>
         <input onChange={onChangeChart} type="date" className='enddate' value={datedef}></input>

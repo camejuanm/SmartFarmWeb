@@ -522,7 +522,17 @@ function Visualize() {
                 maxTicksLimit: 5.1
             }
         }
-    }
+    }, plugins: {annotation: {
+      annotations: {
+        line1: {
+          type: 'line',
+          yMin: 60,
+          yMax: 60,
+          borderColor: 'rgb(255, 99, 132)',
+          borderWidth: 3,
+        }
+      }
+    }}
   })
 
 
