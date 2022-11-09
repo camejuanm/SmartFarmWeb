@@ -147,3 +147,11 @@ button {
 .form-control {
   margin-bottom: 5px;
 }
+select {
+  width: 100px;
+}
+.value {
+  font-size: 12pt;
+  text-transform: lowercase;
+  margin-bottom: 3px;
+}

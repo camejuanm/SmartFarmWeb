@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-import "./dropdown.css";
+import "./Authentication.css";
 
-function DropMenu() {
+function DropBar() {
     const [value, setValue] = useState("")
     const data = ["Admin", "User"]
     return(
@@ -10,9 +10,8 @@ function DropMenu() {
         <select
           list="data"
           type="dropdown"
-          className="form-group"
+          className="btn btn-success"
           onChange={(e)=>setValue(e.target.value)}
-          required
         >
           <option></option>
           <option label for="admin">Admin</option>
@@ -24,4 +23,4 @@ function DropMenu() {
       </div>
     );
 }
-export default DropMenu;
+export default DropBar;

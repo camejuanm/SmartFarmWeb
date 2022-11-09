@@ -9,8 +9,7 @@ import Home from "../navbar/Home";
 const LandingPage = () => {
 
     return (
-        <>
-            <Home />
+        <>  
             <div className="landing">
                 <div class="border">
                     <h1>

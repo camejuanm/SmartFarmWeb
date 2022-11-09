@@ -32,12 +32,17 @@ export default class Login extends Component {
     })
       .then((res) => res.json())
       .then((data) => {
+        
         console.log(data, "userRegister");
         console.log(data.statusCode)
         if (!data.message) {
           alert("login successful");
           window.localStorage.setItem("token", data.accessToken);
-          window.location.href = "./dashboard";
+          window.localStorage.setItem("isAuth", true)
+          window.location.href = "/dashboard";
+          if (data.role == "admin") {
+          window.localStorage.setItem("isAdmin",true)
+          }
         } else {
           alert("invalid email or password");
         }
@@ -46,7 +51,6 @@ export default class Login extends Component {
   render() {
     return (
       <>
-        <Home />
         <div className="outer">
           <div className="card">
             <form onSubmit={this.handleSubmit}>

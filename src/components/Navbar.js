@@ -4,15 +4,37 @@ import * as AiIcons from "react-icons/ai";
 import * as FaIcons from "react-icons/fa";
 import './Navbarstyle.css';
 import {Link} from 'react-router-dom';
-import {SidebarData} from './SidebarData';
+import {SidebarDataAdmin} from './SidebarDataAdmin';
+import { SidebarDataUser } from './SidebarDataUser';
+import { SidebarDataLanding } from './SidebarDataLanding.';
 import { IconContext} from 'react-icons'
 import { Outlet } from 'react-router-dom';
 import LogoUMN from "../images/logo_umn.png";
 
 const Navbar = () => {
-    const [sidebar, setSidebar] = useState(false);
+    let auth = window.localStorage.getItem("isAuth")
+    let admin = window.localStorage.getItem("isAdmin")
+    const [sidebar, setSidebar] = useState();
+    const [sidebarData, setSidebarData] = useState(SidebarDataLanding);
 
+    const fetchnavbar = () => {
+        return(
+            admin ? setSidebarData(SidebarDataAdmin) : setSidebarData(SidebarDataUser)
+        )
+    }
+    
     const showSidebar = () => setSidebar(!sidebar);
+
+    useEffect(() => {
+
+        const checknavbar = () => {
+            return (
+                auth ? fetchnavbar() : setSidebarData(SidebarDataLanding)
+            )
+        }
+        
+        checknavbar()
+    }, [])
 
     return (
     <>
@@ -30,7 +52,7 @@ const Navbar = () => {
                             <AiIcons.AiOutlineClose />
                         </Link>
                     </li>
-                    {SidebarData.map((item, index) => {
+                    {sidebarData.map((item, index) => {
                         return (
                             <li key={index} className={item.cName}>
                                 <Link to={item.path}>
@@ -40,6 +62,7 @@ const Navbar = () => {
                             </li>
                         )
                     })}
+                    <li className='nav-logout' onClick={() => {window.localStorage.clear(); window.location.reload()}}><Link to="/"><AiIcons.AiOutlineLogout/><span>Logout</span></Link></li>
                 </ul>
             </nav>
         </IconContext.Provider>

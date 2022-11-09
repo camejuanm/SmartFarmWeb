@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import app from "./firebase_config";
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
-import Dropdown from '../dropdown/DropMenu';
+import Dropdown from './Dropbar';
 import Home from '../navbar/Home';
 
 const auth = getAuth(app);
@@ -119,7 +119,6 @@ export default class SignUp extends Component {
   render() {
     return (
       <>
-        <Home />
         <div className="outer">
           <div className="card">
             <form onSubmit={this.handleSubmit}>
