@@ -40,7 +40,7 @@ function Dashboard() {
     const datafilter = await datas.filter((data) => {
       return data.airTemp != null && data.airHum != null && data.idNode == nodes
     })
-    console.log(datas)
+    console.log(datafilter)
     setAirHum(Math.round(datafilter[datafilter.length -1].airHum,2));
     setAirTemp(Math.round(datafilter[datafilter.length -1].airTemp, 2));
   }

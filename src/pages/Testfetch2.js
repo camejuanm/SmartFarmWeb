@@ -18,6 +18,7 @@ function Testfetch2() {
   const [datedef, setDatedef] = useState(new Date());
   const [datePicker, setDatePicker] = useState();
   const [dropdown, setDropdown] = useState();
+  const [dateEditor, setDateEditor] = useState(false);
   
   //datastate
   const [fDate, setfDate] = useState([]);
@@ -171,10 +172,10 @@ function Testfetch2() {
           }
           },
           x: {
-              type: 'time', // menampilkan grafik perjam
-              time: {
-                displayFormats: {hour: 'DD HH:mm'}
-              },
+              // type: 'time', // menampilkan grafik perjam
+              // time: {
+              //   displayFormats: {hour: 'DD HH:mm'}
+              // },
             grid:{
               display:false
             },
@@ -246,6 +247,64 @@ function Testfetch2() {
       setblastDate(lastdate.setDate(lastdate.getDate() + 1))
       console.log(lastdate)
       setLastDate(blastDate.setDate(lastdate.getDate() - 5));
+      console.log(blastDate)
+      setDateEditor(true)
+    }
+
+    // data harian max dan min
+    const buttonDailyMax = () => {
+      const maxdata = []
+      const mindata = []
+      const daily = []
+
+      const date1 = new Date(blastDate)
+      date1.setDate(date1.getDate() + 1)
+      date1.setHours(0,0,0,0)
+      console.log(date1)
+      const date2 = new Date(blastDate)
+      date2.setHours(0,0,0,0)
+
+      if(dateEditor == true) {
+        var dayzero = 1
+      } else {
+        var dayzero = 0
+      }
+      console.log(dayzero)
+      
+
+      for(let i = 0 ; i < 5; i++) {
+        
+        var datelast = new Date()
+        datelast.setDate(date1.getDate() - dayzero)
+        datelast.setHours(0,0,0,0)
+        
+        var datefirst = new Date()
+        datefirst.setDate(date2.getDate() - dayzero)
+        datefirst.setHours(0,0,0,0)
+        
+        daily.push(datefirst)
+        console.log(datefirst)
+        console.log(datelast)
+        var max = datasets.filter((a) => {
+          var aDate = new Date(a.timestamp);
+          var aNode = a.idNode
+          return aDate <= datelast && aDate >= datefirst  && aNode == nodestate;
+        })
+        console.log(max)
+        const datamax = max.map((e) => {
+          return e.airHum
+        })
+
+        maxdata.push(Math.max(...datamax))
+        mindata.push(Math.min(...datamax))
+        
+        
+        dayzero = dayzero + 1 
+
+      }
+      console.log(maxdata)
+      console.log(mindata)
+      console.log(daily)
     }
 
   return (
@@ -258,15 +317,16 @@ function Testfetch2() {
         <input onChange={onChangeChart} type="date" className='enddate' value={datedef}></input>
         <button className='btn-humid'onClick={airHumClick} >Humidity</button>
         <button className='btn-temp' onClick={airTempClick}>Temp</button>
+        <button className='btn-maxmindaily' onClick={buttonDailyMax}>Daily</button>
         <Dropdown className="d-inline mx-2">
         <Dropdown.Toggle variant="success" id="dropdown-basic">
         {dropdown}
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
-        <Dropdown.Item key='1' onClick={() => {setNodeState(102);setDropdown('1');}}>1
+        <Dropdown.Item key='102' onClick={() => {setNodeState(102);setDropdown('102');}}>102
         </Dropdown.Item>  
-        <Dropdown.Item key='2' onClick={() => {setNodeState(202);setDropdown('2');}}>2
+        <Dropdown.Item key='202' onClick={() => {setNodeState(202);setDropdown('202');}}>202
         </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
