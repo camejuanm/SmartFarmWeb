@@ -1,0 +1,21 @@
+.clock {
+    width: 105px;
+    height: 60px;
+    align-items: center;
+    overflow: hidden;
+}
+
+.clock h5 {
+    border: 3px solid #cdcdfc;
+    width: 105px;
+    margin: 10px auto 0px auto;
+    border-radius: 15px;
+    padding: 10px 0;
+    background-color: cornsilk;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.current {
+    font-family: 'Courier New', 'Courier New', Courier, monospace;
+    color: #9999ff;
+}
