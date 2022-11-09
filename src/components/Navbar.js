@@ -5,19 +5,37 @@ import * as FaIcons from "react-icons/fa";
 import './Navbarstyle.css';
 import {Link} from 'react-router-dom';
 import {SidebarDataAdmin} from './SidebarDataAdmin';
+import { SidebarDataUser } from './SidebarDataUser';
+import { SidebarLanding } from './SidebarLanding';
 import { IconContext} from 'react-icons'
 import { Outlet } from 'react-router-dom';
 import LogoUMN from "../images/logo_umn.jpg";
 
 const Navbar = () => {
-    let role = window.localStorage.getItem("role")
+    let auth = window.localStorage.getItem("isAuth")
+    let admin = window.localStorage.getItem("isAdmin")
     const [sidebar, setSidebar] = useState();
+    const [sidebarData, setSidebarData] = useState(SidebarLanding);
 
+    const fetchnavbar = () => {
+        return(
+            admin ? setSidebarData(SidebarDataAdmin) : setSidebarData(SidebarDataUser)
+        )
+    }
+    
     const showSidebar = () => setSidebar(!sidebar);
 
     useEffect(() => {
 
-    }, [sidebar])
+        const checknavbar = () => {
+            return (
+                auth ? fetchnavbar() : setSidebarData(SidebarLanding)
+            )
+        }
+        
+        checknavbar()
+    }, [])
+
     return (
     <>
         <IconContext.Provider value={{color:'#fff'}}>
@@ -34,7 +52,7 @@ const Navbar = () => {
                             <AiIcons.AiOutlineClose />
                         </Link>
                     </li>
-                    {SidebarDataAdmin.map((item, index) => {
+                    {sidebarData.map((item, index) => {
                         return (
                             <li key={index} className={item.cName}>
                                 <Link to={item.path}>
