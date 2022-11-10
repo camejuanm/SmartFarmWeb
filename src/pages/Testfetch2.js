@@ -155,7 +155,7 @@ function Testfetch2() {
               label: "% of Humidity",
               data: fHum,
               backgroundColor: [
-                "#FF0000",
+                "black",
               ],
               borderWidth: 1,
               showLine: false
@@ -207,11 +207,33 @@ function Testfetch2() {
                 mode: 'horizontal',
                 scaleID: 'y',
                 value: 40,
-                borderColor: 'yellow',
+                borderColor: 'green',
                 borderWidth: 2,
                 label: {
                   enabled: false,
                   content: 'Test label'
+                }
+              },
+              {
+                type: 'label',
+                xValue: 210,
+                yValue: 75,
+                content: ['Maximum Threshold'],
+                color: 'red',
+                font: {
+                  size: 12
+
+                }
+              },
+              {
+                type: 'label',
+                xValue: 210,
+                yValue: 35,
+                content: ['Minimum Threshold'],
+                color: 'green',
+                font: {
+                  size: 12
+
                 }
               }]
           }
@@ -297,9 +319,9 @@ function Testfetch2() {
       date2.setHours(0,0,0,0)
 
       if(dateEditor == true) {
-        var dayzero = 1
+        var dayzero = 5
       } else {
-        var dayzero = 0
+        var dayzero = 3
       }
       console.log(dayzero)
       
@@ -314,30 +336,127 @@ function Testfetch2() {
         datefirst.setDate(date2.getDate() - dayzero)
         datefirst.setHours(0,0,0,0)
         
-        daily.push(datefirst)
+        daily.push(datefirst.toDateString())
         console.log(datefirst)
         console.log(datelast)
         var max = datasets.filter((a) => {
           var aDate = new Date(a.timestamp);
           var aNode = a.idNode
-          return aDate <= datelast && aDate >= datefirst  && aNode == nodestate;
+          return aDate <= datelast && aDate >= datefirst;
         })
-        console.log(max)
+
+
         const datamax = max.map((e) => {
           return e.airHum
         })
-
+        
+        
+        console.log(Math.max(...datamax))
+        const maxdatax = Math.max(...datamax)
+        console.log(maxdatax)
         maxdata.push(Math.max(...datamax))
         mindata.push(Math.min(...datamax))
         
-        
-        dayzero = dayzero + 1 
+        const datey = max.filter((e) => {
+          return e.airHum === Math.max(...datamax)
+        })  
+
+        console.log(datey)
+
+        dayzero = dayzero - 1 
 
       }
       console.log(maxdata)
       console.log(mindata)
       console.log(daily)
+
+
+      setUserData({
+        labels: daily,
+        datasets: [
+          {
+            label: "Max % of Humidity",
+            data: maxdata,
+            backgroundColor: [
+              "purple",
+            ],
+            borderWidth: 1,
+            showLine: false
+          },
+          {
+            label: "Minimum % of Humidity",
+            data: mindata,
+            backgroundColor: [
+              "green",
+            ],
+            borderWidth: 1,
+            showLine: false
+          }
+
+        ]
+      });
+
+      setOptionData({
+        scales: {
+          y: {
+              beginAtZero: true,
+              max:100,
+              ticks : {
+                  callback: function(value, index, ticks) {
+                      return  value + '%';
+              }  
+          }
+          },
+          x: {
+              // type: 'time', // menampilkan grafik perjam
+              // time: {
+              //   displayFormats: {hour: 'DD HH:mm'}
+              // },
+            grid:{
+              display:false
+            },
+              ticks:{
+                  maxTicksLimit: 5.4  
+                  // maxTicksLimit: 6  
+                  // source: 'labels' //pake kalo data udah rapi
+              }
+          }
+        },
+        plugins :{
+          annotation: {
+            annotations: [{
+              type: 'line',
+              mode: 'horizontal',
+              scaleID: 'y',
+              value: 70,
+              borderColor: 'red',
+              borderWidth: 2,
+              label: {
+                enabled: false,
+                content: 'Test label'
+              }
+            },{
+              type: 'line',
+              mode: 'horizontal',
+              scaleID: 'y',
+              value: 40,
+              borderColor: 'yellow',
+              borderWidth: 2,
+              label: {
+                enabled: false,
+                content: 'Test label'
+              }
+            }]
+        }
+        
+        }
+  });
     }
+
+    const onChangeHandler = event => {
+      setNodeState(event.target.value);
+   };
+
 
   return (
     <>
@@ -350,7 +469,8 @@ function Testfetch2() {
         <button className='btn-humid'onClick={airHumClick} >Humidity</button>
         <button className='btn-temp' onClick={airTempClick}>Temp</button>
         <button className='btn-maxmindaily' onClick={buttonDailyMax}>Daily</button>
-        <Dropdown className="d-inline mx-2">
+        <input type="text" name="name" onChange={onChangeHandler} value={nodestate} style={{width: "60px"}}/>
+        {/* <Dropdown className="d-inline mx-2">
         <Dropdown.Toggle variant="success" id="dropdown-basic">
         {dropdown}
         </Dropdown.Toggle>
@@ -361,7 +481,7 @@ function Testfetch2() {
         <Dropdown.Item key='202' onClick={() => {setNodeState(202);setDropdown('202');}}>202
         </Dropdown.Item>
         </Dropdown.Menu>
-      </Dropdown>
+      </Dropdown> */}
       </div> 
     </div>
     </>

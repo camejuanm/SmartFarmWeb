@@ -27,7 +27,7 @@ function Dashboard() {
 
 // FETCH data from API datalogs and show the airHum and airTemp to the Dashboard
   useEffect(() => {
-    const fetchData =  async () => {
+    const fetchData =   async () => {
 
       const fetchcoba = await fetch('https://smart-farm-backend.vercel.app/api/data-logs', {
         method:"GET",
@@ -92,6 +92,22 @@ function Dashboard() {
     e.preventDefault();
     setNodes('203');
   }
+  const handleOnClick5 = (e) => {
+    e.preventDefault(); // prevent the href in <map> to functioning so the page doesn't change
+    setNodes('102');
+  }
+  const handleOnClick6 = (e) => {
+    e.preventDefault();
+    setNodes('103');
+  }
+  const handleOnClick7 = (e) => {
+    e.preventDefault();
+    setNodes('202');
+  }
+  const handleOnClick8 = (e) => {
+    e.preventDefault();
+    setNodes('203');
+  }
   //preview the file
   const handleChange = (event) => {
     const selectedFile = event.target.files[0]
@@ -124,29 +140,53 @@ function Dashboard() {
       <div className='img-all'>
       <div className='project-picker'>
       <div className='image-container'>
-      <img src={window.sessionStorage.getItem("pic")} className='foto' style={{width: "800px"}} useMap="#node-map"/>
+      <img src={pic} className='foto' style={{width: "444px"}} useMap="#node-map"/>
       <map id="node-map" name='node-map'>
         
-        <area shape='circle'
-              coords='95,130,30'
+        <area shape='rect'
+              coords='49,128,227,192'
               href=''
               onClick={handleOnClick1}
                />
-        <area shape='circle'
-              coords='95,330,30'
+        <area shape='rect'
+              coords='49,194,227,264'
               href=''
               onClick={handleOnClick2}
                /> 
-        <area shape='circle'
-              coords='295,130,30'
+        <area shape='rect'
+              coords='49,265,227,331'
               href=''
               onClick={handleOnClick3}
                /> 
-        <area class=""shape='circle'
-              coords='295,330,30'
+        <area class=""
+              shape='rect'
+              coords='49,332,227,297'
               href=''
               onClick={handleOnClick4}
                /> 
+
+        <area shape='rect'
+              coords='256,128,436,192'
+              href=''
+              onClick={handleOnClick1}
+               />
+        <area shape='rect'
+              coords='256,194,436,264'
+              href=''
+              onClick={handleOnClick2}
+               /> 
+        <area shape='rect'
+              coords='256,265,436,331'
+              href=''
+              onClick={handleOnClick3}
+               /> 
+        <area class=""
+              shape='rect'
+              coords='256,332,436,297'
+              href=''
+              onClick={handleOnClick4}
+               /> 
+
       </map>  
       {file && <img src={preview} alt={file.name} style={{width: "800px"}}/>}
       </div>
@@ -159,7 +199,7 @@ function Dashboard() {
         <Dropdown.Menu>
         {projectdata.map((item,index) => {
       return (
-        <Dropdown.Item key={index} onClick={() => {setDropdown(item.name);window.sessionStorage.setItem("pic",item.url)}}>
+        <Dropdown.Item key={index} onClick={() => {setDropdown(item.name);setPic(item.url)}}>
           {item.name}
         </Dropdown.Item>
         )
