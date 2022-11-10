@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import "./Authentication.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Home from '../navbar/Home';
 
 export default class Forgot extends Component {
     
@@ -39,7 +38,6 @@ export default class Forgot extends Component {
     render() {
         return(
             <>
-                <Home />
                 <div className="outer">
                     <div className="card">         
                         <form onSubmit={this.handleSubmit}>

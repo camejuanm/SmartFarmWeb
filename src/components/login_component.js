@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./Authentication.css";
-import Home from '../navbar/Home';
 
 export default class Login extends Component {
   constructor(props) {

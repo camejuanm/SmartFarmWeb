@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import LandingPage from "./components/landing_page";
 import Login from "./components/login_component";
 import SignUp from "./components/signup_component";
-import UserDetails from "./components/userDetails";
+import Profile from "./pages/profile";
 import Reset from "./components/reset";
 import Forgot from "./components/forgot";
 import Navbar from "./components/Navbar";
@@ -28,7 +28,7 @@ function App() {
       <Navbar />
         <Routes>
           <Route element={<PrivateRoutes  />}>
-            <Route path="/userDetails" element={<UserDetails />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path='/dashboard' element={<Dashboard />} />
             <Route path='/visualize' element={<Visualize/>}/>
             <Route path='/testfetch' element={<Testfetch/>}/>

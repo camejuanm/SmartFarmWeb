@@ -4,7 +4,6 @@ import "./Landing.css";
 import FarmImage from "../images/travel1.PNG";
 import Email from "../images/email.jpg";
 import Phone from "../images/phone.jpg";
-import Home from "../navbar/Home";
 
 const LandingPage = () => {
 

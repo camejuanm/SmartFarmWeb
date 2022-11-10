@@ -1,10 +1,15 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import app from "./firebase_config";
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
-import Dropdown from './Dropbar';
-import Home from '../navbar/Home';
+import { isAdmin } from "@firebase/util";
 
 const auth = getAuth(app);
+// const [selectedRole, setSelectedRole] = useState('');
+
+// const options = selectedRole.match((e) => ({
+//   value: isAdmin,
+//   label: user,
+// }));
 
 export default class SignUp extends Component {
   constructor(props) {
@@ -148,7 +153,16 @@ export default class SignUp extends Component {
 
               <div className="mb-3">
                 <label for="role">Role</label>
-                <Dropdown />
+                <select
+                  type="checkbox"
+                  className="form-control"
+                  placeholder="Select Role"
+                  onChange={(e) => this.setState({ role: e.target.value })}
+                >
+                  <option></option>
+                  <option id="admin">Admin</option>
+                  <option id="user">User</option>
+                </select>
               </div>
 
               <div className="mb-3">

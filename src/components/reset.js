@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './Authentication.css';
-import Home from '../navbar/Home';
   
 export default class Reset extends Component {
     constructor(props) {
@@ -30,7 +29,6 @@ export default class Reset extends Component {
             console.log(this.state);
     
             let input = {};
-            input["role"] = "";
             input["email"] = "";
             input["password"] = "";
             input["confirm_password"] = "";
@@ -47,15 +45,6 @@ export default class Reset extends Component {
         let input = this.state.input;
         let errors = {};
         let isValid = true;
-
-        if(input["role"] != "admin" && input["role"] != "Admin") {
-            isValid = false;
-            errors["role"] = "Role must be admin";
-            if(!input["role"]) {
-                isValid = false;
-                errors["role"] = "Role can not be blank";
-            }
-        }
     
         if (!input["email"]) {
             isValid = false;
@@ -103,7 +92,6 @@ export default class Reset extends Component {
     render() {
         return (
             <>
-                <Home />
                 <div className="outer">
                     <div className="card">
                         <h1>Reset Password</h1>
@@ -111,14 +99,9 @@ export default class Reset extends Component {
 
                             <div class="form-group">
                                 <label for="role">Role:</label>
-                                <input
-                                type="text" 
-                                name="role" 
-                                value={this.state.input.role}
-                                onChange={this.handleChange}
-                                class="form-control" 
-                                placeholder="Type role" 
-                                id="role" />
+                                <p class="form-control" id="role">
+                                    Admin
+                                </p>
                     
                                 <div className="text-danger">{this.state.errors.role}</div>
                             </div>

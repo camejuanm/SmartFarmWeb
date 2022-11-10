@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import "./Authentication.css";
+import "./Profile.css";
 import Time from '../time/time';
 
-export default class UserDetails extends Component {
+export default class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
