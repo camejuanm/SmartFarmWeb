@@ -16,7 +16,7 @@ export default class Login extends Component {
   handleSubmit(e) {
     e.preventDefault();
     const { email, password } = this.state;
-    console.log(email, password);
+    // console.log(email, password);
     fetch("https://smart-farm-backend.vercel.app/api/user/signin", {
       method: "POST",
       crossDomain: true,

@@ -114,6 +114,12 @@ function Testfetch2() {
     console.log(datedef)
   }, [datedef])
   // Function to set the Chart Value with some parameter
+
+
+
+
+
+
   const chartData = () => {
 
     const datex = datasets.map(function(elem) {
@@ -128,7 +134,7 @@ function Testfetch2() {
     console.log(new Date(blastDate))
     console.log(new Date(lastDate))
     console.log(filteredData)
-    
+   
       
 
       const fDate = filteredData.map(function(elem) {
@@ -145,18 +151,28 @@ function Testfetch2() {
           })
       
       // console.log(filteredData)
+      const backgroundcolor = []
+      for (let i = 0; i < fHum.length; i++ ) {
+        if(fHum[i] >= 55) {backgroundcolor.push('red')}
+        else if (fHum[i] < 70 && fHum[i] > 45) {backgroundcolor.push('black')}
+        else {backgroundcolor.push('green')}
+      }
 
       if (chartstatus == 'airhum') {
-        
+
+        for (let i = 0; i < fHum.length; i++ ) {
+          if(fHum[i] >= 55) {backgroundcolor.push('red')}
+          else if (fHum[i] < 70 && fHum[i] > 45) {backgroundcolor.push('black')}
+          else {backgroundcolor.push('green')}
+        }
+
         setUserData({
           labels: fDate,
           datasets: [
             {
               label: "% of Humidity",
               data: fHum,
-              backgroundColor: [
-                "black",
-              ],
+              backgroundColor: backgroundcolor,
               borderWidth: 1,
               showLine: false
             }
@@ -310,12 +326,15 @@ function Testfetch2() {
       const maxdata = []
       const mindata = []
       const daily = []
+      const timestamps= []
 
       const date1 = new Date(blastDate)
       date1.setDate(date1.getDate() + 1)
       date1.setHours(0,0,0,0)
       console.log(date1)
       const date2 = new Date(blastDate)
+      const dateadd = new Date(blastDate)
+      console.log(dateadd)
       date2.setHours(0,0,0,0)
 
       if(dateEditor == true) {
@@ -333,10 +352,13 @@ function Testfetch2() {
         datelast.setHours(0,0,0,0)
         
         var datefirst = new Date()
+        var dateadds = new Date()
+
         datefirst.setDate(date2.getDate() - dayzero)
+        dateadds.setDate(dateadd.getDate() - dayzero)
         datefirst.setHours(0,0,0,0)
         
-        daily.push(datefirst.toDateString())
+        daily.push(dateadds.toDateString())
         console.log(datefirst)
         console.log(datelast)
         var max = datasets.filter((a) => {
@@ -354,6 +376,8 @@ function Testfetch2() {
         console.log(Math.max(...datamax))
         const maxdatax = Math.max(...datamax)
         console.log(maxdatax)
+        console.log(max)
+
         maxdata.push(Math.max(...datamax))
         mindata.push(Math.min(...datamax))
         
@@ -362,13 +386,24 @@ function Testfetch2() {
         })  
 
         console.log(datey)
-
+        timestamps.push(datey.map((e) => {
+          return new Date(e.timestamp).getHours()
+        }))
         dayzero = dayzero - 1 
 
       }
       console.log(maxdata)
       console.log(mindata)
       console.log(daily)
+      console.log(timestamps)
+      
+      const titleTooltip = () => {
+        let sum = [''];
+        timestamps.forEach(month => {
+          sum.push(month);
+        });    
+        return sum;
+      }
 
 
       setUserData({
@@ -423,6 +458,14 @@ function Testfetch2() {
           }
         },
         plugins :{
+    //       tooltip: {
+    //         callbacks: {
+    //           label: function (tooltipItems, data) {
+    //             var i = tooltipItems.index;
+    //             return data.labels[i] + ": " + data.datasets[0].data[i] + " %";
+    //         }
+    //   }
+    // },
           annotation: {
             annotations: [{
               type: 'line',
