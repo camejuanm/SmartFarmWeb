@@ -6,3 +6,5 @@ export const projectdata = [
     url: 'https://drive.google.com/uc?export=view&id=1M-W-0a_OXLutzG5Io76AzcKSGMbBKXsw'
     }
 ]
+
+export default projectdata

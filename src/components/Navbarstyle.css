@@ -66,8 +66,8 @@
   }
   
   .navbar-toggle {
-    background-color: #060b26;
-    width: 100%;
+    background-color: #a60b26;
+    width: 45%;
     height: 80px;
     display: flex;
     justify-content: flex-start;
@@ -78,7 +78,12 @@
     margin-left: 16px;
   }
   .sidebar-position {
-    padding-top: 350px;
+    padding-top: 300px;
     align-items: center;
     text-align: center;
   }
+
+.inner-border {
+  padding: 10px 20px 10px 20px;
+  background-color: linear-gradient(to right, #dcdcef 0%, #3030f0 100%);
+}

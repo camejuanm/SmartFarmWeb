@@ -80,9 +80,22 @@ html,
 }
 
 .outer {
-  padding: 50px 260px 50px 260px;
+  padding: 25px 260px;
   align-items: center;
+  height: 100%;
   background: linear-gradient(to left, #e0e0ef 0%, #1b1bf2 100%);
+}
+.outer-login {
+  padding: 140px 10px;
+}
+.outer-register {
+  padding: 60px 10px;
+}
+.outer-reset {
+  padding: 105px 10px;
+}
+.outer-forgot {
+  padding: 190px 10px;
 }
 .app {
   display: flex;

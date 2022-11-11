@@ -4,8 +4,10 @@ import '../components/Navbarstyle.css';
 
 function Gateway() {
   return (
-    <div className='gateway'>
-      <h1 className="sidebar-position">Gateway</h1>
+    <div className="inner-border">
+      <div className='gateway'>
+        <h1 className="sidebar-position">Gateway</h1>
+      </div>
     </div>
   );
 }

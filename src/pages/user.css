@@ -3,7 +3,11 @@
     box-shadow: 0 0 5px 10px rgba(0, 0, 0, 0.2), 0 0 8px 12px rgba(0, 0, 200, 0.8);
 }
 .outer-border {
-    padding: 20px 15px 5px 260px;
+    padding: 25px 260px;
+    background: linear-gradient(to left, #e0e0ef 0%, #1b1bf2 100%);
+}
+.outer-user {
+    padding: 150px 10px;
 }
 .card {
     align-items: center;
