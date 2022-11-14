@@ -326,7 +326,8 @@ function Testfetch2() {
       const maxdata = []
       const mindata = []
       const daily = []
-      const timestamps= []
+      const maxtime= []
+      const mintime = []
 
       const date1 = new Date(blastDate)
       date1.setDate(date1.getDate() + 1)
@@ -384,26 +385,35 @@ function Testfetch2() {
         const datey = max.filter((e) => {
           return e.airHum === Math.max(...datamax)
         })  
+        const datem = max.filter((e) => {
+          return e.airHum === Math.min(...datamax)
+        })  
 
         console.log(datey)
-        timestamps.push(datey.map((e) => {
+        maxtime.push(datey.map((e) => {
           return new Date(e.timestamp).getHours()
         }))
+
+        mintime.push(datey.map((e) => {
+          return new Date(e.timestamp).getHours()
+        }))
+
         dayzero = dayzero - 1 
 
       }
       console.log(maxdata)
       console.log(mindata)
       console.log(daily)
-      console.log(timestamps)
+      console.log(maxtime)
+      console.log(mintime)
       
-      const titleTooltip = () => {
-        let sum = [''];
-        timestamps.forEach(month => {
-          sum.push(month);
-        });    
-        return sum;
-      }
+      // const titleTooltip = () => {
+      //   let sum = [''];
+      //   timestamps.forEach(month => {
+      //     sum.push(month);
+      //   });    
+      //   return sum;
+      // }
 
 
       setUserData({
@@ -418,6 +428,15 @@ function Testfetch2() {
             borderWidth: 1,
             showLine: false
           },
+          // {
+          //   label: "Time",
+          //   data: timestamps,
+          //   backgroundColor: [
+          //     "purple",
+          //   ],
+          //   borderWidth: 1,
+          //   showLine: false
+          // },
           {
             label: "Minimum % of Humidity",
             data: mindata,
@@ -427,7 +446,6 @@ function Testfetch2() {
             borderWidth: 1,
             showLine: false
           }
-
         ]
       });
 
@@ -458,14 +476,25 @@ function Testfetch2() {
           }
         },
         plugins :{
-    //       tooltip: {
-    //         callbacks: {
-    //           label: function (tooltipItems, data) {
-    //             var i = tooltipItems.index;
-    //             return data.labels[i] + ": " + data.datasets[0].data[i] + " %";
-    //         }
-    //   }
-    // },
+          tooltip: {
+
+            callbacks: {
+              title: ((tooltipItem) => {
+
+                  // menentukan isi tooltip berdasarkan dari index datasets
+                  if (tooltipItem[0].datasetIndex === 0) { 
+                    return`${tooltipItem[0].label} ${maxtime[tooltipItem[0].dataIndex]}.00`; //mereturn label dan juga waktu jam dari max value
+                  }
+                  if (tooltipItem[0].datasetIndex === 1) {
+                    return`${tooltipItem[0].label} ${mintime[tooltipItem[0].dataIndex]}.00`;
+                  }
+                  
+                
+                
+               
+              })
+      }
+    },
           annotation: {
             annotations: [{
               type: 'line',
