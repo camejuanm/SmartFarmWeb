@@ -1,5 +1,5 @@
 body {
-    max-height: 5000px;
+    max-height: 3000px;
     display: none;
 }
 .landing {
@@ -13,8 +13,10 @@ body {
     right: 2%;
 }
 .farm_image {
-    width: 40%;
-    height: 30%;
+    width: 45%;
+    height: 35%;
+    opacity: 0.9;
+    display: inline-flex;
 }
 .border {
     background-color: white;
@@ -22,8 +24,8 @@ body {
     width: 100%;
 }
 .border_image {
-    padding: 5px;
     background-color: whitesmoke;
+    padding: 8px;
 }
 .form-authentication {
     background-color: rgba(32, 192, 250, 0.9);

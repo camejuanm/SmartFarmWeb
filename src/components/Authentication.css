@@ -91,6 +91,9 @@ html,
 .outer-register {
   padding: 60px 10px;
 }
+.outer-e-register {
+  padding: 100px 10px;
+}
 .outer-reset {
   padding: 105px 10px;
 }

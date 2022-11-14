@@ -1,10 +1,10 @@
-import React, {Component, useState, useEffect} from 'react';
-import { Link } from "react-router-dom";
+import React from 'react';
 import "./Landing.css";
 import FarmImage from "../images/travel1.PNG";
 import Email from "../images/email.jpg";
 import Phone from "../images/phone.jpg";
 
+// crypto-browserify
 const LandingPage = () => {
 
     return (

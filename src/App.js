@@ -18,6 +18,7 @@ import Visualize from "./pages/Visualize"
 import Testfetch from './pages/Testfetch';
 import Testfetch2 from './pages/Testfetch2';
 import Page1 from './pages/page1';
+import Email from './email/email';
 
 import PrivateRoutes from './utils/PrivateRoutes';
 import PrivateRoutesAdmin from './utils/PrivateRoutesAdmin';
@@ -46,6 +47,7 @@ function App() {
           <Route path='/sign-in' element={<Login />} />
           <Route path="/forgot" element={<Forgot />} />
           <Route path="/reset" element={<Reset />} />
+          <Route path="/email" element={<Email />} />
         </Routes>
       </Router>
     </>
