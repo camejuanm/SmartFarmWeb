@@ -186,8 +186,13 @@ function Testfetch3() {
             grid:{
                 tickColor: 'black',
                 borderColor: 'black',
-                tickLength: 15
-              }
+                tickLength: 10
+              },
+              ticks:{
+                // maxTicksLimit: 5.4  
+                // maxTicksLimit: 6,
+                // source: 'labels' //pake kalo data udah rapi
+            }
           },
           
           },

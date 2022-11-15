@@ -323,12 +323,15 @@ function Testfetch2() {
 
     // data harian max dan min
     const buttonDailyMax = () => {
+
+      // data yang nantinya akan dipakai
       const maxdata = []
       const mindata = []
       const daily = []
       const maxtime= []
       const mintime = []
 
+      // data date yang diambil dari blastDate
       const date1 = new Date(blastDate)
       date1.setDate(date1.getDate() + 1)
       date1.setHours(0,0,0,0)
@@ -338,6 +341,7 @@ function Testfetch2() {
       console.log(dateadd)
       date2.setHours(0,0,0,0)
 
+      // karena data blastDate ditambahkan satu harus ada konfigurasi
       if(dateEditor == true) {
         var dayzero = 5
       } else {
@@ -346,6 +350,7 @@ function Testfetch2() {
       console.log(dayzero)
       
 
+      // looping untuk melakukan push pada data2 yang diperlukan
       for(let i = 0 ; i < 5; i++) {
         
         var datelast = new Date()
@@ -362,41 +367,103 @@ function Testfetch2() {
         daily.push(dateadds.toDateString())
         console.log(datefirst)
         console.log(datelast)
-        var max = datasets.filter((a) => {
+
+
+        var maxmin = datasets.filter((a) => {
           var aDate = new Date(a.timestamp);
           var aNode = a.idNode
           return aDate <= datelast && aDate >= datefirst;
         })
 
+        if (chartstatus === 'airhum') {
+          const dataairHum = maxmin.map((e) => {
+            return e.airHum
+          })
 
-        const datamax = max.map((e) => {
-          return e.airHum
+          const maxdatax = Math.max(...dataairHum)
+
+          maxdata.push(Math.max(...dataairHum))
+          mindata.push(Math.min(...dataairHum))
+
+          const datey = maxmin.filter((e) => {
+            return e.airHum === Math.max(...dataairHum)
+          })  
+
+          const datem = maxmin.filter((e) => {
+            return e.airHum === Math.min(...dataairHum)
+          })  
+
+          maxtime.push(datey.slice(0, 1).map((e) => {
+            return new Date(e.timestamp).getHours()
+          }))
+  
+          mintime.push(datem.slice(0, 1).map((e) => {
+            return new Date(e.timestamp).getHours()
+          }))
+
+        }
+        else if (chartstatus === 'airtemp') {
+          const dataairTemp = maxmin.map((e) => {
+            return e.airTemp
+          })
+
+          const maxdatax = Math.max(...dataairTemp)
+
+          maxdata.push(Math.max(...dataairTemp))
+          mindata.push(Math.min(...dataairTemp))
+
+          const datey = maxmin.filter((e) => {
+            return e.airTemp === Math.max(...dataairTemp)
+          })  
+
+          const datem = maxmin.filter((e) => {
+            return e.airTemp === Math.min(...dataairTemp)
+          })  
+
+          maxtime.push(datey.slice(0, 1).map((e) => {
+            return new Date(e.timestamp).getHours()
+          }))
+  
+          mintime.push(datem.slice(0, 1).map((e) => {
+            return new Date(e.timestamp).getHours()
+          }))
+          
+        }
+        
+        
+
+        
+        // const dataairHum = maxmin.map((e) => {
+        //   return e.airHum
+        // })
+        
+        const dataairTemp = maxmin.map((e) => {
+          return e.airTemp
         })
-        
-        
-        console.log(Math.max(...datamax))
-        const maxdatax = Math.max(...datamax)
-        console.log(maxdatax)
-        console.log(max)
 
-        maxdata.push(Math.max(...datamax))
-        mindata.push(Math.min(...datamax))
+       
+        // const maxdatax = Math.max(...dataairHum)
+        // // console.log(maxdatax)
+        // // console.log(max)
+
+        // maxdata.push(Math.max(...dataairHum))
+        // mindata.push(Math.min(...dataairHum))
         
-        const datey = max.filter((e) => {
-          return e.airHum === Math.max(...datamax)
-        })  
-        const datem = max.filter((e) => {
-          return e.airHum === Math.min(...datamax)
-        })  
+        // const datey = maxmin.filter((e) => {
+        //   return e.airHum === Math.max(...dataairHum)
+        // })  
+        // const datem = maxmin.filter((e) => {
+        //   return e.airHum === Math.min(...dataairHum)
+        // })  
 
-        console.log(datey)
-        maxtime.push(datey.map((e) => {
-          return new Date(e.timestamp).getHours()
-        }))
+        // console.log(datey)
+        // maxtime.push(datey.map((e) => {
+        //   return new Date(e.timestamp).getHours()
+        // }))
 
-        mintime.push(datey.map((e) => {
-          return new Date(e.timestamp).getHours()
-        }))
+        // mintime.push(datey.map((e) => {
+        //   return new Date(e.timestamp).getHours()
+        // }))
 
         dayzero = dayzero - 1 
 
@@ -481,7 +548,7 @@ function Testfetch2() {
             callbacks: {
               title: ((tooltipItem) => {
 
-                  // menentukan isi tooltip berdasarkan dari index datasets
+                  // menentukan isi tooltip berdasarkan dari index datasets (problem : array lebih dari satu)
                   if (tooltipItem[0].datasetIndex === 0) { 
                     return`${tooltipItem[0].label} ${maxtime[tooltipItem[0].dataIndex]}.00`; //mereturn label dan juga waktu jam dari max value
                   }
