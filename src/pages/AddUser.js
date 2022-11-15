@@ -16,26 +16,30 @@ export default class AddUser extends Component {
     e.preventDefault();
     const { role, email, password } = this.state;
     console.log(role, email, password);
-    fetch("https://localhost:5000/add-user", {
-      method: "POST",
-      crossDomain: true,
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify({
-        role,
-        email,
-        password,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data, "userAdded");
-        console.log(data.statusCode);
-        window.location.href="/dashboard";
-      });
+    if(email !== 'undefined' && password.length >= 6) {
+      fetch("http://localhost:5000/userData", {
+        method: "POST",
+        crossDomain: true,
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+          role,
+          email,
+          password,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data, "userAdded");
+          alert("User added successful");
+          window.location.href="./dashboard";
+        });
+    } else {
+      alert('Please fill in email or password');
+    }
   }
   render() {
     return (
@@ -60,10 +64,11 @@ export default class AddUser extends Component {
                   <input 
                     type="email" 
                     name="email"
-                    onChange={(e) => this.setState({email: e.target.value})}
                     className="form-control" 
-                    placeholder="Please Enter your Email" 
-                    id="email" 
+                    placeholder="Please Enter your Email"
+                    onChange={(e) => this.setState({email: e.target.value})} 
+                    id="email"
+                    required 
                   />
                 </div>
                         
@@ -72,10 +77,12 @@ export default class AddUser extends Component {
                   <input
                     type="password" 
                     name="password"
-                    onChange={(e) => this.setState({password: e.target.value})}
-                    className="form-control" 
+                    className="form-control"
+                    // minLength = {6}
                     placeholder="Please Enter your Password" 
-                    id="password" 
+                    id="password"
+                    onChange={(e) => this.setState({password: e.target.value})}
+                    required 
                   />
                 </div>
                 <input type="submit" value="Add User" class="btn btn-success" />

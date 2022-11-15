@@ -4,7 +4,7 @@
 }
 .outer-border {
     padding: 25px 260px;
-    background: linear-gradient(to left, #e0e0ef 0%, #1b1bf2 100%);
+    background: #f0f0f0;
 }
 .outer-user {
     padding: 150px 10px;
@@ -12,5 +12,5 @@
 .card {
     align-items: center;
     padding: 10px 20px 10px 20px;
-    background-color: linear-gradient(to right, #dcdcef 0%, #3030f0 100%);
+    display: column;
 }

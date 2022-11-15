@@ -130,6 +130,7 @@ export default class SignUp extends Component {
                   <label for="name">Name</label>
                   <input
                     type="text"
+                    id="name"
                     className="form-control"
                     placeholder="Enter name"
                     onChange={(e) => this.setState({ name: e.target.value })}
@@ -141,6 +142,7 @@ export default class SignUp extends Component {
                   <label for="email">Email address</label>
                   <input
                     type="email"
+                    id="email"
                     className="form-control"
                     placeholder="Enter email"
                     onChange={(e) => this.setState({ email: e.target.value })}
@@ -216,9 +218,9 @@ export default class SignUp extends Component {
                   <label for="password">Password</label>
                   <input
                     type="password"
+                    id="password"
                     className="form-control"
                     placeholder="Enter password"
-                    minLength = {6}
                     onChange={(e) => this.setState({ password: e.target.value })}
                     required
                   />
