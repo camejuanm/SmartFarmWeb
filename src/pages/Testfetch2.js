@@ -13,10 +13,11 @@ function Testfetch2() {
   const [datasets, setDatasets] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [chartstatus, setChartStatus] = useState('airhum');
+  const [charttype, setChartType] = useState('normal');
   const [nodestate, setNodeState] = useState(102);
   const [lastDate, setLastDate] = useState();
   const [blastDate, setblastDate] = useState(null);
-  const [datedef, setDatedef] = useState(new Date());
+  const [datedef, setDatedef] = useState();
   const [datePicker, setDatePicker] = useState();
   const [dropdown, setDropdown] = useState();
   const [dateEditor, setDateEditor] = useState(false);
@@ -98,16 +99,21 @@ function Testfetch2() {
       console.log(lastdate)
       setblastDate(lastdate)
       setLastDate(blastdate.setDate(blastdate.getDate() - 5))
-      console.log(lastdate)
+
+
+      const datenow = lastdate.getFullYear() + "-" + (lastdate.getMonth()+1) + "-" + lastdate.getDate();
+
+      setDatedef(datenow);
+      console.log(datenow);
+      console.log(lastdate);
   }, [datasets])
 
 
   // Render the ChartData function when nodestate, chartstatus, lastDate, blastDate is change
   useEffect(() => {
       chartData();
-      console.log(lastDate)
   // empty dependency array means this effect will only run once (like componentDidMount in classes)
-  }, [nodestate, chartstatus, lastDate, blastDate]);
+  }, [nodestate, chartstatus, lastDate, blastDate, charttype]);
 
 
   useEffect(() => {
@@ -149,153 +155,162 @@ function Testfetch2() {
       const fTemp = filteredData.map(function(elem) {
           return elem.airTemp
           })
+
       
-      // console.log(filteredData)
-      const backgroundcolor = []
-      for (let i = 0; i < fHum.length; i++ ) {
-        if(fHum[i] >= 55) {backgroundcolor.push('red')}
-        else if (fHum[i] < 70 && fHum[i] > 45) {backgroundcolor.push('black')}
-        else {backgroundcolor.push('green')}
+      
+      if (charttype === 'normal') {
+// console.log(filteredData)
+const backgroundcolor = []
+for (let i = 0; i < fHum.length; i++ ) {
+  if(fHum[i] >= 55) {backgroundcolor.push('red')}
+  else if (fHum[i] < 70 && fHum[i] > 45) {backgroundcolor.push('black')}
+  else {backgroundcolor.push('green')}
+}
+
+if (chartstatus == 'airhum') {
+
+  for (let i = 0; i < fHum.length; i++ ) {
+    if(fHum[i] >= 55) {backgroundcolor.push('red')}
+    else if (fHum[i] < 70 && fHum[i] > 45) {backgroundcolor.push('black')}
+    else {backgroundcolor.push('green')}
+  }
+
+  setUserData({
+    labels: fDate,
+    datasets: [
+      {
+        label: "% of Humidity",
+        data: fHum,
+        backgroundColor: backgroundcolor,
+        borderWidth: 1,
+        showLine: false
       }
+    ]
+  });
 
-      if (chartstatus == 'airhum') {
+  setOptionData({
+    scales: {
+      y: {
+          beginAtZero: true,
+          max:100,
+          ticks : {
+              callback: function(value, index, ticks) {
+                  return  value + '%';
+          }  
+      }
+      },
+      x: {
+          // type: 'time', // menampilkan grafik perjam
+          // time: {
+          //   displayFormats: {hour: 'DD HH:mm'}
+          // },
+        grid:{
+          display:false
+        },
+          ticks:{
+              maxTicksLimit: 5.4  
+              // maxTicksLimit: 6  
+              // source: 'labels' //pake kalo data udah rapi
+          }
+      }
+    },
+    plugins :{
+      annotation: {
+        annotations: [{
+          type: 'line',
+          mode: 'horizontal',
+          scaleID: 'y',
+          value: 70,
+          borderColor: 'red',
+          borderWidth: 2,
+          label: {
+            enabled: false,
+            content: 'Test label'
+          }
+        },{
+          type: 'line',
+          mode: 'horizontal',
+          scaleID: 'y',
+          value: 40,
+          borderColor: 'green',
+          borderWidth: 2,
+          label: {
+            enabled: false,
+            content: 'Test label'
+          }
+        },
+        {
+          type: 'label',
+          xValue: 210,
+          yValue: 75,
+          content: ['Maximum Threshold'],
+          color: 'red',
+          font: {
+            size: 12
 
-        for (let i = 0; i < fHum.length; i++ ) {
-          if(fHum[i] >= 55) {backgroundcolor.push('red')}
-          else if (fHum[i] < 70 && fHum[i] > 45) {backgroundcolor.push('black')}
-          else {backgroundcolor.push('green')}
+          }
+        },
+        {
+          type: 'label',
+          xValue: 210,
+          yValue: 35,
+          content: ['Minimum Threshold'],
+          color: 'green',
+          font: {
+            size: 12
+
+          }
+        }]
+    }
+    
+    }
+});
+
+}
+
+else if (chartstatus == 'airtemp') {
+  setUserData({
+    labels: fDate,
+    datasets: [
+      {
+        label: "°C of Temperature",
+        data: fTemp,
+        backgroundColor: [
+          "#FF0000",
+        ],
+        borderWidth: 1,
+        showLine: false
+      }
+    ]
+  });
+
+  setOptionData({
+    scales: {
+    y: {
+        beginAtZero: true,
+        max:100,
+        ticks : {
+            callback: function(value, index, ticks) {
+                return  value + '°C';
+        }  
+    }
+    },
+    x: {
+      grid:{
+        display:false
+      },
+        ticks:{
+            maxTicksLimit: 5.1
         }
-
-        setUserData({
-          labels: fDate,
-          datasets: [
-            {
-              label: "% of Humidity",
-              data: fHum,
-              backgroundColor: backgroundcolor,
-              borderWidth: 1,
-              showLine: false
-            }
-          ]
-        });
-
-        setOptionData({
-          scales: {
-            y: {
-                beginAtZero: true,
-                max:100,
-                ticks : {
-                    callback: function(value, index, ticks) {
-                        return  value + '%';
-                }  
-            }
-            },
-            x: {
-                // type: 'time', // menampilkan grafik perjam
-                // time: {
-                //   displayFormats: {hour: 'DD HH:mm'}
-                // },
-              grid:{
-                display:false
-              },
-                ticks:{
-                    maxTicksLimit: 5.4  
-                    // maxTicksLimit: 6  
-                    // source: 'labels' //pake kalo data udah rapi
-                }
-            }
-          },
-          plugins :{
-            annotation: {
-              annotations: [{
-                type: 'line',
-                mode: 'horizontal',
-                scaleID: 'y',
-                value: 70,
-                borderColor: 'red',
-                borderWidth: 2,
-                label: {
-                  enabled: false,
-                  content: 'Test label'
-                }
-              },{
-                type: 'line',
-                mode: 'horizontal',
-                scaleID: 'y',
-                value: 40,
-                borderColor: 'green',
-                borderWidth: 2,
-                label: {
-                  enabled: false,
-                  content: 'Test label'
-                }
-              },
-              {
-                type: 'label',
-                xValue: 210,
-                yValue: 75,
-                content: ['Maximum Threshold'],
-                color: 'red',
-                font: {
-                  size: 12
-
-                }
-              },
-              {
-                type: 'label',
-                xValue: 210,
-                yValue: 35,
-                content: ['Minimum Threshold'],
-                color: 'green',
-                font: {
-                  size: 12
-
-                }
-              }]
-          }
-          
-          }
-    });
-
+    }
+}});
+}
       }
+    else if (charttype === 'daily') {
+      buttonDailyMax()
+    }
       
-      else if (chartstatus == 'airtemp') {
-        setUserData({
-          labels: fDate,
-          datasets: [
-            {
-              label: "°C of Temperature",
-              data: fTemp,
-              backgroundColor: [
-                "#FF0000",
-              ],
-              borderWidth: 1,
-              showLine: false
-            }
-          ]
-        });
-
-        setOptionData({
-          scales: {
-          y: {
-              beginAtZero: true,
-              max:100,
-              ticks : {
-                  callback: function(value, index, ticks) {
-                      return  value + '°C';
-              }  
-          }
-          },
-          x: {
-            grid:{
-              display:false
-            },
-              ticks:{
-                  maxTicksLimit: 5.1
-              }
-          }
-      }});
-      }
+      
   }
 
     //Handle click to change the chartstatus
@@ -579,13 +594,14 @@ function Testfetch2() {
               mode: 'horizontal',
               scaleID: 'y',
               value: 40,
-              borderColor: 'yellow',
+              borderColor: 'green',
               borderWidth: 2,
               label: {
                 enabled: false,
                 content: 'Test label'
               }
-            }]
+            }
+          ]
         }
         
         }
@@ -596,6 +612,15 @@ function Testfetch2() {
       setNodeState(event.target.value);
    };
 
+   const charttypebutton = () => {
+    if (charttype === 'normal') {
+        setChartType('daily');
+    }
+    else if (charttype === 'daily') {
+      setChartType('normal')
+    }
+    
+   }
 
   return (
     <>
@@ -607,7 +632,7 @@ function Testfetch2() {
         <input onChange={onChangeChart} type="date" className='enddate' value={datedef}></input>
         <button className='btn-humid'onClick={airHumClick} >Humidity</button>
         <button className='btn-temp' onClick={airTempClick}>Temp</button>
-        <button className='btn-maxmindaily' onClick={buttonDailyMax}>Daily</button>
+        <button className='btn-maxmindaily' onClick={charttypebutton}>Daily</button>
         <input type="text" name="name" onChange={onChangeHandler} value={nodestate} style={{width: "60px"}}/>
         {/* <Dropdown className="d-inline mx-2">
         <Dropdown.Toggle variant="success" id="dropdown-basic">
