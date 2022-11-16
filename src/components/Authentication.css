@@ -94,6 +94,9 @@ html,
 .outer-e-register {
   padding: 100px 10px;
 }
+.outer-email {
+  padding: 125px 10px;
+}
 .outer-reset {
   padding: 105px 10px;
 }

@@ -37,8 +37,9 @@ export default class AddUser extends Component {
           alert("User added successful");
           window.location.href="./dashboard";
         });
-    } else {
-      alert('Please fill in email or password');
+    }
+    else {
+      alert('Password must be at least 6 characters');
     }
   }
   render() {
@@ -78,7 +79,6 @@ export default class AddUser extends Component {
                     type="password" 
                     name="password"
                     className="form-control"
-                    // minLength = {6}
                     placeholder="Please Enter your Password" 
                     id="password"
                     onChange={(e) => this.setState({password: e.target.value})}
@@ -94,16 +94,3 @@ export default class AddUser extends Component {
     );
   }
 }
-
-// import React from 'react'
-// import Navbar from '../components/Navbar';
-
-// function AddUser() {
-//   return (
-//     <div className='adduser'>
-//     <h1>AddUser</h1>
-//     </div>
-//   );
-// }
-
-// export default AddUser

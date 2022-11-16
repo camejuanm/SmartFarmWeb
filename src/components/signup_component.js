@@ -1,7 +1,9 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useRef } from "react";
 import app from "./firebase_config";
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { isAdmin } from "@firebase/util";
+import styled from 'styled-components';
+import emailjs from '@emailjs/browser';
 import "./Authentication.css";
 
 const auth = getAuth(app);
@@ -9,6 +11,7 @@ const auth = getAuth(app);
 export default class SignUp extends Component {
   constructor(props) {
     super(props);
+    this.form = React.createRef();
     this.state = {
       name: "",
       email: "",
@@ -85,33 +88,54 @@ export default class SignUp extends Component {
     });
   }
 
+  sendEmail(e) {
+    e.preventDefault();
+    const form = this.form;
+
+    emailjs.sendForm('service_22rl9vo', 'template_tqt3buo', form.current, '5qCkTRANrxpqkVp3X')
+    .then((result) => {
+        console.log(result.text);
+        console.log("message sent");
+        alert("message has sent to email");
+    }, (error) => {
+        console.log(error.text);
+    });
+  };
+
   handleSubmit(e) {
     e.preventDefault();
     if(this.state.verified) {
       const { name, email, role, mobile, password } = this.state;
       console.log(name, email, role, mobile, password);
-      fetch("http://localhost:5000/register", {
-        method: "POST",
-        crossDomain: true,
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          role,
-          mobile,
-          password,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data, "userRegister");
-          alert("User has been registered");
+      if(name !== "undefined" && email !== "undefined" && password.length >= 6) {
+        fetch("http://localhost:5000/register", {
+          method: "POST",
+          crossDomain: true,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            role,
+            mobile,
+            password,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data, "userRegister");
+            alert("User has been registered");
+            this.sendEmail();
+            window.location.href="./sign-in";
+          });
+          this.sendEmail();
           window.location.href="./sign-in";
-        });
+      } else {
+        alert("Please complete filling in the form");
+      }  
     } else {
       alert("Please Verify Mobile");
     }
@@ -131,6 +155,7 @@ export default class SignUp extends Component {
                   <input
                     type="text"
                     id="name"
+                    name="user_name"
                     className="form-control"
                     placeholder="Enter name"
                     onChange={(e) => this.setState({ name: e.target.value })}
@@ -143,6 +168,7 @@ export default class SignUp extends Component {
                   <input
                     type="email"
                     id="email"
+                    name="user_email"
                     className="form-control"
                     placeholder="Enter email"
                     onChange={(e) => this.setState({ email: e.target.value })}
@@ -227,7 +253,7 @@ export default class SignUp extends Component {
                 </div>
 
                 <div className="d-grid">
-                  <button 
+                  <button
                     type="submit" 
                     className="btn btn-success" 
                   >

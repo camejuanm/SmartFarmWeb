@@ -10,6 +10,7 @@ import Profile from "./pages/profile";
 import Reset from "./components/reset";
 import Forgot from "./components/forgot";
 import Navbar from "./components/Navbar";
+import Contact from "./components/Contact";
 import Dashboard from "./pages/Dashboard"
 import Gateway from "./pages/Gateway"
 import Token from "./pages/Token"
@@ -48,6 +49,7 @@ function App() {
           <Route path="/forgot" element={<Forgot />} />
           <Route path="/reset" element={<Reset />} />
           <Route path="/email" element={<Email />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
       </Router>
     </>
