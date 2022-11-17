@@ -20,22 +20,18 @@ const Contact = () => {
     };
 
     return (
-        <div className="outer">
-            <div className="outer-email">
-                <div className="card">
-                    <StyledContactForm>
-                        <form ref={form} onSubmit={sendEmail}>
-                            <label for="name">Name</label>
-                            <input type="text" name="user_name" className="form-control" placeholder="Input name" />
-                            <label for="email">Email</label>
-                            <input type="email" name="user_email" className="form-control" placeholder="Input email" />
-                            <label>Message</label>
-                            <textarea name="message" />
-                            <input type="submit" value="Send" />
-                        </form>
-                    </StyledContactForm>
-                </div>
-            </div>
+        <div className="card">
+            <StyledContactForm>
+                <form ref={form} onSubmit={sendEmail}>
+                    <label for="name">Name</label>
+                    <input type="text" name="user_name" className="form-control" placeholder="Input name" />
+                    <label for="email">Email</label>
+                    <input type="email" name="user_email" className="form-control" placeholder="Input email" />
+                    <label>Message</label>
+                    <textarea name="message" />
+                    <input type="submit" value="Send" />
+                </form>
+            </StyledContactForm>
         </div>
     );
 };

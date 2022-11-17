@@ -22,9 +22,14 @@ export default class SignUp extends Component {
       verifyOtp: false,
       otp: "",
       verified: false,
+      validate: false,
+      confirm: false,
+      emailSend: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onSignInSubmit = this.onSignInSubmit.bind(this);
+    this.onRoleSubmit = this.onRoleSubmit.bind(this);
+    this.verifyEmail = this.verifyEmail.bind(this);
     this.verifyCode = this.verifyCode.bind(this);
   }
 
@@ -58,7 +63,22 @@ export default class SignUp extends Component {
     });
   }
 
-  //code will send via SMS about 5 minutes sice verifyButton clicked
+  // only for admin
+  onRoleSubmit() {
+    alert('Admin is processing registration verification for your registration. Please wait for maximum 24 hours.');
+    this.setState({ emailSend: true });
+  }
+
+  // only for admin
+  verifyEmail() {
+    alert("Verification Done");
+    this.setState({
+      validate: true,
+      emailSend: false,
+    });  
+  }
+
+  //code will send via SMS about 5 minutes since verifyButton clicked
   verifyCode() {
     window.confirmationResult
     .confirm(this.state.otp)
@@ -88,11 +108,20 @@ export default class SignUp extends Component {
     });
   }
 
-  sendEmail(e) {
-    e.preventDefault();
-    const form = this.form;
+  changeRole(e) {
+    this.setState({ role: e.target.value }, function() {
+      if(this.state.role == "Admin") {
+        this.setState({
+          confirm: true,
+        })
+      }
+    })
+  }
 
-    emailjs.sendForm('service_22rl9vo', 'template_tqt3buo', form.current, '5qCkTRANrxpqkVp3X')
+  sendEmail(e){
+    const form = React.createRef();
+    e.preventDefault();
+    emailjs.sendForm('service_22rl9vo', 'template_c9ueake', form.current, '5qCkTRANrxpqkVp3X')
     .then((result) => {
         console.log(result.text);
         console.log("message sent");
@@ -107,7 +136,7 @@ export default class SignUp extends Component {
     if(this.state.verified) {
       const { name, email, role, mobile, password } = this.state;
       console.log(name, email, role, mobile, password);
-      if(name !== "undefined" && email !== "undefined" && password.length >= 6) {
+      if(name !== "undefined" && email !== "undefined" && password.length >= 6 && role == "User") {
         fetch("http://localhost:5000/register", {
           method: "POST",
           crossDomain: true,
@@ -128,18 +157,43 @@ export default class SignUp extends Component {
           .then((data) => {
             console.log(data, "userRegister");
             alert("User has been registered");
-            this.sendEmail();
             window.location.href="./sign-in";
           });
-          this.sendEmail();
-          window.location.href="./sign-in";
-      } else {
+      } else if(role == "Admin") {
+        if(this.state.validate) {
+          fetch("http://localhost:5000/register", {
+          method: "POST",
+          crossDomain: true,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            role,
+            mobile,
+            password,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data, "adminRegister");
+            alert("Admin has been registered");
+            window.location.href="./sign-in";
+          });
+        } else {
+          alert("Please verify email");
+        }
+      }
+      
+      else {
         alert("Please complete filling in the form");
       }  
     } else {
       alert("Please Verify Mobile");
-    }
-    
+    } 
   }
   render() {
     return (
@@ -183,13 +237,26 @@ export default class SignUp extends Component {
                     id="role"
                     className="btn btn-primary"
                     placeholder="Select Role"
-                    onChange={(e) => this.setState({ role: e.target.value })}
+                    onChange={(e) => this.changeRole(e)}
                   >
-                    
                     <option></option>
                     <option id="admin">Admin</option>
                     <option id="user">User</option>
                   </select>
+                  {this.state.confirm? (
+                    <input
+                      type="button"
+                      value= {this.state.validate ? "verified" : "verify"}
+                      onClick={this.onRoleSubmit}
+                      style={{
+                        backgroundColor: "blue",
+                        width: "100%",
+                        padding: 8,
+                        color: "white",
+                        border:"none",
+                      }}
+                    />
+                  ):null}
                 </div>
 
                 <div className="mb-3">
@@ -251,6 +318,26 @@ export default class SignUp extends Component {
                     required
                   />
                 </div>
+
+                {this.state.emailSend? (
+                  <div className="mb-3">
+                    <label for="emailVerificationForm">Email Verification Form</label>
+                    <textarea name="message" className="form-control" />
+                    <input
+                      type="button"
+                      value="Confirm"
+                      onClick={this.verifyEmail}
+                      onChange={(e) => this.sendEmail(e)}
+                      style={{
+                        backgroundColor: "blue",
+                        width: "100%",
+                        padding: 5,
+                        color: "white",
+                        border:"none",
+                      }}
+                    />
+                  </div>
+                ): null}
 
                 <div className="d-grid">
                   <button
