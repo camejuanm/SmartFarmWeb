@@ -1,0 +1,17 @@
+td {
+    padding: 5px;
+    max-width: 100%;
+    min-width: 50%;
+}
+.id {
+    width: 100px;
+}
+.name {
+    width: 400px;
+}
+.email {
+    width: 400px;
+}
+.isVerified {
+    width: 200px;
+}

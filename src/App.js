@@ -15,6 +15,7 @@ import Dashboard from "./pages/Dashboard"
 import Gateway from "./pages/Gateway"
 import Token from "./pages/Token"
 import AddUser from "./pages/AddUser"
+import NewUser from "./components/newUser";
 import Visualize from "./pages/Visualize"
 import Testfetch from './pages/Testfetch';
 import Testfetch2 from './pages/Testfetch2';
@@ -48,6 +49,7 @@ function App() {
           <Route path="/forgot" element={<Forgot />} />
           <Route path="/reset" element={<Reset />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/newUser" element={<NewUser />} />
         </Routes>
       </Router>
     </>

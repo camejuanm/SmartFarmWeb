@@ -23,10 +23,12 @@ export default class SignUp extends Component {
       otp: "",
       verified: false,
       validate: false,
+      validateButton: false,
       confirm: false,
       emailSend: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    // this.form = this.form.bind(this);
     this.onSignInSubmit = this.onSignInSubmit.bind(this);
     this.onRoleSubmit = this.onRoleSubmit.bind(this);
     this.verifyEmail = this.verifyEmail.bind(this);
@@ -110,7 +112,7 @@ export default class SignUp extends Component {
 
   changeRole(e) {
     this.setState({ role: e.target.value }, function() {
-      if(this.state.role == "Admin") {
+      if(this.state.role == "User") {
         this.setState({
           confirm: true,
         })
@@ -118,50 +120,13 @@ export default class SignUp extends Component {
     })
   }
 
-  sendEmail(e){
-    const form = React.createRef();
-    e.preventDefault();
-    emailjs.sendForm('service_22rl9vo', 'template_c9ueake', form.current, '5qCkTRANrxpqkVp3X')
-    .then((result) => {
-        console.log(result.text);
-        console.log("message sent");
-        alert("message has sent to email");
-    }, (error) => {
-        console.log(error.text);
-    });
-  };
-
   handleSubmit(e) {
     e.preventDefault();
     if(this.state.verified) {
       const { name, email, role, mobile, password } = this.state;
       console.log(name, email, role, mobile, password);
-      if(name !== "undefined" && email !== "undefined" && password.length >= 6 && role == "User") {
+      if(name !== "undefined" && email !== "undefined" && password.length >= 6 && role == "Admin") {
         fetch("http://localhost:5000/register", {
-          method: "POST",
-          crossDomain: true,
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-          body: JSON.stringify({
-            name,
-            email,
-            role,
-            mobile,
-            password,
-          }),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data, "userRegister");
-            alert("User has been registered");
-            window.location.href="./sign-in";
-          });
-      } else if(role == "Admin") {
-        if(this.state.validate) {
-          fetch("http://localhost:5000/register", {
           method: "POST",
           crossDomain: true,
           headers: {
@@ -183,12 +148,38 @@ export default class SignUp extends Component {
             alert("Admin has been registered");
             window.location.href="./sign-in";
           });
+      } else if(role == "User") {
+        if(this.state.validate) {
+          if(password.length >= 6) {
+            fetch("http://localhost:5000/register", {
+              method: "POST",
+              crossDomain: true,
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                "Access-Control-Allow-Origin": "*",
+              },
+              body: JSON.stringify({
+                name,
+                email,
+                role,
+                mobile,
+                password,
+              }),
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                console.log(data, "userRegister");
+                alert("User has been registered");
+                window.location.href="./sign-in";
+              });
+          } else {
+            alert("Password too short");
+          }
         } else {
-          alert("Please verify email");
+          alert("Please Validate Email");
         }
-      }
-      
-      else {
+      } else {
         alert("Please complete filling in the form");
       }  
     } else {
@@ -196,6 +187,20 @@ export default class SignUp extends Component {
     } 
   }
   render() {
+    const form = this.form;
+    const sendEmail = (e) => {
+      e.preventDefault();
+
+      emailjs.sendForm('service_22rl9vo', 'template_tqt3buo', form.current, '5qCkTRANrxpqkVp3X')
+      .then((result) => {
+          console.log(result.text);
+          console.log("message sent");
+          alert("message has sent to email");
+      }, (error) => {
+          console.log(error.text);
+      });
+      this.setState({ validateButton: true });
+    };
     return (
       <>
         <div className="outer">
@@ -259,6 +264,44 @@ export default class SignUp extends Component {
                   ):null}
                 </div>
 
+                {this.state.emailSend? (
+                  <div className="mb-3">
+                    <form ref={this.form} onSubmit={sendEmail}>
+                      <label for="name">Name</label>
+                      <input type="text" name="user_name" className="form-control" placeholder="Input name" />
+                      <label for="email">Email</label>
+                      <input type="email" name="user_email" className="form-control" placeholder="Input email" />
+                      <input
+                        type="button"
+                        value="send"
+                        onClick={sendEmail}
+                        onChange={(e) => this.sendEmail(e)}
+                        style={{
+                          backgroundColor: "green",
+                          width: "100%",
+                          padding: 5,
+                          color: "white",
+                          border:"none",
+                        }} 
+                      />
+                      {this.state.validateButton ? (
+                      <input
+                        type="button"
+                        value="verify"
+                        onClick={this.verifyEmail}
+                        style={{
+                          backgroundColor: "blue",
+                          width: "100%",
+                          padding: 5,
+                          color: "white",
+                          border:"none",
+                        }} 
+                      />
+                      ): null}
+                    </form>
+                  </div>
+                ): null}
+
                 <div className="mb-3">
                   <label for="mobile">Mobile Phone</label>
                   <input
@@ -319,30 +362,10 @@ export default class SignUp extends Component {
                   />
                 </div>
 
-                {this.state.emailSend? (
-                  <div className="mb-3">
-                    <label for="emailVerificationForm">Email Verification Form</label>
-                    <textarea name="message" className="form-control" />
-                    <input
-                      type="button"
-                      value="Confirm"
-                      onClick={this.verifyEmail}
-                      onChange={(e) => this.sendEmail(e)}
-                      style={{
-                        backgroundColor: "blue",
-                        width: "100%",
-                        padding: 5,
-                        color: "white",
-                        border:"none",
-                      }}
-                    />
-                  </div>
-                ): null}
-
                 <div className="d-grid">
                   <button
                     type="submit" 
-                    className="btn btn-success" 
+                    className="btn btn-success"
                   >
                     Sign Up
                   </button>
