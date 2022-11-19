@@ -184,7 +184,7 @@ export default class SignUp extends Component {
       }  
     } else {
       alert("Please Verify Mobile");
-    } 
+    }
   }
   render() {
     const form = this.form;
@@ -209,98 +209,93 @@ export default class SignUp extends Component {
               <form onSubmit={this.handleSubmit}>
                 <h3>Sign Up</h3>
                 <div id="recaptcha-container"></div>
-                <div className="mb-3">
-                  <label for="name">Name</label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="user_name"
-                    className="form-control"
-                    placeholder="Enter name"
-                    onChange={(e) => this.setState({ name: e.target.value })}
-                    required
-                  />
-                </div>
+                <form ref={this.form} onSubmit={sendEmail}>
+                  <div className="mb-3">
+                    <label for="name">Name</label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="user_name"
+                      className="form-control"
+                      placeholder="Enter name"
+                      onChange={(e) => this.setState({ name: e.target.value })}
+                      required
+                    />
+                  </div>
 
-                <div className="mb-3">
-                  <label for="email">Email address</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="user_email"
-                    className="form-control"
-                    placeholder="Enter email"
-                    onChange={(e) => this.setState({ email: e.target.value })}
-                    required
-                  />
-                </div>
+                  <div className="mb-3">
+                    <label for="email">Email address</label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="user_email"
+                      className="form-control"
+                      placeholder="Enter email"
+                      onChange={(e) => this.setState({ email: e.target.value })}
+                      required
+                    />
+                  </div>
 
-                <div className="mb-3">
-                  <label for="role">Role</label>
-                  <br />
-                  <select
-                    id="role"
-                    className="btn btn-primary"
-                    placeholder="Select Role"
-                    onChange={(e) => this.changeRole(e)}
-                  >
-                    <option></option>
-                    <option id="admin">Admin</option>
-                    <option id="user">User</option>
-                  </select>
-                  {this.state.confirm? (
+                  <div className="mb-3">
+                    <label for="role">Role</label>
+                    <br />
+                    <select
+                      id="role"
+                      className="btn btn-primary"
+                      placeholder="Select Role"
+                      onChange={(e) => this.changeRole(e)}
+                    >
+                      <option></option>
+                      <option id="admin">Admin</option>
+                      <option id="user">User</option>
+                    </select>
+                    {this.state.confirm? (
+                      <input
+                        type="button"
+                        value= {this.state.validate ? "verified" : "verify"}
+                        onClick={this.onRoleSubmit}
+                        style={{
+                          backgroundColor: "blue",
+                          width: "100%",
+                          padding: 8,
+                          color: "white",
+                          border:"none",
+                        }}
+                      />
+                    ):null}
+                  </div>
+                  {this.state.emailSend? (
+                  <>
                     <input
                       type="button"
-                      value= {this.state.validate ? "verified" : "verify"}
-                      onClick={this.onRoleSubmit}
+                      value="Send Mail"
+                      onClick={sendEmail}
+                      onChange={(e) => this.sendEmail(e)}
+                      style={{
+                        backgroundColor: "green",
+                        width: "100%",
+                        padding: 5,
+                        color: "white",
+                        border:"none",
+                      }} 
+                    />
+                    {this.state.validateButton ? (
+                    <input
+                      type="button"
+                      value="verify"
+                      onClick={this.verifyEmail}
                       style={{
                         backgroundColor: "blue",
                         width: "100%",
-                        padding: 8,
+                        padding: 5,
                         color: "white",
                         border:"none",
                       }}
                     />
-                  ):null}
-                </div>
-
-                {this.state.emailSend? (
-                  <div className="mb-3">
-                    <form ref={this.form} onSubmit={sendEmail}>
-                      <label for="name">Name</label>
-                      <input type="text" name="user_name" className="form-control" placeholder="Input name" />
-                      <label for="email">Email</label>
-                      <input type="email" name="user_email" className="form-control" placeholder="Input email" />
-                      <input
-                        type="button"
-                        value="send"
-                        onClick={sendEmail}
-                        onChange={(e) => this.sendEmail(e)}
-                        style={{
-                          backgroundColor: "green",
-                          width: "100%",
-                          padding: 5,
-                          color: "white",
-                          border:"none",
-                        }} 
-                      />
-                      {this.state.validateButton ? (
-                      <input
-                        type="button"
-                        value="verify"
-                        onClick={this.verifyEmail}
-                        style={{
-                          backgroundColor: "blue",
-                          width: "100%",
-                          padding: 5,
-                          color: "white",
-                          border:"none",
-                        }} 
-                      />
-                      ): null}
-                    </form>
-                  </div>
-                ): null}
+                    ):null}
+                  </>
+                  ): null}
+                </form>
 
                 <div className="mb-3">
                   <label for="mobile">Mobile Phone</label>

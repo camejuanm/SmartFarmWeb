@@ -182,17 +182,6 @@ input {
   border-radius: 5px;
   border: 1px solid rgb(220, 220, 220);
 }
-textarea {
-  max-width: 100%;
-  min-width: 50%;
-  width: 70%;
-  max-height: 100px;
-  min-height: 100px;
-  padding: 7px;
-  outline: none;
-  border-radius: 5px;
-  border: 1px solid rgb(220, 220, 220);
-}
 input[type="button"] {
   margin-top: 0.5rem;
   cursor: pointer;

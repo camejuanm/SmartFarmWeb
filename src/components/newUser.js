@@ -19,7 +19,11 @@ export default class newUser extends Component {
 
 
     verifyEmail(e) {
-        this.setState({ id: e.target.value, name: e.target.value, email: e.target.value }, function() {
+        this.setState({
+            id: e.target.value,
+            name: e.target.value,
+            email: e.target.value
+        }, function() {
             if(this.state.id !== "undefined" && this.state.name !== "undefined" && this.state.email !== "undefined") {
                 this.setState({ isVerified: true });
             }
@@ -124,9 +128,9 @@ export default class newUser extends Component {
                                                 className="form-control"
                                                 onClick={this.sendEmail}
                                                 style={{
-                                                    backgroundColor: "blue",
+                                                    backgroundColor: "#4040db",
                                                     width: "100%",
-                                                    padding: 8,
+                                                    padding: 5,
                                                     color: "white",
                                                     border:"none",
                                                 }}

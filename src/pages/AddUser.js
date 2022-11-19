@@ -17,7 +17,8 @@ export default class AddUser extends Component {
     const { role, email, password } = this.state;
     console.log(role, email, password);
     if(email !== 'undefined' && password.length >= 6) {
-      fetch("http://localhost:5000/userData", {
+      if(email !== "starwars@example.com" && email !== "eneos@example.com" && email !== "thenardhi2001@gmail.com") {
+        fetch("http://localhost:5000/userData", {
         method: "POST",
         crossDomain: true,
         headers: {
@@ -37,6 +38,9 @@ export default class AddUser extends Component {
           alert("User added successful");
           window.location.href="./dashboard";
         });
+      } else {
+        alert("User has already exists");
+      }  
     }
     else {
       alert('Password must be at least 6 characters');
@@ -85,7 +89,7 @@ export default class AddUser extends Component {
                     required 
                   />
                 </div>
-                <input type="submit" value="Add User" class="btn btn-success" />
+                <button type="Submit" className="btn btn-success">Add User</button>
               </form>
             </div>
           </div>
