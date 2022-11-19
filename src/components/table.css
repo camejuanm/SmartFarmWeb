@@ -4,14 +4,17 @@ td {
     min-width: 50%;
 }
 .id {
-    width: 100px;
+    width: 200px;
 }
 .name {
-    width: 400px;
+    width: 300px;
 }
 .email {
-    width: 400px;
+    width: 300px;
+}
+.status {
+    width: 150px;
 }
 .isVerified {
-    width: 200px;
+    width: 150px;
 }
