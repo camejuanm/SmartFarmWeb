@@ -23,15 +23,12 @@ export default class SignUp extends Component {
       otp: "",
       verified: false,
       validate: false,
-      validateButton: false,
       confirm: false,
       emailSend: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
-    // this.form = this.form.bind(this);
     this.onSignInSubmit = this.onSignInSubmit.bind(this);
     this.onRoleSubmit = this.onRoleSubmit.bind(this);
-    this.verifyEmail = this.verifyEmail.bind(this);
     this.verifyCode = this.verifyCode.bind(this);
   }
 
@@ -69,15 +66,6 @@ export default class SignUp extends Component {
   onRoleSubmit() {
     alert('Admin is processing registration verification for your registration. Please wait for maximum 24 hours.');
     this.setState({ emailSend: true });
-  }
-
-  // only for admin
-  verifyEmail() {
-    alert("Verification Done");
-    this.setState({
-      validate: true,
-      emailSend: false,
-    });  
   }
 
   //code will send via SMS about 5 minutes since verifyButton clicked
@@ -196,10 +184,14 @@ export default class SignUp extends Component {
           console.log(result.text);
           console.log("message sent");
           alert("message has sent to email");
+          alert("Verification Done");
       }, (error) => {
           console.log(error.text);
       });
-      this.setState({ validateButton: true });
+      this.setState({
+        validate: true,
+        emailSend: false,
+      });
     };
     return (
       <>
@@ -265,7 +257,6 @@ export default class SignUp extends Component {
                     ):null}
                   </div>
                   {this.state.emailSend? (
-                  <>
                     <input
                       type="button"
                       value="Send Mail"
@@ -273,27 +264,13 @@ export default class SignUp extends Component {
                       onChange={(e) => this.sendEmail(e)}
                       style={{
                         backgroundColor: "green",
-                        width: "100%",
-                        padding: 5,
+                        minWidth: "15%",
+                        maxWidth: "50%",
+                        padding: 8,
                         color: "white",
                         border:"none",
                       }} 
                     />
-                    {this.state.validateButton ? (
-                    <input
-                      type="button"
-                      value="verify"
-                      onClick={this.verifyEmail}
-                      style={{
-                        backgroundColor: "blue",
-                        width: "100%",
-                        padding: 5,
-                        color: "white",
-                        border:"none",
-                      }}
-                    />
-                    ):null}
-                  </>
                   ): null}
                 </form>
 
