@@ -11,6 +11,7 @@ export default class newUser extends Component {
             email: "",
             status: "unverified",
             isVerified: false,
+            datas: "",
             verify: false,
         };
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -20,11 +21,10 @@ export default class newUser extends Component {
 
     verifyEmail(e) {
         this.setState({
-            id: e.target.value,
             name: e.target.value,
             email: e.target.value
         }, function() {
-            if(this.state.id !== "undefined" && this.state.name !== "undefined" && this.state.email !== "undefined") {
+            if(this.state.name !== "undefined" && this.state.email !== "undefined") {
                 this.setState({ isVerified: true });
             }
         });
@@ -39,31 +39,46 @@ export default class newUser extends Component {
         });
     }
 
-    handleSubmit(e) {
-        e.preventDefault();
+    componentDidMount() {
         const { id, name, email } = this.state;
         console.log(id, name, email);
-        if(this.state.verify) {
-            fetch("https://smart-farm-backend.vercel.app/api/user/all", {
-            method: "POST",
-            crossDomain: true,
+        const token = window.localStorage.getItem("token");
+        fetch("https://smart-farm-backend.vercel.app/api/user/all", {
+            method: "GET",
             headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-                "Access-Control-Allow-Origin": "*",
-            },
-            body: JSON.stringify({
-                id,
-                name,
-                email,
-            }),
-            })
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data, "userVerify");
-                alert("Verification Done");
-                window.location.href="./sign-up";
+                "x-access-token": token,
+                "Content-Type": 'application/json'
+            }
+        })
+        .then((res) => res.json())
+        .then((data) => {    
+            this.setState({ datas : data })
+            console.log(data);
         });
+    }
+
+    componentWillUpdate(pP,pS,sS) {
+        console.log(pS)
+    }
+
+    displayData(datas){
+        let table = '<table border="1">';
+        table += `<tr><th>ID</th><th>Name</th><th>Rank</th></tr>`;
+        datas.forEach((datas, index) => {
+            table = table + `<tr>`;
+            table = table + `<td>Title: ${datas.name}</td>`;
+            table = table + `<td>Title: ${datas.email}</td>`;
+            table = table + `<td>Title: ${datas.id}</td>`;
+            table += `</tr>`;
+         });
+         table += "</table>";
+         document.getElementById("movies-list").innerHTML = table;
+     }
+
+    handleSubmit(e) {
+        e.preventDefault();
+        if(this.state.verify) {
+            this.componentDidMount();
         } else {
             alert("Please verify new user");
         }
@@ -99,7 +114,7 @@ export default class newUser extends Component {
                                             type="text"
                                             id="id"
                                             className="form-control"
-                                            onChange={(e) => {this.verifyEmail(e)}}
+                                            onChange={(e) => this.setState({ id: e.target.value })}
                                             unique
                                         />
                                     </td>

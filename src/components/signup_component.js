@@ -22,10 +22,11 @@ export default class SignUp extends Component {
       verifyOtp: false,
       otp: "",
       verified: false,
-      validate: false,
+      validate: true,
       confirm: false,
-      emailSend: false,
     };
+    this.callBoth = this.callBoth.bind(this);
+    this.sendEmail = this.sendEmail.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onSignInSubmit = this.onSignInSubmit.bind(this);
     this.onRoleSubmit = this.onRoleSubmit.bind(this);
@@ -65,7 +66,6 @@ export default class SignUp extends Component {
   // only for admin
   onRoleSubmit() {
     alert('Admin is processing registration verification for your registration. Please wait for maximum 24 hours.');
-    this.setState({ emailSend: true });
   }
 
   //code will send via SMS about 5 minutes since verifyButton clicked
@@ -108,9 +108,33 @@ export default class SignUp extends Component {
     })
   }
 
+  callBoth() {
+    if(this.state.role == "User") {
+      this.sendEmail();
+      this.handleSubmit();
+    } else {
+      this.handleSubmit();
+    }  
+  }
+
+  sendEmail() {
+      emailjs.sendForm('service_22rl9vo', 'template_tqt3buo', this.form.current, '5qCkTRANrxpqkVp3X')
+      .then((result) => {
+          console.log(result.text);
+          console.log("message sent");
+          alert("message has sent to email");
+          this.setState({
+            validate: true,
+            emailSend: false,
+          });
+      }, (error) => {
+          // console.log(error.text);
+      });
+  };
+
   handleSubmit(e) {
     e.preventDefault();
-    if(this.state.verified) {
+    // if(this.state.verified) {
       const { name, email, role, mobile, password } = this.state;
       console.log(name, email, role, mobile, password);
       if(name !== "undefined" && email !== "undefined" && password.length >= 6 && role == "Admin") {
@@ -170,38 +194,19 @@ export default class SignUp extends Component {
       } else {
         alert("Please complete filling in the form");
       }  
-    } else {
-      alert("Please Verify Mobile");
-    }
+    // } else {
+    //   alert("Please Verify Mobile");
+    // }
   }
   render() {
-    const form = this.form;
-    const sendEmail = (e) => {
-      e.preventDefault();
-
-      emailjs.sendForm('service_22rl9vo', 'template_tqt3buo', form.current, '5qCkTRANrxpqkVp3X')
-      .then((result) => {
-          console.log(result.text);
-          console.log("message sent");
-          alert("message has sent to email");
-          alert("Verification Done");
-      }, (error) => {
-          console.log(error.text);
-      });
-      this.setState({
-        validate: true,
-        emailSend: false,
-      });
-    };
     return (
       <>
         <div className="outer">
           <div className="outer-register">
             <div className="card">
-              <form onSubmit={this.handleSubmit}>
                 <h3>Sign Up</h3>
                 <div id="recaptcha-container"></div>
-                <form ref={this.form} onSubmit={sendEmail}>
+                <form ref={this.form} onSubmit={this.handleSubmit}>
                   <div className="mb-3">
                     <label for="name">Name</label>
                     <input
@@ -248,6 +253,7 @@ export default class SignUp extends Component {
                         onClick={this.onRoleSubmit}
                         style={{
                           backgroundColor: "blue",
+                          display: "none",
                           width: "100%",
                           padding: 8,
                           color: "white",
@@ -256,96 +262,86 @@ export default class SignUp extends Component {
                       />
                     ):null}
                   </div>
-                  {this.state.emailSend? (
+
+                  <div className="mb-3">
+                    <label for="mobile">Mobile Phone</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      placeholder="(+62) Enter mobile"
+                      onChange={(e) => this.changeMobile(e)}
+                    />
+                    {this.state.verifyButton? (
                     <input
                       type="button"
-                      value="Send Mail"
-                      onClick={sendEmail}
-                      onChange={(e) => this.sendEmail(e)}
+                      value= {this.state.verified ? "verified": "verify"}
+                      onClick={this.onSignInSubmit}
                       style={{
-                        backgroundColor: "green",
-                        minWidth: "15%",
-                        maxWidth: "50%",
+                        backgroundColor: "blue",
+                        width: "100%",
                         padding: 8,
                         color: "white",
                         border:"none",
-                      }} 
+                      }}
                     />
-                  ): null}
+                    ):null}
+                  </div>
+
+                  {this.state.verifyOtp? (
+                  <div className="mb-3">
+                    <label for="otp">OTP</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      placeholder="Enter OTP"
+                      onChange={(e) => this.setState({ otp: e.target.value })}
+                    />
+                    <input
+                      type="button"
+                      value="OTP"
+                      onClick={this.verifyCode}
+                      style={{
+                        backgroundColor: "blue",
+                        width: "100%",
+                        padding: 5,
+                        color: "white",
+                        border:"none",
+                      }}
+                    />
+                  </div>
+                  ) :null}
+
+                  <div className="mb-3">
+                    <label for="password">Password</label>
+                    <input
+                      type="password"
+                      id="password"
+                      className="form-control"
+                      placeholder="Enter password"
+                      onChange={(e) => this.setState({ password: e.target.value })}
+                      required
+                    />
+                  </div>
+
+                  <div className="d-grid">
+                    <input
+                      type="submit"
+                      value="Sign Up"
+                      onClick={this.callBoth}
+                      onChange={(e) => this.sendEmail(e)}
+                      style={{
+                        backgroundColor: "green",
+                        width: "160px",
+                        padding: 8,
+                        color: "white",
+                        border:"none",
+                      }}
+                    />
+                  </div>
                 </form>
-
-                <div className="mb-3">
-                  <label for="mobile">Mobile Phone</label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    placeholder="(+62) Enter mobile"
-                    onChange={(e) => this.changeMobile(e)}
-                  />
-                  {this.state.verifyButton? (
-                  <input
-                    type="button"
-                    value= {this.state.verified ? "verified": "verify"}
-                    onClick={this.onSignInSubmit}
-                    style={{
-                      backgroundColor: "blue",
-                      width: "100%",
-                      padding: 8,
-                      color: "white",
-                      border:"none",
-                    }}
-                  />
-                  ):null}
-                </div>
-
-                {this.state.verifyOtp? (
-                <div className="mb-3">
-                  <label for="otp">OTP</label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    placeholder="Enter OTP"
-                    onChange={(e) => this.setState({ otp: e.target.value })}
-                  />
-                  <input
-                    type="button"
-                    value="OTP"
-                    onClick={this.verifyCode}
-                    style={{
-                      backgroundColor: "blue",
-                      width: "100%",
-                      padding: 5,
-                      color: "white",
-                      border:"none",
-                    }}
-                  />
-                </div>
-                ) :null}
-
-                <div className="mb-3">
-                  <label for="password">Password</label>
-                  <input
-                    type="password"
-                    id="password"
-                    className="form-control"
-                    placeholder="Enter password"
-                    onChange={(e) => this.setState({ password: e.target.value })}
-                    required
-                  />
-                </div>
-
-                <div className="d-grid">
-                  <button
-                    type="submit" 
-                    className="btn btn-success"
-                  >
-                    Sign Up
-                  </button>
-                </div>
                 <p className="forgot-password text-right">
                   Already registered? <a href="/sign-in">sign in?</a>
                 </p>
-              </form>
             </div>
           </div>
         </div>
