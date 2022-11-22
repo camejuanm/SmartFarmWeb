@@ -1,6 +1,21 @@
-import React, {Component} from 'react';
+import React, {Component, useState, useEffect} from 'react';
 import './Authentication.css';
 import './table.css';
+import * as BiIcons from "react-icons/bi";
+import * as AiIcons from "react-icons/ai";
+import * as FaIcons from "react-icons/fa";
+import './Navbarstyle.css';
+import {Link} from 'react-router-dom';
+import {SidebarDataAdmin} from './SidebarDataAdmin';
+import { SidebarDataUser } from './SidebarDataUser';
+import { SidebarDataLanding } from './SidebarDataLanding.';
+import { IconContext} from 'react-icons'
+import { Outlet } from 'react-router-dom';
+import { SidebarDataVerification } from './SidebarDataVerification';
+import { isCompositeComponent } from 'react-dom/test-utils';
+
+// const auth = window.localStorage.getItem("isAuth");
+// const admin = window.localStorage.getItem("isAdmin")
 
 export default class newUser extends Component {
     constructor(props) {
@@ -13,12 +28,17 @@ export default class newUser extends Component {
             isVerified: false,
             datas: "",
             verify: false,
+            verifyButton: true,
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.sendEmail = this.sendEmail.bind(this);
+        this.updateVerification = this.updateVerification.bind(this);
     }
 
-
+    updateVerification() {
+        console.log("Verification updated");
+        this.setState({ isVerified: true, verifyButton: false });
+    }
     verifyEmail(e) {
         this.setState({
             name: e.target.value,
@@ -93,6 +113,63 @@ export default class newUser extends Component {
                         <table>
                             <thead>
                                 <tr>
+                                    <th id="name">Name</th>
+                                    <th id="email">Email</th>
+                                    <th id="id">Verification Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>    
+                                    <td className="name">
+                                        <BiIcons.BiRename />
+                                        {this.state.name}
+                                    </td>
+                                    <td className="email">
+                                        <AiIcons.AiOutlineMail />
+                                        {this.state.email}
+                                    </td>
+                                    <td>
+                                        {this.state.verifyButton ? (
+                                        <input
+                                            type="button"
+                                            value="verify"
+                                            onClick={this.updateVerification}
+                                        />
+                                        ):null}
+                                    </td>
+                                    
+                                </tr>
+                            </tbody>
+                        {/* <IconContext.Provider value={{color:'#fff'}}>
+                            <div className='navbar'>
+                                <Link to='#' className='menu-bars'>
+                                <FaIcons.FaBars onClick={this.showSidebar}/>
+                                </Link>
+                            </div>
+                            <nav className={this.sidebar ? 'nav-menu active' : 'nav-menu'}>
+                                <ul className='nav-menu-items' onClick={this.showSidebar}>
+                                    <li className='navbar-toggle'>
+                                        <Link to="#" className='menu-bars'>
+                                            <AiIcons.AiOutlineClose />
+                                        </Link>
+                                    </li>
+                                    {this.SidebarDataVerification.map((datas, index) => {
+                                        return (
+                                            <li key={index} className={datas.cName}>
+                                                <Link to={datas.path}>
+                                                    {datas.icon}
+                                                    <span>{datas.title}</span>
+                                                </Link>
+                                            </li>
+                                        )
+                                    })}
+                                    <li className='nav-logout' onClick={() => {window.localStorage.clear(); window.location.reload()}}><Link to="/"><AiIcons.AiOutlineLogout/><span>Logout</span></Link></li>
+                                </ul>
+                            </nav>
+                        </IconContext.Provider>
+                        <Outlet/> */}
+                            {/* <thead>
+                                <tr>
                                     <th id="id">Id</th>
                                     <th id="name">Name</th>
                                     <th id="email">Email</th>
@@ -153,13 +230,14 @@ export default class newUser extends Component {
                                         ):null}
                                     </td>
                                 </tr>
-                            </tbody>
+                            </tbody> */}
                         </table>
                     </div>
                     <div className="d-grid">
                     <button
                         type="submit"
                         className="btn btn-success"
+                        onClick={this.updateVerification}
                     >
                         Verify User
                     </button>

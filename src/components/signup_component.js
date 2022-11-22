@@ -29,7 +29,6 @@ export default class SignUp extends Component {
     this.sendEmail = this.sendEmail.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onSignInSubmit = this.onSignInSubmit.bind(this);
-    this.onRoleSubmit = this.onRoleSubmit.bind(this);
     this.verifyCode = this.verifyCode.bind(this);
   }
 
@@ -98,16 +97,6 @@ export default class SignUp extends Component {
     });
   }
 
-  changeRole(e) {
-    this.setState({ role: e.target.value }, function() {
-      if(this.state.role == "User") {
-        this.setState({
-          confirm: true,
-        })
-      }
-    })
-  }
-
   callBoth() {
     if(this.state.role == "User") {
       this.sendEmail();
@@ -118,27 +107,28 @@ export default class SignUp extends Component {
   }
 
   sendEmail() {
+    if(this.state.verified) {
       emailjs.sendForm('service_22rl9vo', 'template_tqt3buo', this.form.current, '5qCkTRANrxpqkVp3X')
       .then((result) => {
           console.log(result.text);
           console.log("message sent");
           alert("message has sent to email");
-          this.setState({
-            validate: true,
-            emailSend: false,
-          });
+          this.setState({ validate: true });
       }, (error) => {
           // console.log(error.text);
       });
+    } else {
+      // alert("Please Verify Mobile");
+    }
   };
 
   handleSubmit(e) {
     e.preventDefault();
-    // if(this.state.verified) {
+    if(this.state.verified) {
       const { name, email, role, mobile, password } = this.state;
       console.log(name, email, role, mobile, password);
       if(name !== "undefined" && email !== "undefined" && password.length >= 6 && role == "Admin") {
-        fetch("http://localhost:5000/register", {
+        fetch("https://smart-farm-backend.vercel.app/api/user/signup", {
           method: "POST",
           crossDomain: true,
           headers: {
@@ -160,10 +150,11 @@ export default class SignUp extends Component {
             alert("Admin has been registered");
             window.location.href="./sign-in";
           });
-      } else if(role == "User") {
+      } 
+      else if(role == "User") {
         if(this.state.validate) {
           if(password.length >= 6) {
-            fetch("http://localhost:5000/register", {
+            fetch("https://smart-farm-backend.vercel.app/api/user/signup", {
               method: "POST",
               crossDomain: true,
               headers: {
@@ -189,14 +180,15 @@ export default class SignUp extends Component {
             alert("Password too short");
           }
         } else {
-          alert("Please Validate Email");
+          // console.log(error.message);
         }
-      } else {
+      }
+      else {
         alert("Please complete filling in the form");
       }  
-    // } else {
-    //   alert("Please Verify Mobile");
-    // }
+    } else {
+      alert("Please Verify Mobile");
+    }
   }
   render() {
     return (
@@ -205,8 +197,8 @@ export default class SignUp extends Component {
           <div className="outer-register">
             <div className="card">
                 <h3>Sign Up</h3>
-                <div id="recaptcha-container"></div>
                 <form ref={this.form} onSubmit={this.handleSubmit}>
+                  <div id="recaptcha-container"></div>
                   <div className="mb-3">
                     <label for="name">Name</label>
                     <input
@@ -240,27 +232,12 @@ export default class SignUp extends Component {
                       id="role"
                       className="btn btn-primary"
                       placeholder="Select Role"
-                      onChange={(e) => this.changeRole(e)}
+                      onChange={ (e) => this.setState({ role: e.target.value })}
                     >
                       <option></option>
                       <option id="admin">Admin</option>
                       <option id="user">User</option>
                     </select>
-                    {this.state.confirm? (
-                      <input
-                        type="button"
-                        value= {this.state.validate ? "verified" : "verify"}
-                        onClick={this.onRoleSubmit}
-                        style={{
-                          backgroundColor: "blue",
-                          display: "none",
-                          width: "100%",
-                          padding: 8,
-                          color: "white",
-                          border:"none",
-                        }}
-                      />
-                    ):null}
                   </div>
 
                   <div className="mb-3">
