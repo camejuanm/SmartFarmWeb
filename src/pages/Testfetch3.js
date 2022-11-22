@@ -9,7 +9,7 @@ import 'chartjs-adapter-luxon';
 function Testfetch3() {
   
   //status
-  let token = window.localStorage.getItem("token");
+  let token = window.sessionStorage.getItem("token");
   const [datasets, setDatasets] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [chartstatus, setChartStatus] = useState('airhum');
@@ -175,6 +175,9 @@ function Testfetch3() {
             type: 'time',
             time: {
                 displayFormats: {hour: 'HH:mm'}
+            },
+            ticks: {
+              source: 'labels'
             }
           },
           x2: {
@@ -282,9 +285,9 @@ function Testfetch3() {
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
-        <Dropdown.Item key='1' onClick={() => {setNodeState(102);setDropdown('1');}}>1
+        <Dropdown.Item key='1' onClick={() => {setNodeState(102);setDropdown('1');}}>102
         </Dropdown.Item>  
-        <Dropdown.Item key='2' onClick={() => {setNodeState(202);setDropdown('2');}}>2
+        <Dropdown.Item key='2' onClick={() => {setNodeState(103);setDropdown('2');}}>103  
         </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>

@@ -12,7 +12,7 @@ import { setRandomFallback } from 'bcryptjs';
 
 function Dashboard() {
   
-  let token = window.localStorage.getItem("token");
+  let token = window.sessionStorage.getItem("token");
   const [airHums, setAirHum] = useState();
   const [airTemps, setAirTemp] = useState();
   const [datax, setDatax] = useState();

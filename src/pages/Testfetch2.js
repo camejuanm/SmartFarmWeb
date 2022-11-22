@@ -5,12 +5,14 @@ import './Visualize.css'
 import Dropdown from 'react-bootstrap/Dropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'chartjs-plugin-annotation';
+import 'chartjs-adapter-luxon';
 
 function Testfetch2() {
   
   //status
-  let token = window.localStorage.getItem("token");
+  let token = window.sessionStorage.getItem("token");
   const [datasets, setDatasets] = useState([]);
+  const [dailyswitch, setDailySwitch] = useState('Daily');
   const [filtered, setFiltered] = useState([]);
   const [chartstatus, setChartStatus] = useState('airhum');
   const [charttype, setChartType] = useState('normal');
@@ -143,9 +145,22 @@ function Testfetch2() {
    
       
 
+      // const fDate = filteredData.map(function(elem) {
+      //   const times = new Date(elem.timestamp).toString()
+      //   const first = times.substr(0,10)
+      //   const second = times.substr(11,5)
+      //   return first + " " + second
+      // })
+
       const fDate = filteredData.map(function(elem) {
-        return new Date(elem.timestamp).toISOString()
+        return new Date(elem.timestamp).toString().substr(4,17);
       })
+
+      
+      // const fDate = filteredData.map(function(elem) {
+      //   const date = new Date(elem.timestamp).toString(); 
+      //   return date.substr();
+      // })
 
     
       const fHum = filteredData.map(function(elem) {
@@ -156,23 +171,28 @@ function Testfetch2() {
           return elem.airTemp
           })
 
+          const fSoil = filteredData.map(function(elem) {
+            return elem.soilHum
+            })
+
       
       
       if (charttype === 'normal') {
 // console.log(filteredData)
 const backgroundcolor = []
-for (let i = 0; i < fHum.length; i++ ) {
-  if(fHum[i] >= 55) {backgroundcolor.push('red')}
-  else if (fHum[i] < 70 && fHum[i] > 45) {backgroundcolor.push('black')}
-  else {backgroundcolor.push('green')}
-}
+
 
 if (chartstatus == 'airhum') {
 
+  const maxthres = 55
+
+  const minthres = 30
+
+  
   for (let i = 0; i < fHum.length; i++ ) {
-    if(fHum[i] >= 55) {backgroundcolor.push('red')}
-    else if (fHum[i] < 70 && fHum[i] > 45) {backgroundcolor.push('black')}
-    else {backgroundcolor.push('green')}
+    if(fHum[i] > maxthres) {backgroundcolor.push('red')}
+    else if (fHum[i] <= maxthres && fHum[i] >= minthres) {backgroundcolor.push('black')}
+    else {backgroundcolor.push('red')}
   }
 
   setUserData({
@@ -192,7 +212,7 @@ if (chartstatus == 'airhum') {
     scales: {
       y: {
           beginAtZero: true,
-          max:100,
+          max:80,
           ticks : {
               callback: function(value, index, ticks) {
                   return  value + '%';
@@ -200,67 +220,97 @@ if (chartstatus == 'airhum') {
       }
       },
       x: {
-          // type: 'time', // menampilkan grafik perjam
-          // time: {
-          //   displayFormats: {hour: 'DD HH:mm'}
-          // },
+        offset: true,
+        // type: 'time',
+        //     time: {
+        //         displayFormats: {hour: 'HH:mm'}
+        //     },
         grid:{
           display:false
-        },
-          ticks:{
-              maxTicksLimit: 5.4  
-              // maxTicksLimit: 6  
-              // source: 'labels' //pake kalo data udah rapi
-          }
-      }
+        },  
+            ticks: {
+              // source: 'labels'
+              maxTicksLimit: 5.5
+            }
+      },
+      // x2: {
+      //   offset: true,
+      //   position: 'top',
+      //   type: 'time',
+      //   time: {
+      //     unit: 'day'
+      //   },
+      //   adapters: {
+      //     date: {
+      //         zone: 'UTC+7'
+      //     }
+      //   },
+      //   grid:{
+      //       tickColor: 'black',
+      //       borderColor: 'black',
+      //       tickLength: 10
+      //     },
+          
+      //     ticks:{
+            
+      //       // maxTicksLimit: 5.4  
+      //      source: 'labels'
+      //       // source: 'labels' //pake kalo data udah rapi
+      //   },
+        
+      //   gridLines: {
+      //     offsetGridLines : true
+      // }
+      // }
     },
     plugins :{
       annotation: {
-        annotations: [{
+        annotations: [
+          {
           type: 'line',
           mode: 'horizontal',
           scaleID: 'y',
-          value: 70,
+          value: maxthres,
           borderColor: 'red',
           borderWidth: 2,
-          label: {
-            enabled: false,
-            content: 'Test label'
-          }
+          // label: {
+          //   enabled: false,
+          //   content: 'Test label'
+          // }
         },{
           type: 'line',
           mode: 'horizontal',
           scaleID: 'y',
-          value: 40,
+          value: minthres,
           borderColor: 'green',
           borderWidth: 2,
-          label: {
-            enabled: false,
-            content: 'Test label'
-          }
+          // label: {
+          //   enabled: false,
+          //   content: 'Test label'
+          // }
         },
-        {
-          type: 'label',
-          xValue: 210,
-          yValue: 75,
-          content: ['Maximum Threshold'],
-          color: 'red',
-          font: {
-            size: 12
+        // {
+        //   type: 'label',
+        //   xValue: 16  ,
+        //   yValue: maxthres + 5,
+        //   content: ['Maximum Threshold'],
+        //   color: 'red',
+        //   font: {
+        //     size: 12
 
-          }
-        },
-        {
-          type: 'label',
-          xValue: 210,
-          yValue: 35,
-          content: ['Minimum Threshold'],
-          color: 'green',
-          font: {
-            size: 12
-
-          }
-        }]
+        //   }
+        // },
+        // {
+        //   type: 'label',
+        //   xValue: 16,
+        //   yValue: minthres - 5,
+        //   content: ['Minimum Threshold'],
+        //   color: 'green',
+        //   font: {
+        //     size: 12
+        //   }
+        // }
+      ]
     }
     
     }
@@ -269,15 +319,24 @@ if (chartstatus == 'airhum') {
 }
 
 else if (chartstatus == 'airtemp') {
+
+  const maxthres = 30
+
+  const minthres = 20
+  
+  for (let i = 0; i < fTemp.length; i++ ) {
+    if(fTemp[i] > maxthres) {backgroundcolor.push('red')}
+    else if (fTemp[i] <= maxthres && fTemp[i] >= minthres) {backgroundcolor.push('black')}
+    else {backgroundcolor.push('red')}
+  }
+
   setUserData({
     labels: fDate,
     datasets: [
       {
         label: "°C of Temperature",
         data: fTemp,
-        backgroundColor: [
-          "#FF0000",
-        ],
+        backgroundColor: backgroundcolor,
         borderWidth: 1,
         showLine: false
       }
@@ -288,7 +347,7 @@ else if (chartstatus == 'airtemp') {
     scales: {
     y: {
         beginAtZero: true,
-        max:100,
+        max:50,
         ticks : {
             callback: function(value, index, ticks) {
                 return  value + '°C';
@@ -296,6 +355,7 @@ else if (chartstatus == 'airtemp') {
     }
     },
     x: {
+      offset: true,
       grid:{
         display:false
       },
@@ -303,7 +363,158 @@ else if (chartstatus == 'airtemp') {
             maxTicksLimit: 5.1
         }
     }
-}});
+},
+plugins :{
+  annotation: {
+    annotations: [{
+      type: 'line',
+      mode: 'horizontal',
+      scaleID: 'y',
+      value: maxthres,
+      borderColor: 'red',
+      borderWidth: 2,
+      label: {
+        enabled: false,
+        content: 'Test label'
+      }
+    },{
+      type: 'line',
+      mode: 'horizontal',
+      scaleID: 'y',
+      value: minthres,
+      borderColor: 'green',
+      borderWidth: 2,
+      label: {
+        enabled: false,
+        content: 'Test label'
+      }
+    },
+    {
+      type: 'label',
+      xValue: 16,
+      yValue: maxthres + 5,
+      content: ['Maximum Threshold'],
+      color: 'red',
+      font: {
+        size: 12
+
+      }
+    },
+    {
+      type: 'label',
+      xValue: 16,
+      yValue: minthres - 5,
+      content: ['Minimum Threshold'],
+      color: 'green',
+      font: {
+        size: 12
+
+      }
+    }]
+}
+
+}
+});
+}
+
+else if (chartstatus == 'soilhum') {
+
+  const maxthres = 35
+
+  const minthres = 10
+  
+  for (let i = 0; i < fSoil.length; i++ ) {
+    if(fSoil[i] > maxthres) {backgroundcolor.push('red')}
+    else if (fSoil[i] <= maxthres && fSoil[i] >= minthres) {backgroundcolor.push('black')}
+    else {backgroundcolor.push('red')}
+  }
+
+  setUserData({
+    labels: fDate,
+    datasets: [
+      {
+        label: "% of Soil Humidity",
+        data: fSoil,
+        backgroundColor: backgroundcolor,
+        borderWidth: 1,
+        showLine: false
+      }
+    ]
+  });
+
+  setOptionData({
+    scales: {
+    y: {
+        beginAtZero: true,
+        max:50,
+        ticks : {
+            callback: function(value, index, ticks) {
+                return  value + '%';
+        }  
+    }
+    },
+    x: {
+      offset: true,
+      grid:{
+        display:false
+      },
+        ticks:{
+            maxTicksLimit: 5.1
+        }
+    }
+},
+plugins :{
+  annotation: {
+    annotations: [{
+      type: 'line',
+      mode: 'horizontal',
+      scaleID: 'y',
+      value: maxthres,
+      borderColor: 'red',
+      borderWidth: 2,
+      label: {
+        enabled: false,
+        content: 'Test label'
+      }
+    },
+    {
+      type: 'line',
+      mode: 'horizontal',
+      scaleID: 'y',
+      value: minthres,
+      borderColor: 'green',
+      borderWidth: 2,
+      label: {
+        enabled: false,
+        content: 'Test label'
+      }
+    },
+    {
+      type: 'label',
+      xValue: 16,
+      yValue: maxthres + 5,
+      content: ['Maximum Threshold'],
+      color: 'red',
+      font: {
+        size: 12
+
+      }
+    },
+    {
+      type: 'label',
+      xValue: 16,
+      yValue: minthres - 5,
+      content: ['Minimum Threshold'],
+      color: 'green',
+      font: {
+        size: 12
+
+      }
+    }]
+}
+
+}
+});
 }
       }
     else if (charttype === 'daily') {
@@ -324,12 +535,18 @@ else if (chartstatus == 'airtemp') {
       chartData();
     }
 
+    const soilHumClick = () => {
+      setChartStatus('soilhum'); 
+      chartData();
+    }
+
     //set the blastDate and lastDate with the date picker
     const onChangeChart = (e) => {
       setDatedef(e.target.values)
       const lastdate = new Date(e.target.value)
       const blastDate = new Date(e.target.value)
-      setblastDate(lastdate.setDate(lastdate.getDate() + 1))
+      lastdate.setDate(lastdate.getDate() + 1)
+      setblastDate(lastdate.setHours(0,0,0,0))
       console.log(lastdate)
       setLastDate(blastDate.setDate(lastdate.getDate() - 5));
       console.log(blastDate)
@@ -387,7 +604,7 @@ else if (chartstatus == 'airtemp') {
         var maxmin = datasets.filter((a) => {
           var aDate = new Date(a.timestamp);
           var aNode = a.idNode
-          return aDate <= datelast && aDate >= datefirst;
+          return aDate <= datelast && aDate >= datefirst && aNode == nodestate;
         })
 
         if (chartstatus === 'airhum') {
@@ -444,6 +661,33 @@ else if (chartstatus == 'airtemp') {
           }))
           
         }
+        else if (chartstatus === 'soilhum') {
+          const datasoilHum= maxmin.map((e) => {
+            return e.soilHum
+          })
+
+          const maxdatax = Math.max(...datasoilHum)
+
+          maxdata.push(Math.max(...datasoilHum))
+          mindata.push(Math.min(...datasoilHum))
+
+          const datey = maxmin.filter((e) => {
+            return e.soilHum === Math.max(...datasoilHum)
+          })  
+
+          const datem = maxmin.filter((e) => {
+            return e.soilHum === Math.min(...datasoilHum)
+          })  
+
+          maxtime.push(datey.slice(0, 1).map((e) => {
+            return new Date(e.timestamp).getHours() 
+          }))
+  
+          mintime.push(datem.slice(0, 1).map((e) => {
+            return new Date(e.timestamp).getHours() 
+          }))
+          
+        }
         
         
 
@@ -452,9 +696,9 @@ else if (chartstatus == 'airtemp') {
         //   return e.airHum
         // })
         
-        const dataairTemp = maxmin.map((e) => {
-          return e.airTemp
-        })
+        // const dataairTemp = maxmin.map((e) => {
+        //   return e.airTemp
+        // })
 
        
         // const maxdatax = Math.max(...dataairHum)
@@ -543,10 +787,12 @@ else if (chartstatus == 'airtemp') {
           }
           },
           x: {
+            offset: true,
               // type: 'time', // menampilkan grafik perjam
               // time: {
               //   displayFormats: {hour: 'DD HH:mm'}
               // },
+              // offset: true,
             grid:{
               display:false
             },
@@ -615,9 +861,11 @@ else if (chartstatus == 'airtemp') {
    const charttypebutton = () => {
     if (charttype === 'normal') {
         setChartType('daily');
+        setDailySwitch('Normal')
     }
     else if (charttype === 'daily') {
       setChartType('normal')
+      setDailySwitch('Daily')
     }
     
    }
@@ -632,7 +880,8 @@ else if (chartstatus == 'airtemp') {
         <input onChange={onChangeChart} type="date" className='enddate' value={datedef}></input>
         <button className='btn-humid'onClick={airHumClick} >Humidity</button>
         <button className='btn-temp' onClick={airTempClick}>Temp</button>
-        <button className='btn-maxmindaily' onClick={charttypebutton}>Daily</button>
+        <button className='btn-soil' onClick={soilHumClick}>Soil</button>
+        <button className='btn-maxmindaily' onClick={charttypebutton}>{dailyswitch}</button>
         <input type="text" name="name" onChange={onChangeHandler} value={nodestate} style={{width: "60px"}}/>
         {/* <Dropdown className="d-inline mx-2">
         <Dropdown.Toggle variant="success" id="dropdown-basic">
