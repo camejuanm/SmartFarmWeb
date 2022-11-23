@@ -1,16 +1,7 @@
 import React, {Component, useState, useEffect} from 'react';
 import './Authentication.css';
 import './table.css';
-import * as BiIcons from "react-icons/bi";
-import * as AiIcons from "react-icons/ai";
-import * as FaIcons from "react-icons/fa";
 import './Navbarstyle.css';
-import {Link} from 'react-router-dom';
-import {SidebarDataAdmin} from './SidebarDataAdmin';
-import { SidebarDataUser } from './SidebarDataUser';
-import { SidebarDataLanding } from './SidebarDataLanding.';
-import { IconContext} from 'react-icons'
-import { isCompositeComponent } from 'react-dom/test-utils';
 
 export default class newUser extends Component {
     constructor(props) {
