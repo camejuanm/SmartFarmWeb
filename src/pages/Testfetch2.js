@@ -289,27 +289,27 @@ if (chartstatus == 'airhum') {
           //   content: 'Test label'
           // }
         },
-        // {
-        //   type: 'label',
-        //   xValue: 16  ,
-        //   yValue: maxthres + 5,
-        //   content: ['Maximum Threshold'],
-        //   color: 'red',
-        //   font: {
-        //     size: 12
+        {
+          type: 'label',
+          xValue: 12  ,
+          yValue: maxthres + 5,
+          content: ['Maximum Threshold'],
+          color: 'red',
+          font: {
+            size: 12
 
-        //   }
-        // },
-        // {
-        //   type: 'label',
-        //   xValue: 16,
-        //   yValue: minthres - 5,
-        //   content: ['Minimum Threshold'],
-        //   color: 'green',
-        //   font: {
-        //     size: 12
-        //   }
-        // }
+          }
+        },
+        {
+          type: 'label',
+          xValue: 12,
+          yValue: minthres - 5,
+          content: ['Minimum Threshold'],
+          color: 'green',
+          font: {
+            size: 12
+          }
+        }
       ]
     }
     
@@ -391,7 +391,7 @@ plugins :{
     },
     {
       type: 'label',
-      xValue: 16,
+      xValue: 12,
       yValue: maxthres + 5,
       content: ['Maximum Threshold'],
       color: 'red',
@@ -402,7 +402,7 @@ plugins :{
     },
     {
       type: 'label',
-      xValue: 16,
+      xValue: 12,
       yValue: minthres - 5,
       content: ['Minimum Threshold'],
       color: 'green',
@@ -491,7 +491,7 @@ plugins :{
     },
     {
       type: 'label',
-      xValue: 16,
+      xValue: 12,
       yValue: maxthres + 5,
       content: ['Maximum Threshold'],
       color: 'red',
@@ -502,7 +502,7 @@ plugins :{
     },
     {
       type: 'label',
-      xValue: 16,
+      xValue: 12,
       yValue: minthres - 5,
       content: ['Minimum Threshold'],
       color: 'green',
@@ -741,12 +741,40 @@ plugins :{
       //   return sum;
       // }
 
+      var maxthres = 0;
+      var minthres = 0;
+      var maxdaily = 0;
+      var labeldailymax = '';
+      var labeldailymin = '';
+
+      if (chartstatus=='airhum') {
+        maxthres = 55
+        minthres = 30
+        maxdaily = 80
+        labeldailymax = "Max % of Air Humidity"
+        labeldailymin = "Min % of Air Humidity"
+      }
+      else if (chartstatus =='airtemp') {
+        maxthres = 30
+        minthres = 20
+        maxdaily = 50
+        labeldailymax = "Max °C of Air Temperature"
+        labeldailymin = "Min °C of Air Temperature"
+      }
+      else if (chartstatus =='soilhum') {
+        maxthres = 35
+        minthres = 10
+        maxdaily = 50
+        labeldailymax = "Max % of Soil Humidity"
+        labeldailymin = "Min % of Soil Humidity"
+      }
+
 
       setUserData({
         labels: daily,
         datasets: [
           {
-            label: "Max % of Humidity",
+            label: labeldailymax,
             data: maxdata,
             backgroundColor: [
               "purple",
@@ -764,7 +792,7 @@ plugins :{
           //   showLine: false
           // },
           {
-            label: "Minimum % of Humidity",
+            label: labeldailymin,
             data: mindata,
             backgroundColor: [
               "green",
@@ -775,11 +803,13 @@ plugins :{
         ]
       });
 
+      
+
       setOptionData({
         scales: {
           y: {
               beginAtZero: true,
-              max:100,
+              max:maxdaily,
               ticks : {
                   callback: function(value, index, ticks) {
                       return  value + '%';
@@ -828,23 +858,46 @@ plugins :{
               type: 'line',
               mode: 'horizontal',
               scaleID: 'y',
-              value: 70,
+              value: maxthres,
               borderColor: 'red',
               borderWidth: 2,
               label: {
                 enabled: false,
                 content: 'Test label'
               }
-            },{
+            },
+            {
               type: 'line',
               mode: 'horizontal',
               scaleID: 'y',
-              value: 40,
+              value: minthres,
               borderColor: 'green',
               borderWidth: 2,
               label: {
                 enabled: false,
                 content: 'Test label'
+              }
+            },
+            {
+              type: 'label',
+              xValue: 3,
+              yValue: maxthres + 5,
+              content: ['Maximum Threshold'],
+              color: 'red',
+              font: {
+                size: 12
+        
+              }
+            },
+            {
+              type: 'label',
+              xValue: 3,
+              yValue: minthres - 5,
+              content: ['Minimum Threshold'],
+              color: 'green',
+              font: {
+                size: 12
+        
               }
             }
           ]
