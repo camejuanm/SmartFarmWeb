@@ -34,11 +34,11 @@ export default class Login extends Component {
         console.log(data.statusCode)
         if (!data.message) {
           alert("login successful");
-          window.localStorage.setItem("token", data.accessToken);
-          window.localStorage.setItem("isAuth", true)
+          window.sessionStorage.setItem("token", data.accessToken);
+          window.sessionStorage.setItem("isAuth", true)
           window.location.href = "/dashboard";
           if (data.role == "admin") {
-            window.localStorage.setItem("isAdmin",true)
+            window.sessionStorage.setItem("isAdmin", true)
           }
         } else {
           alert("invalid email or password");

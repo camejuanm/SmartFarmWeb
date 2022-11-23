@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function Testfetch() {
   
   //status
-  let token = window.localStorage.getItem("token")
+  let token = window.sessionStorage.getItem("token")
   const [datasets, setDatasets] = useState([])
   const [filtered, setFiltered] = useState([])
   const [chartstatus, setChartStatus] = useState('airhum')

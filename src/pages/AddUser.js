@@ -36,6 +36,7 @@ export default class AddUser extends Component {
         .then((data) => {
           console.log(data, "userAdded");
           alert("User added successful");
+          window.sessionStorage.setItem("token", data.accessToken);
           window.location.href="./dashboard";
         });
       } else {
@@ -43,7 +44,7 @@ export default class AddUser extends Component {
       }  
     }
     else {
-      alert('Password must be at least 6 characters');
+      alert('Please complete filling form');
     }
   }
   render() {
@@ -60,7 +61,7 @@ export default class AddUser extends Component {
                     className="form-control" 
                     id="role"
                     style={{fontWeight:"bold"}}
-                    onChange={(e) => this.setState({ role: "e.target.value" })}
+                    onChange={(e) => this.setState({ role: e.target.value })}
                   >User</p>
                 </div>
                     

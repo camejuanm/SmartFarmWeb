@@ -12,8 +12,8 @@ import { Outlet } from 'react-router-dom';
 import LogoUMN from "../images/logo_umn.png";
 
 const Navbar = () => {
-    let auth = window.localStorage.getItem("isAuth")
-    let admin = window.localStorage.getItem("isAdmin")
+    let auth = window.sessionStorage.getItem("isAuth")
+    let admin = window.sessionStorage.getItem("isAdmin")
     const [sidebar, setSidebar] = useState();
     const [sidebarData, setSidebarData] = useState(SidebarDataLanding);
 
@@ -62,7 +62,7 @@ const Navbar = () => {
                             </li>
                         )
                     })}
-                    <li className='nav-logout' onClick={() => {window.localStorage.clear(); window.location.reload()}}><Link to="/"><AiIcons.AiOutlineLogout/><span>Logout</span></Link></li>
+                    <li className='nav-logout' onClick={() => {window.sessionStorage.clear(); window.location.reload()}}><Link to="/"><AiIcons.AiOutlineLogout/><span>Logout</span></Link></li>
                 </ul>
             </nav>
         </IconContext.Provider>

@@ -19,7 +19,7 @@ export default class Profile extends Component {
         "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify({
-        token: window.localStorage.getItem("token"),
+        token: window.sessionStorage.getItem("token"),
       }),
     })
       .then((res) => res.json())
