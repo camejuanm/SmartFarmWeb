@@ -3,18 +3,17 @@ td {
     max-width: 100%;
     min-width: 50%;
 }
-.id {
-    width: 300px;
-}
 .name {
-    width: 300px;
+    width: 500px;
 }
 .email {
-    width: 300px;
-}
-.status {
-    width: 175px;
+    width: 500px;
 }
 .isVerified {
-    width: 150px;
+    width: 300px;
+}
+.history {
+    background: white;
+    position: absolute;
+    top: 45%;
 }
