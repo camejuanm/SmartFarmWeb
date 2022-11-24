@@ -33,11 +33,11 @@ html,
 
 .navbar-light {
   background-color: #ffffff;
-  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+  box-shadow: 0% 1.2% 6.6% rgba(34, 35, 58, 0.2);
 }
 
 .auth-alternate {
-  padding: 10px 60px 10px 60px;
+  padding: 0.8% 4.8%;
   justify-content: center;
   display: flex;
   flex-direction: column;
@@ -59,7 +59,7 @@ html,
   text-align: center;
   margin: 0;
   line-height: 1;
-  padding-bottom: 20px;
+  padding-bottom: 1.6%;
 }
 
 .custom-control-label {
@@ -69,8 +69,8 @@ html,
 .forgot-password,
 .forgot-password a {
   text-align: right;
-  font-size: 13px;
-  padding-top: 10px;
+  font-size: 10pt;
+  padding-top: 1.8%;
   color: #7f7d7d;
   margin: 0;
 }
@@ -80,28 +80,38 @@ html,
 }
 
 .outer {
-  padding: 25px 260px;
+  padding: 4.2% 16%;
   align-items: center;
   height: 100%;
   background: linear-gradient(to left, #e0e0ef 0%, #1b1bf2 100%);
 }
 .outer-login {
-  padding: 115px 10px;
+  padding: 6.5% 0.8%;
 }
 .outer-register {
-  padding: 50px 10px;
+  padding: 0.5% 0.8%;
 }
 .outer-e-register {
-  padding: 75px 10px;
+  padding: 10% 0.8%;
 }
 .outer-email {
-  padding: 100px 10px;
+  padding: 14.3% 0.8%;
 }
 .outer-reset {
-  padding: 100px 10px;
+  padding: 4.3% 0.8%;
 }
 .outer-forgot {
-  padding: 185px 10px;
+  padding: 12.9% 0.8%;
+}
+.outer-card {
+  box-shadow: 0 0.33% 0.67% 0 rgba(0, 0, 0, 0.2), 0 0.5% 1.65% 0 rgba(0, 0, 0, 0.2);
+  padding: 0.5% 0.8%;
+  background-color: #dcdcef;
+  position: absolute;
+  margin: 0.15%;
+  top: 35%;
+  min-width: 16.2%;
+  max-width: 66.4%;
 }
 .app {
   display: flex;
@@ -111,11 +121,11 @@ html,
   height: 100vh;
 }
 .header {
-  padding: 20px;
+  padding: 1%;
 }
 .card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
-  padding: 20px 25px;
+  box-shadow: 0 0.33% 0.67% 0 rgba(0, 0, 0, 0.2), 0 0.5% 1.65% 0 rgba(0, 0, 0, 0.2);
+  padding: 2.5% 2%;
   background-color: #dcdcef;
 }
 
@@ -138,8 +148,8 @@ button {
 }
 .input-field {
   width: 100%;
-  padding: 10px;
-  margin: 10px 0;
+  padding: 1%;
+  margin: 1% 0;
   border: none;
   border-bottom: 1px solid #000;
   outline: none;
@@ -161,10 +171,10 @@ button {
   right: 2%;
 }
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 2%;
 }
 .form-control {
-  margin-bottom: 5px;
+  margin-bottom: 1.25%;
 }
 form {
   display: flex;
@@ -172,15 +182,15 @@ form {
   flex-direction: column;
   width: 100%;
   font-size: 16px;
-  padding: 2px;
+  padding: 0.35%;
 }
 input {
   width: 70%;
-  height: 35px;
-  padding: 5px;
+  height: 5%;
+  padding: 0.5%;
   outline: none;
-  border-radius: 5px;
-  border: 1px solid rgb(220, 220, 220);
+  border-radius: 0.55%;
+  border: 0.2% solid rgb(220, 220, 220);
 }
 input[type="button"] {
   margin-top: 0.5rem;
@@ -189,7 +199,14 @@ input[type="button"] {
   color: white;
   border: none;
 }
+input[type="submit"] {
+  margin-top: 0.5rem;
+  width: 30%;
+  cursor: pointer;
+  border: none;
+  background: rgb(40, 200, 40);
+}
 table {
   width: 100%;
-  padding: 10px;
+  padding: 0.8%;
 }

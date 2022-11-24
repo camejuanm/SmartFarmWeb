@@ -7,6 +7,7 @@ export default class Login extends Component {
     this.state = {
       email: "",
       password: "",
+      login: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -29,17 +30,20 @@ export default class Login extends Component {
     })
       .then((res) => res.json())
       .then((data) => {
-        
         console.log(data, "userRegister");
         console.log(data.statusCode)
         if (!data.message) {
-          alert("login successful");
-          window.sessionStorage.setItem("token", data.accessToken);
-          window.sessionStorage.setItem("isAuth", true)
-          window.location.href = "/dashboard";
-          if (data.role == "admin") {
-            window.sessionStorage.setItem("isAdmin", true)
-          }
+          if(data.email !== undefined) {
+            alert("login successful");
+            window.sessionStorage.setItem("token", data.accessToken);
+            window.sessionStorage.setItem("isAuth", true)
+            window.location.href = "/dashboard";
+            if (data.role == "admin") {
+              window.sessionStorage.setItem("isAdmin", true)
+            }
+          } else {
+            alert("User unverified");
+          }  
         } else {
           alert("invalid email or password");
         }
@@ -90,7 +94,7 @@ export default class Login extends Component {
                   </div>
                 </div>
 
-                <div className="d-grid">
+                <div className="btnSubmit">
                   <button type="submit" className="btn btn-success">
                     Sign In
                   </button>

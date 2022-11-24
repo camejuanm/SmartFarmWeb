@@ -16,32 +16,34 @@ export default class AddUser extends Component {
     e.preventDefault();
     const { role, email, password } = this.state;
     console.log(role, email, password);
-    if(email !== 'undefined' && password.length >= 6) {
-      if(email !== "starwars@example.com" && email !== "eneos@example.com" && email !== "thenardhi2001@gmail.com") {
-        fetch("http://localhost:5000/userData", {
-        method: "POST",
-        crossDomain: true,
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify({
-          role,
-          email,
-          password,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data, "userAdded");
+    if(email !== undefined && password.length >= 6) {
+      fetch("https://smart-farm-backend.vercel.app/api/user/signin", {
+      method: "POST",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        role,
+        email,
+        password,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "userAdded");
+        console.log(data.statusCode);
+        if(data.email !== undefined && data.email !== "starwars@example.com") {
           alert("User added successful");
           window.sessionStorage.setItem("token", data.accessToken);
+          window.sessionStorage.setItem("isAuth", true);
           window.location.href="./dashboard";
-        });
-      } else {
-        alert("User has already exists");
-      }  
+        } else {
+          alert("User has already exists");
+        }
+      });  
     }
     else {
       alert('Please complete filling form');

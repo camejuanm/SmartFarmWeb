@@ -22,7 +22,6 @@ export default class SignUp extends Component {
       verifyOtp: false,
       otp: "",
       verified: false,
-      validate: true,
       confirm: false,
     };
     this.callBoth = this.callBoth.bind(this);
@@ -127,7 +126,7 @@ export default class SignUp extends Component {
     if(this.state.verified) {
       const { name, email, role, mobile, password } = this.state;
       console.log(name, email, role, mobile, password);
-      if(name !== "undefined" && email !== "undefined" && password.length >= 6 && role == "Admin") {
+      if(name !== undefined && email !== undefined && password.length >= 6 && role == "Admin") {
         fetch("https://smart-farm-backend.vercel.app/api/user/signup", {
           method: "POST",
           crossDomain: true,
@@ -152,35 +151,31 @@ export default class SignUp extends Component {
           });
       } 
       else if(role == "User") {
-        if(this.state.validate) {
-          if(password.length >= 6) {
-            fetch("https://smart-farm-backend.vercel.app/api/user/signup", {
-              method: "POST",
-              crossDomain: true,
-              headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-                "Access-Control-Allow-Origin": "*",
-              },
-              body: JSON.stringify({
-                name,
-                email,
-                role,
-                mobile,
-                password,
-              }),
-            })
-              .then((res) => res.json())
-              .then((data) => {
-                console.log(data, "userRegister");
-                alert("User has been registered");
-                window.location.href="./sign-in";
-              });
-          } else {
-            alert("Password too short");
-          }
+        if(password.length >= 6) {
+          fetch("https://smart-farm-backend.vercel.app/api/user/signup", {
+            method: "POST",
+            crossDomain: true,
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              "Access-Control-Allow-Origin": "*",
+            },
+            body: JSON.stringify({
+              name,
+              email,
+              role,
+              mobile,
+              password,
+            }),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              console.log(data, "userRegister");
+              alert("User has been registered");
+              window.location.href="./sign-in";
+            });
         } else {
-          // console.log(error.message);
+          alert("Password too short");
         }
       }
       else {
@@ -256,7 +251,7 @@ export default class SignUp extends Component {
                       style={{
                         backgroundColor: "blue",
                         width: "100%",
-                        padding: 8,
+                        padding: 5,
                         color: "white",
                         border:"none",
                       }}
@@ -300,15 +295,15 @@ export default class SignUp extends Component {
                     />
                   </div>
 
-                  <div className="d-grid">
+                  <div className="btnSubmit">
                     <input
-                      type="submit"
+                      type="button"
                       value="Sign Up"
                       onClick={this.callBoth}
                       onChange={(e) => this.sendEmail(e)}
                       style={{
                         backgroundColor: "green",
-                        width: "160px",
+                        width: "100%",
                         padding: 8,
                         color: "white",
                         border:"none",

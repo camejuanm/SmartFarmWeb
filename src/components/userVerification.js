@@ -138,7 +138,7 @@ export default class userVerification extends Component {
                                                     <input
                                                         type="button"
                                                         value="verify"
-                                                        // onClick={this.verification}
+                                                        onClick={this.verification}
                                                         style={{
                                                             backgroundColor: "blue",
                                                             width: "100%",
