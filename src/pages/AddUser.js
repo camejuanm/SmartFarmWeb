@@ -6,6 +6,7 @@ export default class AddUser extends Component {
     super(props);
     this.state = {
       role: "User",
+      name: "",
       email: "",
       password: "",
     };
@@ -14,8 +15,8 @@ export default class AddUser extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const { role, email, password } = this.state;
-    console.log(role, email, password);
+    const { role, name, email, password } = this.state;
+    console.log(role, name, email, password);
     if(email !== undefined && password.length >= 6) {
       fetch("https://smart-farm-backend.vercel.app/api/user/signin", {
       method: "POST",
@@ -27,6 +28,7 @@ export default class AddUser extends Component {
       },
       body: JSON.stringify({
         role,
+        name,
         email,
         password,
       }),
@@ -35,8 +37,8 @@ export default class AddUser extends Component {
       .then((data) => {
         console.log(data, "userAdded");
         console.log(data.statusCode);
-        if(data.email !== undefined && data.email !== "starwars@example.com") {
-          alert("User added successful");
+        if(data.email !== undefined  && data.name !== undefined) {
+          alert("User has been added");
           window.sessionStorage.setItem("token", data.accessToken);
           window.sessionStorage.setItem("isAuth", true);
           window.location.href="./dashboard";
@@ -58,7 +60,7 @@ export default class AddUser extends Component {
               <form onSubmit={this.handleSubmit}>
                 <h3>Add User</h3>
                 <div class="form-group">
-                  <label for="role">Role:</label>
+                  <label for="role">Role</label>
                   <p
                     className="form-control" 
                     id="role"
@@ -66,9 +68,22 @@ export default class AddUser extends Component {
                     onChange={(e) => this.setState({ role: e.target.value })}
                   >User</p>
                 </div>
+
+                <div class="form-group">
+                  <label for="name">Name</label>
+                  <input 
+                    type="name" 
+                    name="name"
+                    className="form-control" 
+                    placeholder="Please Enter your Name"
+                    onChange={(e) => this.setState({name: e.target.value})} 
+                    id="name"
+                    required 
+                  />
+                </div>
                     
                 <div class="form-group">
-                  <label for="email">Email Address:</label>
+                  <label for="email">Email Address</label>
                   <input 
                     type="email" 
                     name="email"
@@ -81,7 +96,7 @@ export default class AddUser extends Component {
                 </div>
                         
                 <div class="form-group">
-                  <label for="password">Password:</label>
+                  <label for="password">Password</label>
                   <input
                     type="password" 
                     name="password"
@@ -89,7 +104,7 @@ export default class AddUser extends Component {
                     placeholder="Please Enter your Password" 
                     id="password"
                     onChange={(e) => this.setState({password: e.target.value})}
-                    required 
+                    required
                   />
                 </div>
                 <button type="Submit" className="btn btn-success">Add User</button>

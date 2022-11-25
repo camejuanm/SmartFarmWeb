@@ -37,7 +37,6 @@ export default class userVerification extends Component {
         console.log("User verify");
         this.setState({
             isVerified: true,
-            verifyButton: false
         })
     }
     verifyEmail(e) {
@@ -121,6 +120,7 @@ export default class userVerification extends Component {
                         <table>
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th id="name">Name</th>
                                     <th id="email">Email</th>
                                     <th id="isVerified">Verification Status</th>
@@ -131,10 +131,12 @@ export default class userVerification extends Component {
                                     {this.state.datas.map((item, index) => {
                                         return (
                                             <tr key={index}>
+                                                <td>{index+1}</td>
                                                 <td className="name">{item.name}</td>
                                                 <td className="email">{item.email}</td>
-                                                {this.state.verifyButton ? ( 
+                                                 
                                                 <td className="isVerified">
+                                                    {this.state.verifyButton ? (
                                                     <input
                                                         type="button"
                                                         value="verify"
@@ -147,8 +149,8 @@ export default class userVerification extends Component {
                                                             border:"none",
                                                         }}
                                                     />
+                                                    ):null}
                                                 </td>
-                                                ):null}
                                             </tr>
                                         )
                                     })}

@@ -22,11 +22,6 @@ body {
     background-color: whitesmoke;
     padding: 8px;
 }
-.main_menu {
-    height: 100px;
-    background-color: rgba(35, 45, 240, 0.85);
-    padding: 2px;
-}
 .contact {
     padding: 3px;
     background-color: #cfcfe4;

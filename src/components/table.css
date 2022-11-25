@@ -1,16 +1,20 @@
 td {
-    padding: 5px;
+    padding: 0.5%;
     max-width: 100%;
     min-width: 50%;
 }
 .name {
-    width: 500px;
+    width: 6.5%;
+    font-size: 11pt;
 }
 .email {
-    width: 500px;
+    width: 38.5%;
+    font-size: 11pt;
 }
 .isVerified {
-    width: 300px;
+    width: 15%;
+    opacity: 0.88;
+    font-size: 11pt;
 }
 .history {
     background: white;
