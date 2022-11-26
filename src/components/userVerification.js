@@ -1,7 +1,6 @@
 import React, {Component, useState, useEffect} from 'react';
-import './Authentication.css';
+// import './Authentication.css';
 import './table.css';
-import './Navbarstyle.css';
 
 export default class userVerification extends Component {
     constructor(props) {
@@ -84,9 +83,10 @@ export default class userVerification extends Component {
 
     displayData(datas){
         let table = '<table border="1">';
-        table += `<tr><th>Name</th><th>Email</th></tr>`;
+        table += `<tr><th>#</th><th>Name</th><th>Email</th></tr>`;
         datas.forEach((datas, index) => {
             table = table + `<tr>`;
+            table = table + `<td>${datas.id}</td>`;
             table = table + `<td>Name: ${datas.name}</td>`;
             table = table + `<td>Email: ${datas.email}</td>`;
             table += `</tr>`;
@@ -106,7 +106,7 @@ export default class userVerification extends Component {
 
     render() {
         return(
-            <div className="outer">
+            <div className="outer-verification">
                 <form onSubmit={this.handleSubmit}>
                     <h3>Verification User History</h3>
                     <>
@@ -131,7 +131,7 @@ export default class userVerification extends Component {
                                     {this.state.datas.map((item, index) => {
                                         return (
                                             <tr key={index}>
-                                                <td>{index+1}</td>
+                                                <td className="id">{index+1}</td>
                                                 <td className="name">{item.name}</td>
                                                 <td className="email">{item.email}</td>
                                                  
@@ -142,7 +142,7 @@ export default class userVerification extends Component {
                                                         value="verify"
                                                         onClick={this.verification}
                                                         style={{
-                                                            backgroundColor: "blue",
+                                                            backgroundColor: "#2b30ef",
                                                             width: "100%",
                                                             padding: 4,
                                                             color: "white",

@@ -3,12 +3,25 @@ td {
     max-width: 100%;
     min-width: 50%;
 }
+.outer-verification {
+    padding: 2% 16%;
+    background-color: #cdcdf0;
+    text-align: center;
+    align-items: center;
+    flex: 0.78;
+    display: flex;
+    flex-direction: column;
+}
+.id {
+    width: 2.5%;
+    font-size: 11pt;
+}
 .name {
     width: 6.5%;
     font-size: 11pt;
 }
 .email {
-    width: 38.5%;
+    width: 30.5%;
     font-size: 11pt;
 }
 .isVerified {
@@ -17,7 +30,7 @@ td {
     font-size: 11pt;
 }
 .history {
-    background: white;
+    background-color: #cdcdf0;
     position: absolute;
     top: 45%;
 }

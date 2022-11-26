@@ -3,7 +3,7 @@ body {
     display: none;
 }
 .landing {
-    padding: 1.2%;
+    padding: 1.3%;
     width: 100%;
     background: #f0f0ff;
 }
@@ -20,10 +20,10 @@ body {
 }
 .border_image {
     background-color: whitesmoke;
-    padding: 8px;
+    padding: 0.7%;
 }
 .contact {
-    padding: 3px;
+    padding: 0.25%;
     background-color: #cfcfe4;
 }
 .sosmed {

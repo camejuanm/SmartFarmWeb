@@ -1,6 +1,7 @@
 import React from 'react';
 import "./Landing.css";
-import FarmImage from "../images/travel1.PNG";
+import KedairekaUMN from "../images/travel1.PNG";
+import SmartfarmUMN from "../images/smartfarmUMN.JPG";
 import Email from "../images/email.jpg";
 import Phone from "../images/phone.jpg";
 
@@ -16,7 +17,7 @@ const LandingPage = () => {
                     </h1>
                 </div>
                 <div className="border_image">
-                    <img src={FarmImage} className="farm_image" />
+                    <img src={KedairekaUMN} className="farm_image" />
                 </div>
                 <div className="border">
                     <div className="contact">
