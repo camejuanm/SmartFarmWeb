@@ -1,10 +1,12 @@
-import React, {Component, useState, useEffect} from 'react';
-// import './Authentication.css';
+import React, {Component, useState, useEffect, useRef} from 'react';
 import './table.css';
+import emailjs from '@emailjs/browser';
+import { GiConsoleController } from 'react-icons/gi';
 
 export default class userVerification extends Component {
     constructor(props) {
         super(props);
+        this.form = React.createRef();
         this.state = {
             id: "",
             name: "",
@@ -17,9 +19,10 @@ export default class userVerification extends Component {
             history: false,
         };
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.sendEmail = this.sendEmail.bind(this);
         this.updateVerification = this.updateVerification.bind(this);
         this.verification = this.verification.bind(this);
+        this.sendEmail = this.sendEmail.bind(this);
+        this.callMulti = this.callMulti.bind(this);
     }
 
     updateVerification() {
@@ -36,7 +39,33 @@ export default class userVerification extends Component {
         console.log("User verify");
         this.setState({
             isVerified: true,
+            verifyButton: false,
         })
+    }
+    sendEmail() {
+        console.log("Cinta");
+        emailjs.sendForm('service_22rl9vo', 'template_c9ueake', this.form.current, '5qCkTRANrxpqkVp3X')
+        .then((result) => {
+            console.log(result.text);
+            console.log("message sent to email");
+            alert("Email verified");
+            this.setState({
+                verify: true,
+                verifyButton: false,
+            });
+        }, (error) => {
+            alert("Something went wrong");
+        });
+    };
+    chooseOne(e) {
+        e.preventDefault();
+
+    }
+
+    callMulti(e, value) {
+        // this.verification();
+        // this.sendEmail();
+        console.log(this.state.datas[`${value}`]);
     }
     verifyEmail(e) {
         this.setState({
@@ -46,14 +75,6 @@ export default class userVerification extends Component {
             if(this.state.name !== "undefined" && this.state.email !== "undefined") {
                 this.setState({ isVerified: true });
             }
-        });
-    }
-
-    sendEmail() {
-        alert("Email verified");
-        this.setState({
-            verify: true,
-            isVerified: false,
         });
     }
 
@@ -107,7 +128,7 @@ export default class userVerification extends Component {
     render() {
         return(
             <div className="outer-verification">
-                <form onSubmit={this.handleSubmit}>
+                <form ref={this.form} onSubmit={this.handleSubmit}>
                     <h3>Verification User History</h3>
                     <>
                     {this.state.history ? (
@@ -130,17 +151,18 @@ export default class userVerification extends Component {
                                 <>
                                     {this.state.datas.map((item, index) => {
                                         return (
+
                                             <tr key={index}>
                                                 <td className="id">{index+1}</td>
                                                 <td className="name">{item.name}</td>
                                                 <td className="email">{item.email}</td>
-                                                 
                                                 <td className="isVerified">
                                                     {this.state.verifyButton ? (
                                                     <input
+                                                        key={index}
                                                         type="button"
                                                         value="verify"
-                                                        onClick={this.verification}
+                                                        onClick={this.callMulti(index)}
                                                         style={{
                                                             backgroundColor: "#2b30ef",
                                                             width: "100%",

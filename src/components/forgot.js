@@ -33,7 +33,7 @@ export default class Forgot extends Component {
           .then((res) => res.json())
           .then((data) => {
             console.log(data, "userRegister");
-            alert("password changes");
+            alert("Message sent to email");
         });
     }
 

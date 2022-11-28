@@ -13,19 +13,19 @@ td {
     flex-direction: column;
 }
 .id {
-    width: 2.5%;
+    width: 2%;
     font-size: 11pt;
 }
 .name {
-    width: 6.5%;
+    width: 10%;
     font-size: 11pt;
 }
 .email {
-    width: 30.5%;
+    width: 30%;
     font-size: 11pt;
 }
 .isVerified {
-    width: 15%;
+    width: 13%;
     opacity: 0.88;
     font-size: 11pt;
 }

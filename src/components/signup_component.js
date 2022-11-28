@@ -61,11 +61,6 @@ export default class SignUp extends Component {
     });
   }
 
-  // only for admin
-  onRoleSubmit() {
-    alert('Admin is processing registration verification for your registration. Please wait for maximum 24 hours.');
-  }
-
   //code will send via SMS about 5 minutes since verifyButton clicked
   verifyCode() {
     window.confirmationResult
@@ -96,12 +91,12 @@ export default class SignUp extends Component {
     });
   }
 
-  callBoth() {
+  callBoth(e) {
     if(this.state.role == "User") {
       this.sendEmail();
-      this.handleSubmit();
+      this.handleSubmit(e);
     } else {
-      this.handleSubmit();
+      this.handleSubmit(e);
     }  
   }
 
@@ -300,7 +295,6 @@ export default class SignUp extends Component {
                       type="button"
                       value="Sign Up"
                       onClick={this.callBoth}
-                      onChange={(e) => this.sendEmail(e)}
                       style={{
                         backgroundColor: "green",
                         width: "100%",
