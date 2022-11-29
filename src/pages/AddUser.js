@@ -38,7 +38,7 @@ export default class AddUser extends Component {
         console.log(data, "userAdded");
         console.log(data.statusCode);
         if(data.email !== undefined  && data.name !== undefined) {
-          alert("User has been added");
+          alert("User added successful");
           window.sessionStorage.setItem("token", data.accessToken);
           window.sessionStorage.setItem("isAuth", true);
           window.location.href="./dashboard";

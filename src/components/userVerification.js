@@ -1,14 +1,12 @@
 import React, {Component, useState, useEffect, useRef} from 'react';
 import './table.css';
 import emailjs from '@emailjs/browser';
-import { GiConsoleController } from 'react-icons/gi';
 
 export default class userVerification extends Component {
     constructor(props) {
         super(props);
         this.form = React.createRef();
         this.state = {
-            id: "",
             name: "",
             email: "",
             isVerified: false,
@@ -22,7 +20,6 @@ export default class userVerification extends Component {
         this.updateVerification = this.updateVerification.bind(this);
         this.verification = this.verification.bind(this);
         this.sendEmail = this.sendEmail.bind(this);
-        this.callMulti = this.callMulti.bind(this);
     }
 
     updateVerification() {
@@ -43,7 +40,6 @@ export default class userVerification extends Component {
         })
     }
     sendEmail() {
-        console.log("Cinta");
         emailjs.sendForm('service_22rl9vo', 'template_c9ueake', this.form.current, '5qCkTRANrxpqkVp3X')
         .then((result) => {
             console.log(result.text);
@@ -57,30 +53,18 @@ export default class userVerification extends Component {
             alert("Something went wrong");
         });
     };
-    chooseOne(e) {
-        e.preventDefault();
 
-    }
-
-    callMulti(e, value) {
-        // this.verification();
-        // this.sendEmail();
-        console.log(this.state.datas[`${value}`]);
-    }
-    verifyEmail(e) {
-        this.setState({
-            name: e.target.value,
-            email: e.target.value
-        }, function() {
-            if(this.state.name !== "undefined" && this.state.email !== "undefined") {
-                this.setState({ isVerified: true });
-            }
-        });
-    }
+    callMulti = (index) => (e) => {
+        let datas = this.state;
+        datas[index] = e.target.datas;
+        console.log(this.state.datas[index]);
+        this.verification();
+        this.sendEmail();
+    };
 
     componentDidMount() {
-        const { id, name, email } = this.state;
-        console.log(id, name, email);
+        const { name, email } = this.state;
+        console.log(name, email);
         const token = window.sessionStorage.getItem("token");
         fetch("https://smart-farm-backend.vercel.app/api/user/all", {
             method: "GET",
@@ -107,7 +91,7 @@ export default class userVerification extends Component {
         table += `<tr><th>#</th><th>Name</th><th>Email</th></tr>`;
         datas.forEach((datas, index) => {
             table = table + `<tr>`;
-            table = table + `<td>${datas.id}</td>`;
+            table = table + `<td>${index}</td>`;
             table = table + `<td>Name: ${datas.name}</td>`;
             table = table + `<td>Email: ${datas.email}</td>`;
             table += `</tr>`;
@@ -141,27 +125,43 @@ export default class userVerification extends Component {
                         <table>
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th id="name">Name</th>
-                                    <th id="email">Email</th>
-                                    <th id="isVerified">Verification Status</th>
+                                    <th>No</th>
+                                    <th id="name" className="th_name">Name</th>
+                                    <th id="email" className="th_email">Email</th>
+                                    {this.state.verifyButton? (
+                                    <th id="isVerified" className="verification">
+                                        Verification
+                                    </th>
+                                    ):null}
                                 </tr>
                             </thead>
                             <tbody>
                                 <>
                                     {this.state.datas.map((item, index) => {
                                         return (
-
                                             <tr key={index}>
                                                 <td className="id">{index+1}</td>
-                                                <td className="name">{item.name}</td>
-                                                <td className="email">{item.email}</td>
+                                                <td
+                                                    className="name"
+                                                    name="user_name"
+                                                    onLoad={(e) => this.setState({ name: item.name[index] })}
+                                                >
+                                                    {item.name}
+                                                </td>
+                                                <td
+                                                    className="email"
+                                                    name="user_email"
+                                                    onLoad={(e) => this.setState({ email: item.email[index] })}
+                                                >
+                                                    {item.email}
+                                                </td>
+                                                {this.state.verifyButton ? (
                                                 <td className="isVerified">
-                                                    {this.state.verifyButton ? (
                                                     <input
                                                         key={index}
                                                         type="button"
                                                         value="verify"
+                                                        onChange = {this.callMulti(item[index])}
                                                         onClick={this.callMulti(index)}
                                                         style={{
                                                             backgroundColor: "#2b30ef",
@@ -171,8 +171,8 @@ export default class userVerification extends Component {
                                                             border:"none",
                                                         }}
                                                     />
-                                                    ):null}
                                                 </td>
+                                                ):null}
                                             </tr>
                                         )
                                     })}

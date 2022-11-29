@@ -1,7 +1,17 @@
-td {
+table {
+    margin: 0.2%;
+    padding: 0.2%;
+    background-color: #9090cd;
+}
+
+td, tr, th {
     padding: 0.5%;
     max-width: 100%;
     min-width: 50%;
+}
+th {
+    background-color: #dcdcfe;
+    font-size: 15pt;
 }
 .outer-verification {
     padding: 2% 16%;
@@ -15,22 +25,42 @@ td {
 .id {
     width: 2%;
     font-size: 11pt;
+    background-color: cyan;
 }
 .name {
     width: 10%;
     font-size: 11pt;
+    background-color: #ee80ee;
+}
+.th_name {
+    width: 10%;
+    padding: 0.2%;
+    background-color: #34bccd;
 }
 .email {
     width: 30%;
     font-size: 11pt;
+    background-color: orange;
+}
+.th_email {
+    width: 30%;
+    padding: 0.2%;
+    background-color: #abff00;
 }
 .isVerified {
     width: 13%;
-    opacity: 0.88;
+    opacity: 0.6;
     font-size: 11pt;
+    background-color: chocolate;
+}
+.verification {
+    width: 13%;
+    opacity: 1;
+    padding: 0.2%;
+    background-color: #cafffc;
 }
 .history {
-    background-color: #cdcdf0;
+    background-color: #e0e0f0;
     position: absolute;
     top: 45%;
 }
