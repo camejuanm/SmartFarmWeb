@@ -122,7 +122,7 @@ export default class SignUp extends Component {
       const { name, email, role, mobile, password } = this.state;
       console.log(name, email, role, mobile, password);
       if(name !== undefined && email !== undefined && password.length >= 6 && role == "Admin") {
-        fetch("https://smart-farm-backend.vercel.app/api/user/signup", {
+        fetch("https://smart-farm-backend.vercel.app/api/user/admin_signup", {
           method: "POST",
           crossDomain: true,
           headers: {

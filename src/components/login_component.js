@@ -33,7 +33,7 @@ export default class Login extends Component {
         console.log(data, "userRegister");
         console.log(data.statusCode)
         if (!data.message) {
-          if(data.email !== undefined) {
+          if(data.isVerified == true) {
             alert("login successful");
             window.sessionStorage.setItem("token", data.accessToken);
             window.sessionStorage.setItem("isAuth", true)
