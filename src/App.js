@@ -36,7 +36,7 @@ function App() {
             <Route path="/userDetails" element={<UserDetails />} />
             <Route path='/dashboard' element={<Dashboard />} />
             <Route path='/visualize' element={<Visualize/>}/>
-            <Route path='/testfetch' element={<Testfetch/>}/>
+            <Route path='/testfetch' element={<Testfetch2/>}/>
             <Route element={<PrivateRoutesAdmin/>}>
               <Route path='/gateway' element={<Gateway/>}/>
               <Route path='/token' element={<Token/>}/>
@@ -47,8 +47,6 @@ function App() {
           <Route path="/reset" element={<Reset />} />
           <Route path='/sign-up' element={<SignUp />} />
           <Route path='/sign-in' element={<Login />} />
-          <Route path='/testfetch2' element={<Testfetch2 />} />
-          <Route path='/testfetch3' element={<Testfetch3 />} />
         </Routes>
       </Router>
     </>

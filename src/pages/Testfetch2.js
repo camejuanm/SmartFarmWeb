@@ -33,6 +33,17 @@ function Testfetch2() {
   const [dataairtemp, setairTemp] = useState([])
   const [datasoilhum, setSoilHum] = useState([])
 
+
+  const nodelist = [
+    {node : 102},
+    {node : 103},
+    {node : 104},
+    {node : 105},
+    {node : 202},
+    {node : 203},
+    {node : 204},
+    {node : 205}
+  ]
   //chart setup
   const [userData, setUserData] = useState({
     labels: [],
@@ -129,6 +140,14 @@ function Testfetch2() {
 
 
   const chartData = () => {
+    
+    var titlechart = '';
+    var chartlabel = '';
+    var maxthres = 0;
+    var minthres = 0;
+    var fData = [];
+    var maxyaxes = 0;
+    var symbol = '';
 
     const datex = datasets.map(function(elem) {
       return new Date(elem.timestamp)
@@ -152,15 +171,14 @@ function Testfetch2() {
       //   return first + " " + second
       // })
 
-      const fDate = filteredData.map(function(elem) {
-        return new Date(elem.timestamp).toString().substr(4,17);
-      })
-
-      
       // const fDate = filteredData.map(function(elem) {
-      //   const date = new Date(elem.timestamp).toString(); 
-      //   return date.substr();
+      //   return new Date(elem.timestamp).toString().substr(4,17);
       // })
+
+      const fDate = filteredData.map(function(elem) {
+        return new Date(elem.timestamp).toISOString();
+      })
+    
 
     
       const fHum = filteredData.map(function(elem) {
@@ -171,9 +189,9 @@ function Testfetch2() {
           return elem.airTemp
           })
 
-          const fSoil = filteredData.map(function(elem) {
-            return elem.soilHum
-            })
+        const fSoil = filteredData.map(function(elem) {
+          return elem.soilHum
+          })
 
       
       
@@ -181,347 +199,532 @@ function Testfetch2() {
 // console.log(filteredData)
 const backgroundcolor = []
 
+  titlechart = 'Data Normal dari ' + new Date(lastDate).toDateString().substr(4,12) + ' - ' + new Date(blastDate).toDateString().substr(4,12)
 
 if (chartstatus == 'airhum') {
 
-  const maxthres = 55
+  maxthres = 55
+  minthres = 30
 
-  const minthres = 30
+  maxyaxes = 80
 
-  
-  for (let i = 0; i < fHum.length; i++ ) {
-    if(fHum[i] > maxthres) {backgroundcolor.push('red')}
-    else if (fHum[i] <= maxthres && fHum[i] >= minthres) {backgroundcolor.push('black')}
-    else {backgroundcolor.push('red')}
-  }
+  chartlabel = "% of Air Humidity"
+  symbol ="%"
 
-  setUserData({
-    labels: fDate,
-    datasets: [
-      {
-        label: "% of Humidity",
-        data: fHum,
-        backgroundColor: backgroundcolor,
-        borderWidth: 1,
-        showLine: false
-      }
-    ]
-  });
-
-  setOptionData({
-    scales: {
-      y: {
-          beginAtZero: true,
-          max:80,
-          ticks : {
-              callback: function(value, index, ticks) {
-                  return  value + '%';
-          }  
-      }
-      },
-      x: {
-        offset: true,
-        // type: 'time',
-        //     time: {
-        //         displayFormats: {hour: 'HH:mm'}
-        //     },
-        grid:{
-          display:false
-        },  
-            ticks: {
-              // source: 'labels'
-              maxTicksLimit: 5.5
-            }
-      },
-      // x2: {
-      //   offset: true,
-      //   position: 'top',
-      //   type: 'time',
-      //   time: {
-      //     unit: 'day'
-      //   },
-      //   adapters: {
-      //     date: {
-      //         zone: 'UTC+7'
-      //     }
-      //   },
-      //   grid:{
-      //       tickColor: 'black',
-      //       borderColor: 'black',
-      //       tickLength: 10
-      //     },
-          
-      //     ticks:{
-            
-      //       // maxTicksLimit: 5.4  
-      //      source: 'labels'
-      //       // source: 'labels' //pake kalo data udah rapi
-      //   },
-        
-      //   gridLines: {
-      //     offsetGridLines : true
-      // }
-      // }
-    },
-    plugins :{
-      annotation: {
-        annotations: [
-          {
-          type: 'line',
-          mode: 'horizontal',
-          scaleID: 'y',
-          value: maxthres,
-          borderColor: 'red',
-          borderWidth: 2,
-          // label: {
-          //   enabled: false,
-          //   content: 'Test label'
-          // }
-        },{
-          type: 'line',
-          mode: 'horizontal',
-          scaleID: 'y',
-          value: minthres,
-          borderColor: 'green',
-          borderWidth: 2,
-          // label: {
-          //   enabled: false,
-          //   content: 'Test label'
-          // }
-        },
-        {
-          type: 'label',
-          xValue: 12  ,
-          yValue: maxthres + 5,
-          content: ['Maximum Threshold'],
-          color: 'red',
-          font: {
-            size: 12
-
-          }
-        },
-        {
-          type: 'label',
-          xValue: 12,
-          yValue: minthres - 5,
-          content: ['Minimum Threshold'],
-          color: 'green',
-          font: {
-            size: 12
-          }
-        }
-      ]
-    }
-    
-    }
-});
+  fData = filteredData.map(function(elem) {
+    return elem.airHum
+    })
 
 }
 
 else if (chartstatus == 'airtemp') {
 
-  const maxthres = 30
-
-  const minthres = 20
+  maxthres = 30
+  minthres = 20
   
-  for (let i = 0; i < fTemp.length; i++ ) {
-    if(fTemp[i] > maxthres) {backgroundcolor.push('red')}
-    else if (fTemp[i] <= maxthres && fTemp[i] >= minthres) {backgroundcolor.push('black')}
-    else {backgroundcolor.push('red')}
-  }
+  maxyaxes = 50
 
-  setUserData({
-    labels: fDate,
-    datasets: [
-      {
-        label: "°C of Temperature",
-        data: fTemp,
-        backgroundColor: backgroundcolor,
-        borderWidth: 1,
-        showLine: false
-      }
-    ]
-  });
+  chartlabel = "°C of Temperature"
+  symbol = "°C"
 
-  setOptionData({
-    scales: {
-    y: {
-        beginAtZero: true,
-        max:50,
-        ticks : {
-            callback: function(value, index, ticks) {
-                return  value + '°C';
-        }  
-    }
-    },
-    x: {
-      offset: true,
-      grid:{
-        display:false
-      },
-        ticks:{
-            maxTicksLimit: 5.1
-        }
-    }
-},
-plugins :{
-  annotation: {
-    annotations: [{
-      type: 'line',
-      mode: 'horizontal',
-      scaleID: 'y',
-      value: maxthres,
-      borderColor: 'red',
-      borderWidth: 2,
-      label: {
-        enabled: false,
-        content: 'Test label'
-      }
-    },{
-      type: 'line',
-      mode: 'horizontal',
-      scaleID: 'y',
-      value: minthres,
-      borderColor: 'green',
-      borderWidth: 2,
-      label: {
-        enabled: false,
-        content: 'Test label'
-      }
-    },
-    {
-      type: 'label',
-      xValue: 12,
-      yValue: maxthres + 5,
-      content: ['Maximum Threshold'],
-      color: 'red',
-      font: {
-        size: 12
+  fData = filteredData.map(function(elem) {
+    return elem.airTemp
+    })
 
-      }
-    },
-    {
-      type: 'label',
-      xValue: 12,
-      yValue: minthres - 5,
-      content: ['Minimum Threshold'],
-      color: 'green',
-      font: {
-        size: 12
-
-      }
-    }]
-}
-
-}
-});
+ 
 }
 
 else if (chartstatus == 'soilhum') {
 
-  const maxthres = 35
+  maxthres = 35
+  minthres = 10
 
-  const minthres = 10
-  
-  for (let i = 0; i < fSoil.length; i++ ) {
-    if(fSoil[i] > maxthres) {backgroundcolor.push('red')}
-    else if (fSoil[i] <= maxthres && fSoil[i] >= minthres) {backgroundcolor.push('black')}
-    else {backgroundcolor.push('red')}
-  }
+  maxyaxes = 50
 
-  setUserData({
-    labels: fDate,
-    datasets: [
-      {
-        label: "% of Soil Humidity",
-        data: fSoil,
-        backgroundColor: backgroundcolor,
-        borderWidth: 1,
-        showLine: false
-      }
-    ]
-  });
+  chartlabel = "% of Soil Humidity"
+  symbol = "%"
 
-  setOptionData({
-    scales: {
+  fData = filteredData.map(function(elem) {
+    return elem.soilHum
+    })
+
+}
+
+for (let i = 0; i < fData.length; i++ ) {
+  if(fData[i] > maxthres) {backgroundcolor.push('red')}
+  else if (fData[i] <= maxthres && fData[i] >= minthres) {backgroundcolor.push('black')}
+  else {backgroundcolor.push('red')}
+}
+
+setUserData({
+  labels: fDate,
+  datasets: [
+    {
+      label: chartlabel,
+      data: fData,
+      borderDash: [],
+      backgroundColor: backgroundcolor,
+      borderWidth: 1,
+      showLine: false
+    }
+  ]
+});
+
+setOptionData({
+  scales: {
     y: {
         beginAtZero: true,
-        max:50,
+        max: maxyaxes,
         ticks : {
             callback: function(value, index, ticks) {
-                return  value + '%';
+                return  value + symbol;
         }  
     }
     },
     x: {
+      bounds: 'ticks',
       offset: true,
-      grid:{
-        display:false
+      type: 'time',
+          time: {
+              unit: 'day',  
+          },
+      // grid:{
+      //   display:false
+      // },  
+        
+          ticks: {
+            callback: function(value, index, ticks) {
+              return value + ', 12 AM';
+          }
+            // maxTicksLimit: 5.1
+          },
+          adapters: {
+              date: {
+                  zone: 'UTC+7'
+              }
+          }
+    },
+    // x2: {
+    //   offset: true,
+    //   position: 'top',
+    //   type: 'time',
+    //   time: {
+    //     unit: 'day'
+    //   },
+    //   adapters: {
+    //     date: {
+    //         zone: 'UTC+7'
+    //     }
+    //   },
+    //   grid:{
+    //       tickColor: 'black',
+    //       borderColor: 'black',
+    //       tickLength: 10
+    //     },
+        
+    //     ticks:{
+          
+    //       // maxTicksLimit: 5.4  
+    //      source: 'labels'
+    //       // source: 'labels' //pake kalo data udah rapi
+    //   },
+      
+    //   gridLines: {
+    //     offsetGridLines : true
+    // }
+    // }
+  },
+  plugins :{
+    title: {
+      display:true,
+      text: titlechart
+    },
+    annotation: {
+      annotations: [
+        {
+        type: 'line',
+        mode: 'horizontal',
+        scaleID: 'y',
+        value: maxthres,
+        borderColor: 'red',
+        borderWidth: 2,
+        // label: {
+        //   enabled: false,
+        //   content: 'Test label'
+        // }
+      },{
+        type: 'line',
+        mode: 'horizontal',
+        scaleID: 'y',
+        value: minthres,
+        borderColor: 'green',
+        borderWidth: 2,
+        // label: {
+        //   enabled: false,
+        //   content: 'Test label'
+        // }
       },
-        ticks:{
-            maxTicksLimit: 5.1
-        }
-    }
-},
-plugins :{
-  annotation: {
-    annotations: [{
-      type: 'line',
-      mode: 'horizontal',
-      scaleID: 'y',
-      value: maxthres,
-      borderColor: 'red',
-      borderWidth: 2,
-      label: {
-        enabled: false,
-        content: 'Test label'
-      }
-    },
-    {
-      type: 'line',
-      mode: 'horizontal',
-      scaleID: 'y',
-      value: minthres,
-      borderColor: 'green',
-      borderWidth: 2,
-      label: {
-        enabled: false,
-        content: 'Test label'
-      }
-    },
-    {
-      type: 'label',
-      xValue: 12,
-      yValue: maxthres + 5,
-      content: ['Maximum Threshold'],
-      color: 'red',
-      font: {
-        size: 12
+      // {
+      //   type: 'label',
+      //   xValue: 12  ,
+      //   yValue: maxthres + 5,
+      //   content: ['Maximum Threshold'],
+      //   color: 'red',
+      //   font: {
+      //     size: 12
 
-      }
-    },
-    {
-      type: 'label',
-      xValue: 12,
-      yValue: minthres - 5,
-      content: ['Minimum Threshold'],
-      color: 'green',
-      font: {
-        size: 12
-
-      }
-    }]
-}
-
-}
+      //   }
+      // },
+      // {
+      //   type: 'label',
+      //   xValue: 12,
+      //   yValue: minthres - 5,
+      //   content: ['Minimum Threshold'],
+      //   color: 'green',
+      //   font: {
+      //     size: 12
+      //   }
+      // }
+    ]
+  }
+  
+  }
 });
-}
       }
     else if (charttype === 'daily') {
       buttonDailyMax()
     }
       
       
+  }
+
+  const buttonDailyMax = () => {
+
+    // data yang nantinya akan dipakai
+    const maxdata = []
+    const mindata = []
+    const daily = []
+    const maxtime= []
+    const mintime = []
+
+    // data date yang diambil dari blastDate
+    const date1 = new Date(blastDate)
+    date1.setDate(date1.getDate() + 1)
+    date1.setHours(0,0,0,0)
+    console.log(date1)
+    const date2 = new Date(blastDate)
+    console.log(date2)
+    const dateadd = new Date(blastDate)
+    console.log(dateadd)
+    date2.setHours(0,0,0,0)
+
+    const date3 = new Date(blastDate)
+    date3.setHours(0,0,0,0)
+
+    // karena data blastDate ditambahkan satu harus ada konfigurasi
+    if(dateEditor == true) {
+      var dayzero = 5
+    } else {
+      var dayzero = 3
+    }
+    // var dayzero = 5;
+    
+
+    // looping untuk melakukan push pada data2 yang diperlukan
+    for(let i = 0 ; i < 5; i++) {
+      var datefirst = new Date();
+      var dateadds = new Date();
+      var datelast = new Date();
+
+      datelast.setDate(date1.getDate() - dayzero)
+      datelast.setMonth(date1.getMonth())
+      datelast.setHours(0,0,0,0)
+
+      datefirst.setDate(date2.getDate() - dayzero)
+      datefirst.setMonth(date2.getMonth())
+      datefirst.setHours(0,0,0,0)
+      dateadds.setDate(dateadd.getDate() - dayzero)
+      dateadds.setMonth(dateadd.getMonth())
+      
+      
+      daily.push(dateadds.toDateString())
+      
+      console.log(datelast)
+      console.log(datefirst)
+      console.log(dayzero)
+
+
+      var maxmin = datasets.filter((a) => {
+        var aDate = new Date(a.timestamp);
+        var aNode = a.idNode
+        return aDate <= datelast && aDate >= datefirst && aNode == nodestate;
+      })
+
+      if (chartstatus === 'airhum') {
+        const dataairHum = maxmin.map((e) => {
+          return e.airHum
+        })
+
+        const maxdatax = Math.max(...dataairHum)
+
+        maxdata.push(Math.max(...dataairHum))
+        mindata.push(Math.min(...dataairHum))
+
+        const datey = maxmin.filter((e) => {
+          return e.airHum === Math.max(...dataairHum)
+        })  
+
+        const datem = maxmin.filter((e) => {
+          return e.airHum === Math.min(...dataairHum)
+        })  
+
+        maxtime.push(datey.slice(0, 1).map((e) => {
+          return new Date(e.timestamp).getHours()
+        }))
+
+        mintime.push(datem.slice(0, 1).map((e) => {
+          return new Date(e.timestamp).getHours()
+        }))
+
+      }
+      else if (chartstatus === 'airtemp') {
+        const dataairTemp = maxmin.map((e) => {
+          return e.airTemp
+        })
+
+        const maxdatax = Math.max(...dataairTemp)
+
+        maxdata.push(Math.max(...dataairTemp))
+        mindata.push(Math.min(...dataairTemp))
+
+        const datey = maxmin.filter((e) => {
+          return e.airTemp === Math.max(...dataairTemp)
+        })  
+
+        const datem = maxmin.filter((e) => {
+          return e.airTemp === Math.min(...dataairTemp)
+        })  
+
+        maxtime.push(datey.slice(0, 1).map((e) => {
+          return new Date(e.timestamp).getHours()
+        }))
+
+        mintime.push(datem.slice(0, 1).map((e) => {
+          return new Date(e.timestamp).getHours()
+        }))
+        
+      }
+      else if (chartstatus === 'soilhum') {
+        const datasoilHum= maxmin.map((e) => {
+          return e.soilHum
+        })
+
+        const maxdatax = Math.max(...datasoilHum)
+
+        maxdata.push(Math.max(...datasoilHum))
+        mindata.push(Math.min(...datasoilHum))
+
+        const datey = maxmin.filter((e) => {
+          return e.soilHum === Math.max(...datasoilHum)
+        })  
+
+        const datem = maxmin.filter((e) => {
+          return e.soilHum === Math.min(...datasoilHum)
+        })  
+
+        maxtime.push(datey.slice(0, 1).map((e) => {
+          return new Date(e.timestamp).getHours() 
+        }))
+
+        mintime.push(datem.slice(0, 1).map((e) => {
+          return new Date(e.timestamp).getHours() 
+        }))
+        
+      }
+      
+      dayzero = dayzero - 1 
+
+    }
+    console.log(maxdata)
+    console.log(mindata)
+    console.log(daily)
+    console.log(maxtime)
+    console.log(mintime)
+
+    var maxthres = 0;
+    var minthres = 0;
+    var maxdaily = 0;
+    var labeldailymax = '';
+    var labeldailymin = '';
+    var symbol = '';
+    var titlechart = 'Data Max & Min dari ' + new Date(lastDate).toDateString().substr(4,12) + ' - ' + new Date(blastDate).toDateString().substr(4,12)
+
+
+    if (chartstatus=='airhum') {
+      maxthres = 55
+      minthres = 30
+      maxdaily = 80
+      symbol = "%"
+      labeldailymax = "Max % of Air Humidity"
+      labeldailymin = "Min % of Air Humidity"
+    }
+    else if (chartstatus =='airtemp') {
+      maxthres = 30
+      minthres = 20
+      maxdaily = 50
+      symbol = "°C"
+      labeldailymax = "Max °C of Air Temperature"
+      labeldailymin = "Min °C of Air Temperature"
+    }
+    else if (chartstatus =='soilhum') {
+      maxthres = 35
+      minthres = 10
+      maxdaily = 50
+      symbol = "%"
+      labeldailymax = "Max % of Soil Humidity"
+      labeldailymin = "Min % of Soil Humidity"
+    }
+
+
+    setUserData({
+      labels: daily,
+      datasets: [
+        {
+          label: labeldailymax,
+          data: maxdata,
+          backgroundColor: [
+            "purple",
+          ],
+          borderWidth: 1,
+          showLine: false
+        },
+        // {
+        //   label: "Time",
+        //   data: timestamps,
+        //   backgroundColor: [
+        //     "purple",
+        //   ],
+        //   borderWidth: 1,
+        //   showLine: false
+        // },
+        {
+          label: labeldailymin,
+          data: mindata,
+          backgroundColor: [
+            "green",
+          ],
+          borderWidth: 1,
+          showLine: false
+        }
+      ]
+    });
+
+    
+
+    setOptionData({
+      scales: {
+        y: {
+            beginAtZero: true,
+            max:maxdaily,
+            ticks : {
+                callback: function(value, index, ticks) {
+                    return  value + symbol;
+            }  
+        }
+        },
+        x: {
+          offset: true,
+            // type: 'time', // menampilkan grafik perjam
+            // time: {
+            //   displayFormats: {hour: 'DD HH:mm'}
+            // },
+            // offset: true,
+          grid:{
+            display:false
+          },
+            ticks:{
+                maxTicksLimit: 5.4  
+                // maxTicksLimit: 6  
+                // source: 'labels' //pake kalo data udah rapi
+            }
+        }
+      },
+      plugins :{
+        tooltip: {
+
+          callbacks: {
+            title: ((tooltipItem) => {
+
+                // menentukan isi tooltip berdasarkan dari index datasets (problem : array lebih dari satu)
+                if (tooltipItem[0].datasetIndex === 0) { 
+                  return`${tooltipItem[0].label} ${maxtime[tooltipItem[0].dataIndex]}.00`; //mereturn label dan juga waktu jam dari max value
+                }
+                if (tooltipItem[0].datasetIndex === 1) {
+                  return`${tooltipItem[0].label} ${mintime[tooltipItem[0].dataIndex]}.00`;
+                }
+                
+              
+              
+             
+            })
+    }
+  },
+        title: {
+          display:true,
+          text: titlechart
+        },
+        annotation: {
+          annotations: [{
+            type: 'line',
+            mode: 'horizontal',
+            scaleID: 'y',
+            value: maxthres,
+            borderColor: 'red',
+            borderWidth: 2,
+            label: {
+              enabled: false,
+              content: 'Test label'
+            }
+          },
+          {
+            type: 'line',
+            mode: 'horizontal',
+            scaleID: 'y',
+            value: minthres,
+            borderColor: 'green',
+            borderWidth: 2,
+            label: {
+              enabled: false,
+              content: 'Test label'
+            }
+          },
+          {
+            type: 'label',
+            xValue: 4,
+            yValue: maxthres + 5,
+            content: ['Maximum Threshold'],
+            color: 'red',
+            font: {
+              size: 12
+      
+            }
+          },
+          {
+            type: 'label',
+            xValue: 4,
+            yValue: minthres - 5,
+            content: ['Minimum Threshold'],
+            color: 'green',
+            font: {
+              size: 12
+      
+            }
+          }
+        ]
+      }
+      
+      }
+});
   }
 
     //Handle click to change the chartstatus
@@ -542,6 +745,7 @@ plugins :{
 
     //set the blastDate and lastDate with the date picker
     const onChangeChart = (e) => {
+      console.log(new Date(e.target.value))
       setDatedef(e.target.values)
       const lastdate = new Date(e.target.value)
       const blastDate = new Date(e.target.value)
@@ -554,358 +758,7 @@ plugins :{
     }
 
     // data harian max dan min
-    const buttonDailyMax = () => {
-
-      // data yang nantinya akan dipakai
-      const maxdata = []
-      const mindata = []
-      const daily = []
-      const maxtime= []
-      const mintime = []
-
-      // data date yang diambil dari blastDate
-      const date1 = new Date(blastDate)
-      date1.setDate(date1.getDate() + 1)
-      date1.setHours(0,0,0,0)
-      console.log(date1)
-      const date2 = new Date(blastDate)
-      const dateadd = new Date(blastDate)
-      console.log(dateadd)
-      date2.setHours(0,0,0,0)
-
-      // karena data blastDate ditambahkan satu harus ada konfigurasi
-      if(dateEditor == true) {
-        var dayzero = 5
-      } else {
-        var dayzero = 3
-      }
-      console.log(dayzero)
-      
-
-      // looping untuk melakukan push pada data2 yang diperlukan
-      for(let i = 0 ; i < 5; i++) {
-        
-        var datelast = new Date()
-        datelast.setDate(date1.getDate() - dayzero)
-        datelast.setHours(0,0,0,0)
-        
-        var datefirst = new Date()
-        var dateadds = new Date()
-
-        datefirst.setDate(date2.getDate() - dayzero)
-        dateadds.setDate(dateadd.getDate() - dayzero)
-        datefirst.setHours(0,0,0,0)
-        
-        daily.push(dateadds.toDateString())
-        console.log(datefirst)
-        console.log(datelast)
-
-
-        var maxmin = datasets.filter((a) => {
-          var aDate = new Date(a.timestamp);
-          var aNode = a.idNode
-          return aDate <= datelast && aDate >= datefirst && aNode == nodestate;
-        })
-
-        if (chartstatus === 'airhum') {
-          const dataairHum = maxmin.map((e) => {
-            return e.airHum
-          })
-
-          const maxdatax = Math.max(...dataairHum)
-
-          maxdata.push(Math.max(...dataairHum))
-          mindata.push(Math.min(...dataairHum))
-
-          const datey = maxmin.filter((e) => {
-            return e.airHum === Math.max(...dataairHum)
-          })  
-
-          const datem = maxmin.filter((e) => {
-            return e.airHum === Math.min(...dataairHum)
-          })  
-
-          maxtime.push(datey.slice(0, 1).map((e) => {
-            return new Date(e.timestamp).getHours()
-          }))
-  
-          mintime.push(datem.slice(0, 1).map((e) => {
-            return new Date(e.timestamp).getHours()
-          }))
-
-        }
-        else if (chartstatus === 'airtemp') {
-          const dataairTemp = maxmin.map((e) => {
-            return e.airTemp
-          })
-
-          const maxdatax = Math.max(...dataairTemp)
-
-          maxdata.push(Math.max(...dataairTemp))
-          mindata.push(Math.min(...dataairTemp))
-
-          const datey = maxmin.filter((e) => {
-            return e.airTemp === Math.max(...dataairTemp)
-          })  
-
-          const datem = maxmin.filter((e) => {
-            return e.airTemp === Math.min(...dataairTemp)
-          })  
-
-          maxtime.push(datey.slice(0, 1).map((e) => {
-            return new Date(e.timestamp).getHours()
-          }))
-  
-          mintime.push(datem.slice(0, 1).map((e) => {
-            return new Date(e.timestamp).getHours()
-          }))
-          
-        }
-        else if (chartstatus === 'soilhum') {
-          const datasoilHum= maxmin.map((e) => {
-            return e.soilHum
-          })
-
-          const maxdatax = Math.max(...datasoilHum)
-
-          maxdata.push(Math.max(...datasoilHum))
-          mindata.push(Math.min(...datasoilHum))
-
-          const datey = maxmin.filter((e) => {
-            return e.soilHum === Math.max(...datasoilHum)
-          })  
-
-          const datem = maxmin.filter((e) => {
-            return e.soilHum === Math.min(...datasoilHum)
-          })  
-
-          maxtime.push(datey.slice(0, 1).map((e) => {
-            return new Date(e.timestamp).getHours() 
-          }))
-  
-          mintime.push(datem.slice(0, 1).map((e) => {
-            return new Date(e.timestamp).getHours() 
-          }))
-          
-        }
-        
-        
-
-        
-        // const dataairHum = maxmin.map((e) => {
-        //   return e.airHum
-        // })
-        
-        // const dataairTemp = maxmin.map((e) => {
-        //   return e.airTemp
-        // })
-
-       
-        // const maxdatax = Math.max(...dataairHum)
-        // // console.log(maxdatax)
-        // // console.log(max)
-
-        // maxdata.push(Math.max(...dataairHum))
-        // mindata.push(Math.min(...dataairHum))
-        
-        // const datey = maxmin.filter((e) => {
-        //   return e.airHum === Math.max(...dataairHum)
-        // })  
-        // const datem = maxmin.filter((e) => {
-        //   return e.airHum === Math.min(...dataairHum)
-        // })  
-
-        // console.log(datey)
-        // maxtime.push(datey.map((e) => {
-        //   return new Date(e.timestamp).getHours()
-        // }))
-
-        // mintime.push(datey.map((e) => {
-        //   return new Date(e.timestamp).getHours()
-        // }))
-
-        dayzero = dayzero - 1 
-
-      }
-      console.log(maxdata)
-      console.log(mindata)
-      console.log(daily)
-      console.log(maxtime)
-      console.log(mintime)
-      
-      // const titleTooltip = () => {
-      //   let sum = [''];
-      //   timestamps.forEach(month => {
-      //     sum.push(month);
-      //   });    
-      //   return sum;
-      // }
-
-      var maxthres = 0;
-      var minthres = 0;
-      var maxdaily = 0;
-      var labeldailymax = '';
-      var labeldailymin = '';
-
-      if (chartstatus=='airhum') {
-        maxthres = 55
-        minthres = 30
-        maxdaily = 80
-        labeldailymax = "Max % of Air Humidity"
-        labeldailymin = "Min % of Air Humidity"
-      }
-      else if (chartstatus =='airtemp') {
-        maxthres = 30
-        minthres = 20
-        maxdaily = 50
-        labeldailymax = "Max °C of Air Temperature"
-        labeldailymin = "Min °C of Air Temperature"
-      }
-      else if (chartstatus =='soilhum') {
-        maxthres = 35
-        minthres = 10
-        maxdaily = 50
-        labeldailymax = "Max % of Soil Humidity"
-        labeldailymin = "Min % of Soil Humidity"
-      }
-
-
-      setUserData({
-        labels: daily,
-        datasets: [
-          {
-            label: labeldailymax,
-            data: maxdata,
-            backgroundColor: [
-              "purple",
-            ],
-            borderWidth: 1,
-            showLine: false
-          },
-          // {
-          //   label: "Time",
-          //   data: timestamps,
-          //   backgroundColor: [
-          //     "purple",
-          //   ],
-          //   borderWidth: 1,
-          //   showLine: false
-          // },
-          {
-            label: labeldailymin,
-            data: mindata,
-            backgroundColor: [
-              "green",
-            ],
-            borderWidth: 1,
-            showLine: false
-          }
-        ]
-      });
-
-      
-
-      setOptionData({
-        scales: {
-          y: {
-              beginAtZero: true,
-              max:maxdaily,
-              ticks : {
-                  callback: function(value, index, ticks) {
-                      return  value + '%';
-              }  
-          }
-          },
-          x: {
-            offset: true,
-              // type: 'time', // menampilkan grafik perjam
-              // time: {
-              //   displayFormats: {hour: 'DD HH:mm'}
-              // },
-              // offset: true,
-            grid:{
-              display:false
-            },
-              ticks:{
-                  maxTicksLimit: 5.4  
-                  // maxTicksLimit: 6  
-                  // source: 'labels' //pake kalo data udah rapi
-              }
-          }
-        },
-        plugins :{
-          tooltip: {
-
-            callbacks: {
-              title: ((tooltipItem) => {
-
-                  // menentukan isi tooltip berdasarkan dari index datasets (problem : array lebih dari satu)
-                  if (tooltipItem[0].datasetIndex === 0) { 
-                    return`${tooltipItem[0].label} ${maxtime[tooltipItem[0].dataIndex]}.00`; //mereturn label dan juga waktu jam dari max value
-                  }
-                  if (tooltipItem[0].datasetIndex === 1) {
-                    return`${tooltipItem[0].label} ${mintime[tooltipItem[0].dataIndex]}.00`;
-                  }
-                  
-                
-                
-               
-              })
-      }
-    },
-          annotation: {
-            annotations: [{
-              type: 'line',
-              mode: 'horizontal',
-              scaleID: 'y',
-              value: maxthres,
-              borderColor: 'red',
-              borderWidth: 2,
-              label: {
-                enabled: false,
-                content: 'Test label'
-              }
-            },
-            {
-              type: 'line',
-              mode: 'horizontal',
-              scaleID: 'y',
-              value: minthres,
-              borderColor: 'green',
-              borderWidth: 2,
-              label: {
-                enabled: false,
-                content: 'Test label'
-              }
-            },
-            {
-              type: 'label',
-              xValue: 3,
-              yValue: maxthres + 5,
-              content: ['Maximum Threshold'],
-              color: 'red',
-              font: {
-                size: 12
-        
-              }
-            },
-            {
-              type: 'label',
-              xValue: 3,
-              yValue: minthres - 5,
-              content: ['Minimum Threshold'],
-              color: 'green',
-              font: {
-                size: 12
-        
-              }
-            }
-          ]
-        }
-        
-        }
-  });
-    }
+    
 
     const onChangeHandler = event => {
       setNodeState(event.target.value);
@@ -925,31 +778,46 @@ plugins :{
 
   return (
     <>
-    <div className='container-chart'>Visualize
-      <div className='chart'>
-        <LineChart chartData={userData} chartOption={optionData}/>
-      </div>
-      <div className='button-chart'>
-        <input onChange={onChangeChart} type="date" className='enddate' value={datedef}></input>
-        <button className='btn-humid'onClick={airHumClick} >Humidity</button>
-        <button className='btn-temp' onClick={airTempClick}>Temp</button>
-        <button className='btn-soil' onClick={soilHumClick}>Soil</button>
-        <button className='btn-maxmindaily' onClick={charttypebutton}>{dailyswitch}</button>
-        <input type="text" name="name" onChange={onChangeHandler} value={nodestate} style={{width: "60px"}}/>
-        {/* <Dropdown className="d-inline mx-2">
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-        {dropdown}
-        </Dropdown.Toggle>
+    <div className='chart-page'>
+      <div className='container-chart'>
+        <div className='chart'>
+          <LineChart chartData={userData} chartOption={optionData}/>
+        </div>
+        <div className='button-chart'>
+          <div>
+          <input onChange={onChangeChart} type="date" className='enddate' value={datedef}></input>
+          <button className='btn-humid'onClick={airHumClick} >Humidity</button>
+          <button className='btn-temp' onClick={airTempClick}>Temp</button>
+          <button className='btn-soil' onClick={soilHumClick}>Soil</button>
+          <div className='node-input'>
+          {/* {nodelist.map((item, index) => {
+                        return (
+                            <button className='node-button' key={index} value={item.node}>{item.node}</button>
+                        )
+                    })} */}
+          <input className='input-node' type="text" name="name" onChange={onChangeHandler} value={nodestate} />
+         
+          </div>
+          
+          <button className='btn-maxmindaily' onClick={charttypebutton}></button>
+          </div>
+          
+          {/* <Dropdown className="d-inline mx-2">
+          <Dropdown.Toggle variant="success" id="dropdown-basic">
+          {dropdown}
+          </Dropdown.Toggle>
 
-        <Dropdown.Menu>
-        <Dropdown.Item key='102' onClick={() => {setNodeState(102);setDropdown('102');}}>102
-        </Dropdown.Item>  
-        <Dropdown.Item key='202' onClick={() => {setNodeState(202);setDropdown('202');}}>202
-        </Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown> */}
-      </div> 
+          <Dropdown.Menu>
+          <Dropdown.Item key='102' onClick={() => {setNodeState(102);setDropdown('102');}}>102
+          </Dropdown.Item>  
+          <Dropdown.Item key='202' onClick={() => {setNodeState(202);setDropdown('202');}}>202
+          </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown> */}
+        </div> 
+      </div>
     </div>
+    
     </>
   )
 }

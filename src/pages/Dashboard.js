@@ -140,49 +140,47 @@ function Dashboard() {
       <div className='img-all'>
       <div className='project-picker'>
       <div className='image-container'>
-      <img src={pic} className='foto' style={{width: "444px"}} useMap="#node-map"/>
+      <img src={pic} className='foto' style={{width: "400px"}} useMap="#node-map"/>
       <map id="node-map" name='node-map'>
         
-        <area shape='rect'
-              coords='49,128,227,192'
+        <area shape='circle'
+              coords='147,221,29'
               href=''
               onClick={handleOnClick1}
                />
-        <area shape='rect'
-              coords='49,194,227,264'
+        <area shape='circle'
+              coords='147,264,29'
               href=''
               onClick={handleOnClick2}
                /> 
-        <area shape='rect'
-              coords='49,265,227,331'
+        <area shape='circle'
+              coords='147,307,29'
               href=''
               onClick={handleOnClick3}
                /> 
-        <area class=""
-              shape='rect'
-              coords='49,332,227,297'
+        <area shape='circle'
+              coords='147,345,29'
               href=''
               onClick={handleOnClick4}
                /> 
 
-        <area shape='rect'
-              coords='256,128,436,192'
+        <area shape='circle'
+              coords='214,221,29'
               href=''
               onClick={handleOnClick1}
                />
-        <area shape='rect'
-              coords='256,194,436,264'
+        <area shape='circle'
+              coords='214,264,29'
               href=''
               onClick={handleOnClick2}
                /> 
-        <area shape='rect'
-              coords='256,265,436,331'
+        <area shape='circle'
+              coords='214,307,29'
               href=''
               onClick={handleOnClick3}
                /> 
-        <area class=""
-              shape='rect'
-              coords='256,332,436,297'
+        <area shape='circle'
+              coords='214,345,29'
               href=''
               onClick={handleOnClick4}
                /> 

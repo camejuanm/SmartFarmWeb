@@ -10,10 +10,11 @@ import { SidebarLanding } from './SidebarLanding';
 import { IconContext} from 'react-icons'
 import { Outlet } from 'react-router-dom';
 import LogoUMN from "../images/logo_umn.jpg";
+import e from 'cors';
 
 const Navbar = () => {
-    let auth = window.localStorage.getItem("isAuth")
-    let admin = window.localStorage.getItem("isAdmin")
+    let auth = window.sessionStorage.getItem("isAuth")
+    let admin = window.sessionStorage.getItem("isAdmin")
     const [sidebar, setSidebar] = useState();
     const [sidebarData, setSidebarData] = useState(SidebarLanding);
 
@@ -35,6 +36,10 @@ const Navbar = () => {
         
         checknavbar()
     }, [])
+
+    const keymap = (e) => {
+        console.log(sidebarData[e.target.key].title)
+    }
 
     return (
     <>
@@ -59,10 +64,11 @@ const Navbar = () => {
                                     {item.icon}
                                     <span>{item.title}</span>
                                 </Link>
+                                <button key={index} onClick={keymap}></button>
                             </li>
                         )
                     })}
-                    <li className='nav-logout' onClick={() => {window.localStorage.clear(); window.location.reload()}}><Link to="/"><AiIcons.AiOutlineLogout/><span>Logout</span></Link></li>
+                    <li className='nav-logout' onClick={() => {window.sessionStorage.clear(); window.location.reload()}}><Link to="/"><AiIcons.AiOutlineLogout/><span>Logout</span></Link></li>
                 </ul>
             </nav>
         </IconContext.Provider>
