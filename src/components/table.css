@@ -1,17 +1,18 @@
 table {
     margin: 0.2%;
     padding: 0.2%;
-    background-color: #9090cd;
+    background-color: white;
 }
 
 td, tr, th {
     padding: 0.5%;
     max-width: 100%;
     min-width: 50%;
+    border: solid 0.75px black;
 }
 th {
-    background-color: #dcdcfe;
     font-size: 15pt;
+    background-color: #5b5bef;
 }
 .outer-verification {
     padding: 2% 16%;
@@ -25,42 +26,38 @@ th {
 .id {
     width: 2%;
     font-size: 11pt;
-    background-color: cyan;
 }
 .name {
     width: 10%;
     font-size: 11pt;
-    background-color: #ee80ee;
 }
 .th_name {
     width: 10%;
     padding: 0.2%;
-    background-color: #34bccd;
 }
 .email {
     width: 30%;
     font-size: 11pt;
-    background-color: orange;
 }
 .th_email {
     width: 30%;
     padding: 0.2%;
-    background-color: #abff00;
 }
 .isVerified {
     width: 13%;
     opacity: 0.6;
     font-size: 11pt;
-    background-color: chocolate;
 }
 .verification {
     width: 13%;
     opacity: 1;
     padding: 0.2%;
-    background-color: #cafffc;
 }
 .history {
-    background-color: #e0e0f0;
+    background-color: white;
     position: absolute;
     top: 45%;
+}
+.email_sent {
+    visibility: hidden;
 }

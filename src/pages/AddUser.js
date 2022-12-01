@@ -5,10 +5,11 @@ export default class AddUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      role: "User",
+      role: "",
       name: "",
       email: "",
       password: "",
+      token: window.sessionStorage.getItem("token"),
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -17,7 +18,7 @@ export default class AddUser extends Component {
     e.preventDefault();
     const { role, name, email, password } = this.state;
     console.log(role, name, email, password);
-    if(email !== undefined && password.length >= 6) {
+    if(email !== undefined && password.length >= 6 && role == "User") {
       fetch("https://smart-farm-backend.vercel.app/api/user/signup", {
         method: "POST",
         crossDomain: true,
@@ -39,6 +40,29 @@ export default class AddUser extends Component {
             alert("User has been added");
             window.location.href="./dashboard";
         });
+    } else if(role == "Admin") {
+      fetch("https://smart-farm-backend.vercel.app/api/user/admin_signup", {
+        method: "POST",
+        crossDomain: true,
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "x-access-token": this.state.token,
+        },
+        body: JSON.stringify({
+          role,
+          name,
+          email,
+          password,
+        }),
+      })
+      .then((res) => res.json())
+        .then((data) => {
+            console.log(data, "adminAdded");
+            alert("Admin has been added");
+            window.location.href="./dashboard";
+        });
     } else {
       alert('Please complete filling form');
     }
@@ -53,12 +77,17 @@ export default class AddUser extends Component {
                 <h3>Add User</h3>
                 <div class="form-group">
                   <label for="role">Role</label>
-                  <p
-                    className="form-control" 
-                    id="role"
-                    style={{fontWeight:"bold"}}
-                    onChange={(e) => this.setState({ role: e.target.value })}
-                  >User</p>
+                  <br />
+                  <select
+                      id="role"
+                      className="btn btn-primary"
+                      placeholder="Select Role"
+                      onChange={ (e) => this.setState({ role: e.target.value })}
+                    >
+                      <option></option>
+                      <option id="admin">Admin</option>
+                      <option id="user">User</option>
+                    </select>
                 </div>
 
                 <div class="form-group">

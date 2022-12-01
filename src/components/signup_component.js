@@ -15,7 +15,7 @@ export default class SignUp extends Component {
     this.state = {
       name: "",
       email: "",
-      role: "",
+      // role: "",
       mobile: "",
       password: "",
       verifyButton: false,
@@ -92,12 +92,8 @@ export default class SignUp extends Component {
   }
 
   callBoth(e) {
-    if(this.state.role == "User") {
-      this.sendEmail();
-      this.handleSubmit(e);
-    } else {
-      this.handleSubmit(e);
-    }  
+    this.sendEmail();
+    this.handleSubmit(e);  
   }
 
   sendEmail() {
@@ -118,11 +114,11 @@ export default class SignUp extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    if(this.state.verified) {
-      const { name, email, role, mobile, password } = this.state;
-      console.log(name, email, role, mobile, password);
-      if(name !== undefined && email !== undefined && password.length >= 6 && role == "Admin") {
-        fetch("https://smart-farm-backend.vercel.app/api/user/admin_signup", {
+    // if(this.state.verified) {
+      const { name, email, mobile, password } = this.state;
+      console.log(name, email, mobile, password);
+      if(name !== undefined && email !== undefined && password.length >= 6) {
+        fetch("https://smart-farm-backend.vercel.app/api/user/signup", {
           method: "POST",
           crossDomain: true,
           headers: {
@@ -133,52 +129,22 @@ export default class SignUp extends Component {
           body: JSON.stringify({
             name,
             email,
-            role,
             mobile,
             password,
           }),
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log(data, "adminRegister");
-            alert("Admin has been registered");
+            console.log(data, "userRegister");
+            alert("User has been registered");
             window.location.href="./sign-in";
           });
-      } 
-      else if(role == "User") {
-        if(password.length >= 6) {
-          fetch("https://smart-farm-backend.vercel.app/api/user/signup", {
-            method: "POST",
-            crossDomain: true,
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-              "Access-Control-Allow-Origin": "*",
-            },
-            body: JSON.stringify({
-              name,
-              email,
-              role,
-              mobile,
-              password,
-            }),
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              console.log(data, "userRegister");
-              alert("User has been registered");
-              window.location.href="./sign-in";
-            });
-        } else {
-          alert("Password too short");
-        }
-      }
-      else {
+      } else {
         alert("Please complete filling in the form");
       }  
-    } else {
-      alert("Please Verify Mobile");
-    }
+    // } else {
+    //   alert("Please Verify Mobile");
+    // }
   }
   render() {
     return (
@@ -215,7 +181,7 @@ export default class SignUp extends Component {
                     />
                   </div>
 
-                  <div className="mb-3">
+                  {/* <div className="mb-3">
                     <label for="role">Role</label>
                     <br />
                     <select
@@ -228,7 +194,7 @@ export default class SignUp extends Component {
                       <option id="admin">Admin</option>
                       <option id="user">User</option>
                     </select>
-                  </div>
+                  </div> */}
 
                   <div className="mb-3">
                     <label for="mobile">Mobile Phone</label>

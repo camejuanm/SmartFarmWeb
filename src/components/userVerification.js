@@ -12,9 +12,9 @@ export default class userVerification extends Component {
             isVerified: false,
             datas: [],
             verify: false,
-            verifyButton: true,
             updateVerification: true,
             history: false,
+            email_sent: "",
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.updateVerification = this.updateVerification.bind(this);
@@ -36,12 +36,6 @@ export default class userVerification extends Component {
         console.log("User verify");
     }
     sendEmail() {
-        // let name = this.state;
-        // name[index] = e.target.name;
-        // console.log(this.state.name[index]);
-        // let email = this.state;
-        // datas[index] = e.target.email;
-        // console.log(this.state.email[index]);
         emailjs.sendForm('service_22rl9vo', 'template_c9ueake', this.form.current, '5qCkTRANrxpqkVp3X')
         .then((result) => {
             console.log(result.text);
@@ -55,14 +49,18 @@ export default class userVerification extends Component {
     callMulti = (index) => (e) => {
         let datas = this.state;
         datas[index] = e.target.datas;
-        console.log(this.state.datas[index]);
-        this.verification();
-        this.sendEmail();
         this.setState({
             isVerified: true,
-            verifyButton: false,
             verify: true,
+            email_sent: this.state.datas[index].email
         })
+        if(this.state.email_sent == this.state.datas[index].email) {
+            console.log(this.state.datas[index].email);
+            this.verification();
+            this.sendEmail();
+        } else {
+            // console.log(error.message);
+        }
     };
 
     componentDidMount() {
@@ -87,7 +85,16 @@ export default class userVerification extends Component {
 
     componentWillUpdate(pP,pS,sS) {
         console.log(pS)
+        console.log(this.state)
     }
+
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     console.log(nextState);
+    // }
+
+    // componentWillMount() {
+    //     this.setState({ email_sent: this.state.email_sent })
+    // }
 
     displayData(datas){
         let table = '<table border="1">';
@@ -115,7 +122,7 @@ export default class userVerification extends Component {
     render() {
         return(
             <div className="outer-verification">
-                <form ref={this.form} onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleSubmit}>
                     <h3>Verification User History</h3>
                     <>
                     {this.state.history ? (
@@ -131,11 +138,10 @@ export default class userVerification extends Component {
                                     <th>No</th>
                                     <th id="name" className="th_name">Name</th>
                                     <th id="email" className="th_email">Email</th>
-                                    {this.state.verifyButton? (
                                     <th id="isVerified" className="verification">
                                         Verification
                                     </th>
-                                    ):null}
+                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -150,10 +156,10 @@ export default class userVerification extends Component {
                                                         type="text"
                                                         name="user_name"
                                                         value={item.name}
-                                                        onChange={(e) => this.setState({ name: e.target.value.key })}
+                                                        onChange={(e) => this.setState({ name: e.target.value[index] })}
                                                         style={{
                                                             width: "100%",
-                                                            backgroundColor: "#ee80ee",
+                                                            backgroundColor: "none",
                                                             padding: 1,
                                                             border: "none",
                                                         }}
@@ -165,32 +171,30 @@ export default class userVerification extends Component {
                                                         type="email"
                                                         name="user_email"
                                                         value={item.email}
-                                                        onChange={(e) => this.setState({ email: e.target.value.key })}
+                                                        onChange={(e) => this.setState({ email: e.target.value[index] })}
                                                         style={{
                                                             width: "100%",
-                                                            backgroundColor:"orange",
+                                                            backgroundColor:"none",
                                                             padding: 1,
                                                             border: "none",
                                                         }}
                                                     />
                                                 </td>
-                                                {this.state.verifyButton ? (
                                                 <td className="isVerified">
                                                     <input
                                                         key={index}
                                                         type="button"
                                                         value="verify"
                                                         onClick={this.callMulti(index)}
+                                                        onSubmit={this.handleSubmit}
                                                         style={{
-                                                            backgroundColor: "#2b30ef",
+                                                            backgroundColor: "#2020ef",
                                                             width: "100%",
                                                             padding: 4,
                                                             color: "white",
-                                                            border:"none",
                                                         }}
                                                     />
                                                 </td>
-                                                ):null}
                                             </tr>
                                         )
                                     })}
@@ -198,6 +202,10 @@ export default class userVerification extends Component {
                             </tbody>
                         </table>
                     </div>
+
+                    <form ref={this.form} className="email_sent">
+                        <input type="email" name='user_email' value={this.state.email_sent}></input>
+                    </form>
                     <div className="d-grid">
                         <button
                             type="submit"
