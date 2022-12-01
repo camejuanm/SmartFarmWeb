@@ -33,7 +33,7 @@ function App() {
           <Route element={<PrivateRoutes  />}>
             <Route path="/profile" element={<Profile />} />
             <Route path='/dashboard' element={<Dashboard />} />
-            <Route path='/visualize' element={<Visualize/>}/>
+            <Route path='/visualize' element={<Testfetch2/>}/>
             <Route path='/page1' element={<Page1/>}/>
             <Route path='/testfetch' element={<Testfetch/>}/>
             <Route path='/testfetch2' element={<Testfetch2 />} />
