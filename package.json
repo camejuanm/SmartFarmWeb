@@ -13,6 +13,7 @@
     "bootstrap": "^5.2.2",
     "chart.js": "^3.9.1",
     "chartjs-adapter-luxon": "^1.2.0",
+    "chartjs-plugin-annotation": "^2.1.0",
     "cors": "^2.8.5",
     "crypto-browserify": "^3.12.0",
     "crypto-js": "^4.0.0",
