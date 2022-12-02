@@ -33,6 +33,7 @@ export default class userVerification extends Component {
     }
 
     verification() {
+        this.setState({verify: true})
         console.log("User verify");
     }
     sendEmail() {
@@ -46,16 +47,23 @@ export default class userVerification extends Component {
         });
     };
 
-    callMulti = (index) => (e) => {
+    componentWillReceiveProps(newProps) {
+        console.log('componentWillReceiveProps', newProps);
+        this.setState(newProps);
+    }
+
+    callMulti = (index) => (e) => { // tekan tombol verify sebanyak 2 kali untuk melakukan verifikasi email
+        // this.componentWillReceiveProps();
         let datas = this.state;
         datas[index] = e.target.datas;
         this.setState({
-            isVerified: true,
-            verify: true,
             email_sent: this.state.datas[index].email
         })
         if(this.state.email_sent == this.state.datas[index].email) {
             console.log(this.state.datas[index].email);
+            this.setState({
+                isVerified: true,
+            })
             this.verification();
             this.sendEmail();
         } else {
@@ -83,18 +91,9 @@ export default class userVerification extends Component {
         });
     }
 
-    componentWillUpdate(pP,pS,sS) {
-        console.log(pS)
-        console.log(this.state)
+    componentDidUpdate(pP,pS,sS) {
+        if(this.state.verify == true) {console.log(pS)}
     }
-
-    // shouldComponentUpdate(nextProps, nextState) {
-    //     console.log(nextState);
-    // }
-
-    // componentWillMount() {
-    //     this.setState({ email_sent: this.state.email_sent })
-    // }
 
     displayData(datas){
         let table = '<table border="1">';
@@ -156,7 +155,7 @@ export default class userVerification extends Component {
                                                         type="text"
                                                         name="user_name"
                                                         value={item.name}
-                                                        onChange={(e) => this.setState({ name: e.target.value[index] })}
+                                                        onChange={(e) => this.setState({ name: e.target.value })}
                                                         style={{
                                                             width: "100%",
                                                             backgroundColor: "none",
@@ -171,7 +170,7 @@ export default class userVerification extends Component {
                                                         type="email"
                                                         name="user_email"
                                                         value={item.email}
-                                                        onChange={(e) => this.setState({ email: e.target.value[index] })}
+                                                        onChange={(e) => this.setState({ email: e.target.value })}
                                                         style={{
                                                             width: "100%",
                                                             backgroundColor:"none",
@@ -186,7 +185,6 @@ export default class userVerification extends Component {
                                                         type="button"
                                                         value="verify"
                                                         onClick={this.callMulti(index)}
-                                                        onSubmit={this.handleSubmit}
                                                         style={{
                                                             backgroundColor: "#2020ef",
                                                             width: "100%",
