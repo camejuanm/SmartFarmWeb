@@ -1,0 +1,63 @@
+table {
+    margin: 0.2%;
+    padding: 0.2%;
+    background-color: white;
+}
+
+td, tr, th {
+    padding: 0.5%;
+    max-width: 100%;
+    min-width: 50%;
+    border: solid 0.75px black;
+}
+th {
+    font-size: 15pt;
+    background-color: #5b5bef;
+}
+.outer-verification {
+    padding: 2% 16%;
+    background-color: #cdcdf0;
+    text-align: center;
+    align-items: center;
+    flex: 0.78;
+    display: flex;
+    flex-direction: column;
+}
+.id {
+    width: 2%;
+    font-size: 11pt;
+}
+.name {
+    width: 10%;
+    font-size: 11pt;
+}
+.th_name {
+    width: 10%;
+    padding: 0.2%;
+}
+.email {
+    width: 30%;
+    font-size: 11pt;
+}
+.th_email {
+    width: 30%;
+    padding: 0.2%;
+}
+.isVerified {
+    width: 13%;
+    opacity: 0.6;
+    font-size: 11pt;
+}
+.verification {
+    width: 13%;
+    opacity: 1;
+    padding: 0.2%;
+}
+.history {
+    background-color: white;
+    position: absolute;
+    top: 45%;
+}
+.email_sent {
+    visibility: hidden;
+}

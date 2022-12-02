@@ -1,7 +1,7 @@
 import { Outlet, Navigate } from "react-router-dom"
 
 const PrivateRoutesAdmin  = () => {
-    let auth = window.localStorage.getItem("isAdmin");
+    let auth = window.sessionStorage.getItem("isAdmin");
     return(
         auth ? <Outlet/> : <Navigate to="/dashboard"/>
     )

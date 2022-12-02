@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import "./Authentication.css";
+import "./Profile.css";
 import Time from '../time/time';
 
-export default class UserDetails extends Component {
+export default class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,7 +19,7 @@ export default class UserDetails extends Component {
         "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify({
-        token: window.localStorage.getItem("token"),
+        token: window.sessionStorage.getItem("token"),
       }),
     })
       .then((res) => res.json())

@@ -6,17 +6,20 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import LandingPage from "./components/landing_page";
 import Login from "./components/login_component";
 import SignUp from "./components/signup_component";
-import UserDetails from "./components/userDetails";
+import Profile from "./pages/profile";
 import Reset from "./components/reset";
 import Forgot from "./components/forgot";
 import Navbar from "./components/Navbar";
+import Contact from "./components/Contact";
 import Dashboard from "./pages/Dashboard"
 import Gateway from "./pages/Gateway"
 import Token from "./pages/Token"
 import AddUser from "./pages/AddUser"
+import UserVerification from "./components/userVerification";
 import Visualize from "./pages/Visualize"
 import Testfetch from './pages/Testfetch';
 import Testfetch2 from './pages/Testfetch2';
+import Page1 from './pages/page1';
 
 import PrivateRoutes from './utils/PrivateRoutes';
 import PrivateRoutesAdmin from './utils/PrivateRoutesAdmin';
@@ -28,10 +31,12 @@ function App() {
       <Navbar />
         <Routes>
           <Route element={<PrivateRoutes  />}>
-            <Route path="/userDetails" element={<UserDetails />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path='/dashboard' element={<Dashboard />} />
-            <Route path='/visualize' element={<Visualize/>}/>
+            <Route path='/visualize' element={<Testfetch2/>}/>
+            <Route path='/page1' element={<Page1/>}/>
             <Route path='/testfetch' element={<Testfetch/>}/>
+            <Route path='/testfetch2' element={<Testfetch2 />} />
             <Route element={<PrivateRoutesAdmin/>}>
               <Route path='/gateway' element={<Gateway/>}/>
               <Route path='/token' element={<Token/>}/>
@@ -43,7 +48,8 @@ function App() {
           <Route path='/sign-in' element={<Login />} />
           <Route path="/forgot" element={<Forgot />} />
           <Route path="/reset" element={<Reset />} />
-          <Route path='/testfetch2' element={<Testfetch2 />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/userVerification" element={<UserVerification />} />
         </Routes>
       </Router>
     </>

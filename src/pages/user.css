@@ -1,0 +1,16 @@
+.adduser {
+    padding: 0.8%;
+    box-shadow: 0 0 0.5% 1% rgba(0, 0, 0, 0.2), 0 0 0.8% 1.2% rgba(0, 0, 200, 0.8);
+}
+.outer-border {
+    padding: 4.2% 16%;
+    background: #f0f0f0;
+}
+.outer-user {
+    padding: 5% 0.8%;
+}
+.card {
+    align-items: center;
+    padding: 1.5% 1.6%;
+    display: column;
+}

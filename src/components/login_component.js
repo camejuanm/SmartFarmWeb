@@ -1,15 +1,13 @@
 import React, { Component } from "react";
 import "./Authentication.css";
-import Home from '../navbar/Home';
 
 export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      input: {},
-      errors: {},
       email: "",
       password: "",
+      login: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -32,17 +30,20 @@ export default class Login extends Component {
     })
       .then((res) => res.json())
       .then((data) => {
-        
         console.log(data, "userRegister");
         console.log(data.statusCode)
         if (!data.message) {
-          alert("login successful");
-          window.localStorage.setItem("token", data.accessToken);
-          window.localStorage.setItem("isAuth", true)
-          window.location.href = "/dashboard";
-          if (data.role == "admin") {
-          window.localStorage.setItem("isAdmin",true)
-          }
+          if(data.isVerified == true) {
+            alert("login successful");
+            window.sessionStorage.setItem("token", data.accessToken);
+            window.sessionStorage.setItem("isAuth", true)
+            window.location.href = "/dashboard";
+            if (data.role == "admin") {
+              window.sessionStorage.setItem("isAdmin", true)
+            }
+          } else {
+            alert("User unverified");
+          }  
         } else {
           alert("invalid email or password");
         }
@@ -52,55 +53,57 @@ export default class Login extends Component {
     return (
       <>
         <div className="outer">
-          <div className="card">
-            <form onSubmit={this.handleSubmit}>
-              <h3>Sign In</h3>
+          <div className="outer-login">
+            <div className="card">
+              <form onSubmit={this.handleSubmit}>
+                <h3>Sign In</h3>
 
-              <div className="mb-3">
-                <label for="email">Email address</label>
-                <input
-                  type="email"
-                  className="form-control"
-                  placeholder="Enter email"
-                  onChange={(e) => this.setState({ email: e.target.value })}
-                />
-              </div>
-
-              <div className="mb-3">
-                <label for="password">Password</label>
-                <input
-                  type="password"
-                  className="form-control"
-                  placeholder="Enter password"
-                  onChange={(e) => this.setState({ password: e.target.value })}
-                />
-              </div>
-              <p className="forgot-password text-right">
-                <a href="/forgot">Forgot password</a>?
-              </p>
-
-              <div className="mb-3">
-                <div className="custom-control custom-checkbox">
+                <div className="mb-3">
+                  <label for="email">Email address</label>
                   <input
-                    type="checkbox"
-                    className="custom-control-input"
-                    id="rememberMe"
+                    type="email"
+                    className="form-control"
+                    placeholder="Enter email"
+                    onChange={(e) => this.setState({ email: e.target.value })}
                   />
-                  <label className="custom-control-label" htmlFor="rememberMe">
-                    Remember me
-                  </label>
                 </div>
-              </div>
 
-              <div className="d-grid">
-                <button type="submit" className="btn btn-success">
-                  Submit
-                </button>
-              </div>
-              <p className="forgot-password text-right">
-                <a href="/sign-up">Sign Up</a>
-              </p>
-            </form>
+                <div className="mb-3">
+                  <label for="password">Password</label>
+                  <input
+                    type="password"
+                    className="form-control"
+                    placeholder="Enter password"
+                    onChange={(e) => this.setState({ password: e.target.value })}
+                  />
+                </div>
+                <p className="forgot-password text-right">
+                  <a href="/forgot">Forgot password</a>?
+                </p>
+
+                <div className="mb-3">
+                  <div className="custom-control custom-checkbox">
+                    <input
+                      type="checkbox"
+                      className="custom-control-input"
+                      id="rememberMe"
+                    />
+                    <label className="custom-control-label" htmlFor="rememberMe">
+                      Remember me
+                    </label>
+                  </div>
+                </div>
+
+                <div className="btnSubmit">
+                  <button type="submit" className="btn btn-success">
+                    Sign In
+                  </button>
+                </div>
+                <p className="forgot-password text-right">
+                  Don't have account yet? <a href="/sign-up">Sign Up</a>
+                </p>
+              </form>
+            </div>
           </div>
         </div>
       </>
