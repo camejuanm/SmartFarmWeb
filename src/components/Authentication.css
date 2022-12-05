@@ -5,9 +5,10 @@ body {
   background: #fff !important;
   min-height: 100vh;
   width: 100%;
-  display: flex;
+  display: inline-flex;
   font-weight: 400;
   font-family: "Fira Sans", sans-serif;
+  box-shadow: 0 0.5% 1% 1% rgba(2, 200, 255, 0.76);
 }
 
 h1,
@@ -86,10 +87,10 @@ html,
   background: linear-gradient(to left, #e0e0ef 0%, #1b1bf2 100%);
 }
 .outer-login {
-  padding: 6.2% 0.8%;
+  padding: 5.5% 0.8%;
 }
 .outer-register {
-  padding: 0.2% 0.8%;
+  padding: 2.3% 0.8%;
 }
 .outer-e-register {
   padding: 9.7% 0.8%;
@@ -98,10 +99,10 @@ html,
   padding: 14% 0.8%;
 }
 .outer-reset {
-  padding: 4% 0.8%;
+  padding: 2.9% 0.8%;
 }
 .outer-forgot {
-  padding: 12.8% 0.8%;
+  padding: 12% 0.8%;
 }
 .outer-card {
   box-shadow: 0 0.33% 0.67% 0 rgba(0, 0, 0, 0.2), 0 0.5% 1.65% 0 rgba(0, 0, 0, 0.2);

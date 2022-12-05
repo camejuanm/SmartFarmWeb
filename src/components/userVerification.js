@@ -7,6 +7,7 @@ export default class userVerification extends Component {
         super(props);
         this.form = React.createRef();
         this.state = {
+            id: "",
             name: [],
             email: [],
             isVerified: false,
@@ -57,7 +58,8 @@ export default class userVerification extends Component {
         let datas = this.state;
         datas[index] = e.target.datas;
         this.setState({
-            email_sent: this.state.datas[index].email
+            email_sent: this.state.datas[index].email,
+            id: this.state.datas[index]._id,
         })
         if(this.state.email_sent == this.state.datas[index].email) {
             console.log(this.state.datas[index].email);
@@ -72,8 +74,8 @@ export default class userVerification extends Component {
     };
 
     componentDidMount() {
-        const { name, email } = this.state;
-        console.log(name, email);
+        const { id, name, email } = this.state;
+        console.log(id, name, email);
         const token = window.sessionStorage.getItem("token");
         fetch("https://smart-farm-backend.vercel.app/api/user/all", {
             method: "GET",
@@ -89,6 +91,25 @@ export default class userVerification extends Component {
             })})
             console.log(data);
         });
+        fetch("https://smart-farm-backend.vercel.app/api/user/userVerify", {
+            method: "PUT",
+            headers: {
+                "x-access-token": token,
+                "Content-Type": 'aplication.json',
+                Accept: 'application/json'
+            },
+            body: JSON.stringify({
+                id
+            }),
+        })
+        .then(response => response.json())
+        .then(data => console.log(data));
+        // .then((data) => {    
+        //     this.setState({ datas : data.filter((item) => {
+        //         return item.isVerified == false && item.role == 'user';
+        //     })})
+        //     console.log(data);
+        // });
     }
 
     componentDidUpdate(pP,pS,sS) {
@@ -202,7 +223,7 @@ export default class userVerification extends Component {
                     </div>
 
                     <form ref={this.form} className="email_sent">
-                        <input type="email" name='user_email' value={this.state.email_sent}></input>
+                        <input type="email" name='user_email' value={this.state.email_sent} />
                     </form>
                     <div className="d-grid">
                         <button

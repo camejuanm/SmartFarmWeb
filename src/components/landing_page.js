@@ -12,9 +12,9 @@ const LandingPage = () => {
         <>  
             <div className="landing">
                 <div class="border">
-                    <h1>
-                        Pengembangan Web App sebagai Media Pemantauan <br /> Sistem Tumbuh Tanaman Memanfaatkan IoT
-                    </h1>
+                    <p class="title">
+                        Pengembangan Web App Sebagai Media Pemantauan <br /> Sistem Tumbuh Tanaman Memanfaatkan IoT
+                    </p>
                 </div>
                 <div className="border_image">
                     <img src={KedairekaUMN} className="farm_image" />
@@ -22,14 +22,16 @@ const LandingPage = () => {
                 <div className="border">
                     <div className="contact">
                         <h3>Hubungi Kami</h3>
-                        <span>
-                            <img src={Phone} className="sosmed" alt="nomorHP" />
-                            <a class="fab fa-phone">5422 0808</a>
-                        </span>
-                        <span>
-                            <img src={Email} className="sosmed" alt="email" />
-                            <a class="fab fa-envelope-o">fti@umn.ac.id</a>
-                        </span>
+                        <div className="additional-contact">
+                            <span>
+                                <img src={Phone} className="sosmed" alt="nomorHP" />
+                                <a class="fab fa-phone">5422 0808</a>
+                            </span>
+                            <span>
+                                <img src={Email} className="sosmed" alt="email" />
+                                <a class="fab fa-envelope-o">fti@umn.ac.id</a>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>

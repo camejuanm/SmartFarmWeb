@@ -15,7 +15,6 @@ export default class SignUp extends Component {
     this.state = {
       name: "",
       email: "",
-      // role: "",
       mobile: "",
       password: "",
       verifyButton: false,
