@@ -10,10 +10,9 @@ export default class userVerification extends Component {
             id: "",
             name: [],
             email: [],
-            isVerified: false,
             datas: [],
             verify: false,
-            updateVerification: true,
+            loadVerification: true,
             history: false,
             email_sent: "",
         };
@@ -27,15 +26,14 @@ export default class userVerification extends Component {
         console.log("Verification updated");
         alert("All users verified");
         this.setState({
-            isVerified: true,
-            updateVerification: false,
+            loadVerification: false,
             history: true
         });
     }
 
     verification() {
         this.setState({verify: true})
-        console.log("User verify");
+        console.log("User verified");
     }
     sendEmail() {
         emailjs.sendForm('service_22rl9vo', 'template_c9ueake', this.form.current, '5qCkTRANrxpqkVp3X')
@@ -48,34 +46,51 @@ export default class userVerification extends Component {
         });
     };
 
-    componentWillReceiveProps(newProps) {
-        console.log('componentWillReceiveProps', newProps);
-        this.setState(newProps);
-    }
-
-    callMulti = (index) => (e) => { // tekan tombol verify sebanyak 2 kali untuk melakukan verifikasi email
-        // this.componentWillReceiveProps();
+    handleSubmit = (index) => (e) => {
+        e.preventDefault()
         let datas = this.state;
         datas[index] = e.target.datas;
         this.setState({
             email_sent: this.state.datas[index].email,
-            id: this.state.datas[index]._id,
+            _id: this.state.datas[index]._id,
         })
         if(this.state.email_sent == this.state.datas[index].email) {
             console.log(this.state.datas[index].email);
-            this.setState({
-                isVerified: true,
-            })
             this.verification();
             this.sendEmail();
+            console.log('User Email ' + [this.state.datas[index].email] + ' has verified');
         } else {
             // console.log(error.message);
         }
+        const token = window.sessionStorage.getItem("token");
+        const _id = this.state.datas[index]._id;
+        fetch("https://smart-farm-backend.vercel.app/api/user/userVerify", {
+            method: "PUT",
+            crossdomain: true,
+            headers: {
+                "x-access-token": token,
+                "Content-Type": 'application/json'
+            },
+            body: JSON.stringify({
+                _id
+            }),
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            console.log(data);
+            if(this.state.datas.length >= 2) {
+                window.location.reload();
+            } else {
+                console.log("All users verified");
+                this.setState({
+                    history: true,
+                    loadVerification: false
+                })
+            }
+        });
     };
 
     componentDidMount() {
-        const { id, name, email } = this.state;
-        console.log(id, name, email);
         const token = window.sessionStorage.getItem("token");
         fetch("https://smart-farm-backend.vercel.app/api/user/all", {
             method: "GET",
@@ -91,25 +106,6 @@ export default class userVerification extends Component {
             })})
             console.log(data);
         });
-        fetch("https://smart-farm-backend.vercel.app/api/user/userVerify", {
-            method: "PUT",
-            headers: {
-                "x-access-token": token,
-                "Content-Type": 'aplication.json',
-                Accept: 'application/json'
-            },
-            body: JSON.stringify({
-                id
-            }),
-        })
-        .then(response => response.json())
-        .then(data => console.log(data));
-        // .then((data) => {    
-        //     this.setState({ datas : data.filter((item) => {
-        //         return item.isVerified == false && item.role == 'user';
-        //     })})
-        //     console.log(data);
-        // });
     }
 
     componentDidUpdate(pP,pS,sS) {
@@ -128,28 +124,19 @@ export default class userVerification extends Component {
          });
          table += "</table>";
          document.getElementById("user-verification").innerHTML = table;
-     }
-
-    handleSubmit(e) {
-        e.preventDefault();
-        if(this.state.verify) {
-            this.componentDidMount();
-        } else {
-            alert("Please verify new user");
-        }
     }
 
     render() {
         return(
             <div className="outer-verification">
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.callMulti}>
                     <h3>Verification User History</h3>
                     <>
                     {this.state.history ? (
                         <h2 className="history">No New User which is unverified</h2>
                     ):null}
                     </>
-                    {this.state.updateVerification ? (
+                    {this.state.loadVerification ? (
                     <>
                     <div className="table">
                         <table>
@@ -205,7 +192,7 @@ export default class userVerification extends Component {
                                                         key={index}
                                                         type="button"
                                                         value="verify"
-                                                        onClick={this.callMulti(index)}
+                                                        onClick={this.handleSubmit(index)}
                                                         style={{
                                                             backgroundColor: "#2020ef",
                                                             width: "100%",
@@ -230,6 +217,7 @@ export default class userVerification extends Component {
                             type="submit"
                             className="btn btn-success"
                             onClick={this.updateVerification}
+                            style={{visibility: "hidden"}}
                         >
                             Verify All User
                         </button>

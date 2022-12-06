@@ -37,8 +37,12 @@ export default class AddUser extends Component {
       .then((res) => res.json())
         .then((data) => {
             console.log(data, "userAdded");
-            alert("User has been added");
-            window.location.href="./dashboard";
+            if(data.message == "New user successfully registered") {
+              alert("User has been added");
+              window.location.href="./dashboard";
+            } else {
+              alert("User has already exists");
+            }
         });
     } else if(role == "Admin") {
       fetch("https://smart-farm-backend.vercel.app/api/user/admin_signup", {
@@ -60,8 +64,12 @@ export default class AddUser extends Component {
       .then((res) => res.json())
         .then((data) => {
             console.log(data, "adminAdded");
-            alert("Admin has been added");
-            window.location.href="./dashboard";
+            if(data.message == "New admin successfully registered") {
+              alert("Admin has been added");
+              window.location.href="./dashboard";
+            } else {
+              alert("User has already exists");
+            }
         });
     } else {
       alert('Please complete filling form');
