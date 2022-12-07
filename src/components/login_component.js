@@ -7,7 +7,6 @@ export default class Login extends Component {
     this.state = {
       email: "",
       password: "",
-      login: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }

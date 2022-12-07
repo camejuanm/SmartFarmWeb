@@ -154,55 +154,63 @@ export default class userVerification extends Component {
                             <tbody>
                                 <>
                                     {this.state.datas.map((item, index) => {
-                                        return (
-                                            <tr key={index}>
-                                                <td className="id">{index+1}</td>
-                                                <td className="name">
-                                                    <input
-                                                        key={index}
-                                                        type="text"
-                                                        name="user_name"
-                                                        value={item.name}
-                                                        onChange={(e) => this.setState({ name: e.target.value })}
-                                                        style={{
-                                                            width: "100%",
-                                                            backgroundColor: "none",
-                                                            padding: 1,
-                                                            border: "none",
-                                                        }}
-                                                    />
-                                                </td>
-                                                <td className="email">
-                                                    <input
-                                                        key={index}
-                                                        type="email"
-                                                        name="user_email"
-                                                        value={item.email}
-                                                        onChange={(e) => this.setState({ email: e.target.value })}
-                                                        style={{
-                                                            width: "100%",
-                                                            backgroundColor:"none",
-                                                            padding: 1,
-                                                            border: "none",
-                                                        }}
-                                                    />
-                                                </td>
-                                                <td className="isVerified">
-                                                    <input
-                                                        key={index}
-                                                        type="button"
-                                                        value="verify"
-                                                        onClick={this.handleSubmit(index)}
-                                                        style={{
-                                                            backgroundColor: "#2020ef",
-                                                            width: "100%",
-                                                            padding: 4,
-                                                            color: "white",
-                                                        }}
-                                                    />
-                                                </td>
-                                            </tr>
-                                        )
+                                        if(this.state.datas.length == 0) {
+                                            this.setState({
+                                                history: true,
+                                                loadVerification: false
+                                            })
+                                        }
+                                        else {
+                                            return (
+                                                <tr key={index}>
+                                                    <td className="id">{index+1}</td>
+                                                    <td className="name">
+                                                        <input
+                                                            key={index}
+                                                            type="text"
+                                                            name="user_name"
+                                                            value={item.name}
+                                                            onChange={(e) => this.setState({ name: e.target.value })}
+                                                            style={{
+                                                                width: "100%",
+                                                                backgroundColor: "none",
+                                                                padding: 1,
+                                                                border: "none",
+                                                            }}
+                                                        />
+                                                    </td>
+                                                    <td className="email">
+                                                        <input
+                                                            key={index}
+                                                            type="email"
+                                                            name="user_email"
+                                                            value={item.email}
+                                                            onChange={(e) => this.setState({ email: e.target.value })}
+                                                            style={{
+                                                                width: "100%",
+                                                                backgroundColor:"none",
+                                                                padding: 1,
+                                                                border: "none",
+                                                            }}
+                                                        />
+                                                    </td>
+                                                    <td className="isVerified">
+                                                        <input
+                                                            key={index}
+                                                            type="button"
+                                                            value="verify"
+                                                            onClick={this.handleSubmit(index)}
+                                                            style={{
+                                                                backgroundColor: "#2020ef",
+                                                                width: "100%",
+                                                                padding: 4,
+                                                                color: "white",
+                                                            }}
+                                                        />
+                                                    </td>
+                                                </tr>
+                                            )
+                                        }
                                     })}
                                 </>
                             </tbody>
