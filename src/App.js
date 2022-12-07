@@ -37,6 +37,7 @@ function App() {
             <Route path='/dashboard' element={<Dashboard />} />
             <Route path='/visualize' element={<Visualize/>}/>
             <Route path='/testfetch' element={<Testfetch2/>}/>
+            <Route path='/testfetch3' element={<Testfetch3/>}/>
             <Route element={<PrivateRoutesAdmin/>}>
               <Route path='/gateway' element={<Gateway/>}/>
               <Route path='/token' element={<Token/>}/>

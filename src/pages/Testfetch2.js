@@ -36,12 +36,12 @@ function Testfetch2() {
 
   const nodelist = [
     {node : 102},
-    {node : 103},
-    {node : 104},
-    {node : 105},
     {node : 202},
+    {node : 103},
     {node : 203},
+    {node : 104},
     {node : 204},
+    {node : 105},
     {node : 205}
   ]
   //chart setup
@@ -199,7 +199,7 @@ function Testfetch2() {
 // console.log(filteredData)
 const backgroundcolor = []
 
-  titlechart = 'Data Normal dari ' + new Date(lastDate).toDateString().substr(4,12) + ' - ' + new Date(blastDate).toDateString().substr(4,12)
+  titlechart = 'Daily Data Between ' + new Date(lastDate).toDateString().substr(4,12) + ' - ' + new Date(blastDate).toDateString().substr(4,12)
 
 if (chartstatus == 'airhum') {
 
@@ -557,7 +557,7 @@ setOptionData({
     var labeldailymax = '';
     var labeldailymin = '';
     var symbol = '';
-    var titlechart = 'Data Max & Min dari ' + new Date(lastDate).toDateString().substr(4,12) + ' - ' + new Date(blastDate).toDateString().substr(4,12)
+    var titlechart = 'Maximum & Minimum Data Between ' + new Date(lastDate).toDateString().substr(4,12) + ' - ' + new Date(blastDate).toDateString().substr(4,12)
 
 
     if (chartstatus=='airhum') {
@@ -764,14 +764,14 @@ setOptionData({
       setNodeState(event.target.value);
    };
 
-   const charttypebutton = () => {
+   const charttypebutton = (event) => {
     if (charttype === 'normal') {
         setChartType('daily');
-        setDailySwitch('Normal')
+        event.target.style.backgroundColor = 'red';
     }
     else if (charttype === 'daily') {
       setChartType('normal')
-      setDailySwitch('Daily')
+      event.target.style.backgroundColor = 'blue';
     }
     
    }
@@ -786,17 +786,17 @@ setOptionData({
         <div className='button-chart'>
           <div>
           <input onChange={onChangeChart} type="date" className='enddate' value={datedef}></input>
-          <button className='btn-humid'onClick={airHumClick} >Humidity</button>
-          <button className='btn-temp' onClick={airTempClick}>Temp</button>
-          <button className='btn-soil' onClick={soilHumClick}>Soil</button>
+          <button className='btn-temp' onClick={airTempClick}>Air Temperature</button>
+          <button className='btn-humid'onClick={airHumClick} >Air Humidity</button>
+          <button className='btn-soil' onClick={soilHumClick}>Soil Humidity</button>
           <div className='node-input'>
-          {/* {nodelist.map((item, index) => {
+          {nodelist.map((item, index) => {
                         return (
-                            <button className='node-button' key={index} value={item.node}>{item.node}</button>
+                            <button className='input-node' key={index} value={item.node} onClick={onChangeHandler}>{item.node} </button>
                         )
-                    })} */}
-          <input className='input-node' type="text" name="name" onChange={onChangeHandler} value={nodestate} />
-         
+                    })}
+          {/* <input className='input-node' type="text" name="name" onChange={onChangeHandler} value={nodestate} /> */}
+
           </div>
           
           <button className='btn-maxmindaily' onClick={charttypebutton}></button>
