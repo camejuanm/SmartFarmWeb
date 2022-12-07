@@ -33,17 +33,15 @@
 .enddate{
     margin-top: 20%;
     width: 80%;
+    margin-bottom: 8%;
 }
-
 .btn-humid{
-    margin-top: 30px;
-    margin-right: 10px;
-    margin-left: 10px;
     margin-bottom: 5%;
     width: 80%;
-    height: 30px;
+    height:30px;
     border-radius: 10px;
 }
+
 
 .btn-temp{
     margin-bottom: 5%;
@@ -64,7 +62,7 @@
     width: 80%;
     height: 30px;
     border-radius: 10px;
-    background-color: #4CAF50; /* Green */
+    background-color: blue; /* Green */
     border: none;
     color: white;
 }
@@ -83,20 +81,20 @@ width: 100%;
     
 } */
 
-/* .input-node{
+.input-node{
     margin-left: 8%;
     margin-right: 8%;
     margin-bottom: 5%;
     width: 20%;
     height: 10%;
     border-radius: 10px;
-} */
+}
 
-.input-node{
+/* .input-node{
     margin-left: 8%;
     margin-right: 8%;
     margin-bottom: 5%;
     width: 80%;
     height: 10%;
     border-radius: 10px;
-}
+} */

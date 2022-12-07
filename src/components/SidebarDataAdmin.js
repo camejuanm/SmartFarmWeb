@@ -28,5 +28,11 @@ export const SidebarDataAdmin = [
         path: '/adduser',
         icon: <AiIcons.AiOutlineUserAdd/>,
         cName: 'nav-text'
+    },
+    {
+        title: 'User Verification',
+        path: '/userverification',
+        icon: <AiIcons.AiOutlineUserSwitch/>,
+        cName: 'nav-text'
     }
 ]
