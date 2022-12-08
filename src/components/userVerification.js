@@ -12,8 +12,8 @@ export default class userVerification extends Component {
             email: [],
             datas: [],
             verify: false,
-            loadVerification: true,
-            history: false,
+            loadVerification: false,
+            history: true,
             email_sent: "",
         };
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -49,45 +49,39 @@ export default class userVerification extends Component {
     handleSubmit = (index) => (e) => {
         e.preventDefault()
         let datas = this.state;
+        let _id = this.state;
         datas[index] = e.target.datas;
+        const token = window.sessionStorage.getItem("token");
         this.setState({
             email_sent: this.state.datas[index].email,
             _id: this.state.datas[index]._id,
         })
         if(this.state.email_sent == this.state.datas[index].email) {
             console.log(this.state.datas[index].email);
+            console.log('Email terkirim')
             this.verification();
-            this.sendEmail();
+            // this.sendEmail();
             console.log('User Email ' + [this.state.datas[index].email] + ' has verified');
+            fetch("https://smart-farm-backend.vercel.app/api/user/userVerify", {
+                method: "PUT",
+                crossdomain: true,
+                headers: {
+                    "x-access-token": token,
+                    "Content-Type": 'application/json'
+                },
+                body: JSON.stringify({
+                    _id
+                }),
+            })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                window.location.reload();
+            });
         } else {
             // console.log(error.message);
         }
-        const token = window.sessionStorage.getItem("token");
-        const _id = this.state.datas[index]._id;
-        fetch("https://smart-farm-backend.vercel.app/api/user/userVerify", {
-            method: "PUT",
-            crossdomain: true,
-            headers: {
-                "x-access-token": token,
-                "Content-Type": 'application/json'
-            },
-            body: JSON.stringify({
-                _id
-            }),
-        })
-        .then((res) => res.json())
-        .then((data) => {
-            console.log(data);
-            if(this.state.datas.length >= 2) {
-                window.location.reload();
-            } else {
-                console.log("All users verified");
-                this.setState({
-                    history: true,
-                    loadVerification: false
-                })
-            }
-        });
+        console.log('Update');
     };
 
     componentDidMount() {
@@ -101,16 +95,30 @@ export default class userVerification extends Component {
         })
         .then((res) => res.json())
         .then((data) => {    
-            this.setState({ datas : data.filter((item) => {
-                return item.isVerified == false && item.role == 'user';
-            })})
+            this.setState({ 
+                datas : data.filter((item) => {
+                    return item.isVerified == false && item.role == 'user';
+                }),
+            })
+            if(this.state.datas.length >= 1) {
+                this.setState({
+                    history: false,
+                    loadVerification: true,
+                })
+            }
             console.log(data);
         });
     }
 
     componentDidUpdate(pP,pS,sS) {
-        if(this.state.verify == true) {console.log(pS)}
+        if(this.state.verify == true) {
+            console.log(pS)
+        }
     }
+
+    // componentWillUpdate = (index) => (e) => {
+    //     this.setState({email_sent: this.state.datas[index].email})
+    // }
 
     displayData(datas){
         let table = '<table border="1">';
@@ -154,63 +162,55 @@ export default class userVerification extends Component {
                             <tbody>
                                 <>
                                     {this.state.datas.map((item, index) => {
-                                        if(this.state.datas.length == 0) {
-                                            this.setState({
-                                                history: true,
-                                                loadVerification: false
-                                            })
-                                        }
-                                        else {
-                                            return (
-                                                <tr key={index}>
-                                                    <td className="id">{index+1}</td>
-                                                    <td className="name">
-                                                        <input
-                                                            key={index}
-                                                            type="text"
-                                                            name="user_name"
-                                                            value={item.name}
-                                                            onChange={(e) => this.setState({ name: e.target.value })}
-                                                            style={{
-                                                                width: "100%",
-                                                                backgroundColor: "none",
-                                                                padding: 1,
-                                                                border: "none",
-                                                            }}
-                                                        />
-                                                    </td>
-                                                    <td className="email">
-                                                        <input
-                                                            key={index}
-                                                            type="email"
-                                                            name="user_email"
-                                                            value={item.email}
-                                                            onChange={(e) => this.setState({ email: e.target.value })}
-                                                            style={{
-                                                                width: "100%",
-                                                                backgroundColor:"none",
-                                                                padding: 1,
-                                                                border: "none",
-                                                            }}
-                                                        />
-                                                    </td>
-                                                    <td className="isVerified">
-                                                        <input
-                                                            key={index}
-                                                            type="button"
-                                                            value="verify"
-                                                            onClick={this.handleSubmit(index)}
-                                                            style={{
-                                                                backgroundColor: "#2020ef",
-                                                                width: "100%",
-                                                                padding: 4,
-                                                                color: "white",
-                                                            }}
-                                                        />
-                                                    </td>
-                                                </tr>
-                                            )
-                                        }
+                                        return (
+                                            <tr key={index}>
+                                                <td className="id">{index+1}</td>
+                                                <td className="name">
+                                                    <input
+                                                        key={index}
+                                                        type="text"
+                                                        name="user_name"
+                                                        value={item.name}
+                                                        onChange={(e) => this.setState({ name: e.target.value })}
+                                                        style={{
+                                                            width: "100%",
+                                                            backgroundColor: "none",
+                                                            padding: 1,
+                                                            border: "none",
+                                                        }}
+                                                    />
+                                                </td>
+                                                <td className="email">
+                                                    <input
+                                                        key={index}
+                                                        type="email"
+                                                        name="user_email"
+                                                        value={item.email}
+                                                        onChange={(e) => this.setState({ email: e.target.value })}
+                                                        style={{
+                                                            width: "100%",
+                                                            backgroundColor:"none",
+                                                            padding: 1,
+                                                            border: "none",
+                                                        }}
+                                                    />
+                                                </td>
+                                                <td className="isVerified">
+                                                    <input
+                                                        key={index}
+                                                        type="button"
+                                                        value="verify"
+                                                        onClick={this.handleSubmit(index)}
+                                                        style={{
+                                                            backgroundColor: "#2020ef",
+                                                            width: "100%",
+                                                            padding: 4,
+                                                            color: "white",
+                                                        }}
+                                                    />
+                                                </td>
+                                            </tr>
+                                        )
                                     })}
                                 </>
                             </tbody>

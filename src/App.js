@@ -19,7 +19,6 @@ import UserVerification from "./components/userVerification";
 import Visualize from "./pages/Visualize"
 import Testfetch from './pages/Testfetch';
 import Testfetch2 from './pages/Testfetch2';
-import Page1 from './pages/page1';
 
 import PrivateRoutes from './utils/PrivateRoutes';
 import PrivateRoutesAdmin from './utils/PrivateRoutesAdmin';
@@ -34,7 +33,6 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path='/dashboard' element={<Dashboard />} />
             <Route path='/visualize' element={<Testfetch2/>}/>
-            <Route path='/page1' element={<Page1/>}/>
             {/* <Route path='/testfetch' element={<Testfetch/>}/>
             <Route path='/testfetch2' element={<Testfetch2 />} /> */}
             <Route element={<PrivateRoutesAdmin/>}>

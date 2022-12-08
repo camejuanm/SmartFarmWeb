@@ -98,6 +98,7 @@ function Testfetch2() {
               .then(data => setDatasets( data.filter((data) => {
                   return data.airHum != null && data.airTemp != null;
                 } )));
+
   }, [])
 
   // Set lastDate and blastDate after datasets is set
@@ -113,8 +114,13 @@ function Testfetch2() {
       setblastDate(lastdate)
       setLastDate(blastdate.setDate(blastdate.getDate() - 5))
 
-
-      const datenow = lastdate.getFullYear() + "-" + (lastdate.getMonth()+1) + "-" + lastdate.getDate();
+      var datenow = 0;
+      if (lastdate.getDate() > 9) {
+        datenow = lastdate.getFullYear() + "-" + (lastdate.getMonth()+1) + "-" + lastdate.getDate();
+      }
+      else {
+        datenow = lastdate.getFullYear() + "-" + (lastdate.getMonth()+1) + "-0" + lastdate.getDate();
+      }
 
       setDatedef(datenow);
       console.log(datenow);
