@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import LineChart from '../components/Chart/LineChart';
 import './Visualize.css'
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -23,6 +23,7 @@ function Testfetch2() {
   const [datePicker, setDatePicker] = useState();
   const [dropdown, setDropdown] = useState();
   const [dateEditor, setDateEditor] = useState(false);
+  const [chartchange, setChartChange] = useState('Change to Max & Min Chart');
   
   //datastate
   const [fDate, setfDate] = useState([]);
@@ -770,14 +771,17 @@ setOptionData({
       setNodeState(event.target.value);
    };
 
+   const test = useRef(null)
    const charttypebutton = (event) => {
     if (charttype === 'normal') {
         setChartType('daily');
         event.target.style.backgroundColor = 'red';
+        setChartChange('Change to Daily Data Chart')
     }
     else if (charttype === 'daily') {
       setChartType('normal')
       event.target.style.backgroundColor = 'blue';
+      setChartChange('Change to Min & Max Chart')
     }
     
    }
@@ -805,7 +809,7 @@ setOptionData({
 
           </div>
           
-          <button className='btn-maxmindaily' onClick={charttypebutton}></button>
+          <button className='btn-maxmindaily' onClick={charttypebutton}>{chartchange}</button>
           </div>
           
           {/* <Dropdown className="d-inline mx-2">

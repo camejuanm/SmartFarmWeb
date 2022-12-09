@@ -20,6 +20,7 @@ export default class userVerification extends Component {
         this.updateVerification = this.updateVerification.bind(this);
         this.verification = this.verification.bind(this);
         this.sendEmail = this.sendEmail.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     updateVerification() {
@@ -46,43 +47,49 @@ export default class userVerification extends Component {
         });
     };
 
-    handleSubmit = (index) => (e) => {
-        e.preventDefault()
+    handleChange = (index) => (e) => {
+        e.preventDefault();
         let datas = this.state;
-        let _id = this.state;
         datas[index] = e.target.datas;
-        const token = window.sessionStorage.getItem("token");
         this.setState({
             email_sent: this.state.datas[index].email,
             _id: this.state.datas[index]._id,
         })
         if(this.state.email_sent == this.state.datas[index].email) {
             console.log(this.state.datas[index].email);
-            console.log('Email terkirim')
+            console.log('Email sent');
             this.verification();
             // this.sendEmail();
-            console.log('User Email ' + [this.state.datas[index].email] + ' has verified');
-            fetch("https://smart-farm-backend.vercel.app/api/user/userVerify", {
-                method: "PUT",
-                crossdomain: true,
-                headers: {
-                    "x-access-token": token,
-                    "Content-Type": 'application/json'
-                },
-                body: JSON.stringify({
-                    _id
-                }),
-            })
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-                window.location.reload();
-            });
+            const message = 'User Email ' + [this.state.datas[index].email] + ' has verified';
+            console.log(message);
+            this.handleSubmit();
         } else {
             // console.log(error.message);
         }
         console.log('Update');
     };
+
+    handleSubmit() {
+        console.log("tester");
+        let _id = this.state;
+        const token = window.sessionStorage.getItem("token");
+        fetch("https://smart-farm-backend.vercel.app/api/user/userVerify", {
+            method: "PUT",
+            crossdomain: true,
+            headers: {
+                "x-access-token": token,
+                "Content-Type": 'application/json'
+            },
+            body: JSON.stringify({
+                _id
+            }),
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            console.log(data);
+            window.location.reload();
+        });
+    }
 
     componentDidMount() {
         const token = window.sessionStorage.getItem("token");
@@ -110,14 +117,23 @@ export default class userVerification extends Component {
         });
     }
 
-    componentDidUpdate(pP,pS,sS) {
+    componentWillUpdate(pP,pS,sS) {
         if(this.state.verify == true) {
             console.log(pS)
         }
     }
 
-    // componentWillUpdate = (index) => (e) => {
-    //     this.setState({email_sent: this.state.datas[index].email})
+    componentDidUpdate(nextProps, nextState) {
+        if(this.state.email_sent != nextState.email_sent) {
+            console.log(nextState);
+        }
+    }
+
+    // shouldComponentUpdate(nextState, nextProps) {
+    //     if(this.state.email_sent != nextState.email_sent) {
+    //         return true;
+    //     }
+    //     return false;
     // }
 
     displayData(datas){
@@ -137,7 +153,7 @@ export default class userVerification extends Component {
     render() {
         return(
             <div className="outer-verification">
-                <form onSubmit={this.callMulti}>
+                <form onSubmit={this.handleChange}>
                     <h3>Verification User History</h3>
                     <>
                     {this.state.history ? (
@@ -146,6 +162,7 @@ export default class userVerification extends Component {
                     </>
                     {this.state.loadVerification ? (
                     <>
+                    <h6>Double klik to Verify</h6>
                     <div className="table">
                         <table>
                             <thead>
@@ -200,7 +217,7 @@ export default class userVerification extends Component {
                                                         key={index}
                                                         type="button"
                                                         value="verify"
-                                                        onClick={this.handleSubmit(index)}
+                                                        onClick={this.handleChange(index)}
                                                         style={{
                                                             backgroundColor: "#2020ef",
                                                             width: "100%",
