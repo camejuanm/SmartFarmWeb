@@ -16,6 +16,7 @@ import Gateway from "./pages/Gateway"
 import Token from "./pages/Token"
 import AddUser from "./pages/AddUser"
 import UserVerification from "./components/userVerification";
+import UserVerificationT from "./pages/userVerification";
 import Visualize from "./pages/Visualize"
 import Testfetch from './pages/Testfetch';
 import Testfetch2 from './pages/Testfetch2';
@@ -40,6 +41,7 @@ function App() {
               <Route path='/token' element={<Token/>}/>
               <Route path='/adduser' element={<AddUser/>}/>
               <Route path="/userverification" element={<UserVerification />} />
+              <Route path="/userverificationT" element={<UserVerificationT />} />
             </Route>
           </Route>
           <Route exact path="/" element={<LandingPage />} />

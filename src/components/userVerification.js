@@ -8,8 +8,6 @@ export default class userVerification extends Component {
         this.form = React.createRef();
         this.state = {
             id: "",
-            name: [],
-            email: [],
             datas: [],
             verify: false,
             loadVerification: false,
@@ -71,24 +69,24 @@ export default class userVerification extends Component {
 
     handleSubmit() {
         console.log("tester");
-        let _id = this.state;
-        const token = window.sessionStorage.getItem("token");
-        fetch("https://smart-farm-backend.vercel.app/api/user/userVerify", {
-            method: "PUT",
-            crossdomain: true,
-            headers: {
-                "x-access-token": token,
-                "Content-Type": 'application/json'
-            },
-            body: JSON.stringify({
-                _id
-            }),
-        })
-        .then((res) => res.json())
-        .then((data) => {
-            console.log(data);
-            window.location.reload();
-        });
+        // let _id = this.state;
+        // const token = window.sessionStorage.getItem("token");
+        // fetch("https://smart-farm-backend.vercel.app/api/user/userVerify", {
+        //     method: "PUT",
+        //     crossdomain: true,
+        //     headers: {
+        //         "x-access-token": token,
+        //         "Content-Type": 'application/json'
+        //     },
+        //     body: JSON.stringify({
+        //         _id
+        //     }),
+        // })
+        // .then((res) => res.json())
+        // .then((data) => {
+        //     console.log(data);
+        //     window.location.reload();
+        // });
     }
 
     componentDidMount() {
@@ -188,7 +186,6 @@ export default class userVerification extends Component {
                                                         type="text"
                                                         name="user_name"
                                                         value={item.name}
-                                                        onChange={(e) => this.setState({ name: e.target.value })}
                                                         style={{
                                                             width: "100%",
                                                             backgroundColor: "none",
@@ -203,7 +200,6 @@ export default class userVerification extends Component {
                                                         type="email"
                                                         name="user_email"
                                                         value={item.email}
-                                                        onChange={(e) => this.setState({ email: e.target.value })}
                                                         style={{
                                                             width: "100%",
                                                             backgroundColor:"none",
