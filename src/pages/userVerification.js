@@ -1,9 +1,9 @@
-import React, {Component, useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import '../components/table.css';
 import emailjs from '@emailjs/browser';
 
-function UserVerification() {
-    // let token = window.sessionStorage.getItem("token");
+const UserVerification = () => {
+    let token = window.sessionStorage.getItem("token");
     const [id, setId] = useState("");
     const [datas, setDatas] = useState([]);
     const [verify, setVerify] = useState(false);
@@ -14,7 +14,6 @@ function UserVerification() {
 
     // fetch data
     useEffect(() => {
-        const token = window.sessionStorage.getItem("token");
         const fetchData = async() => {
             fetch("https://smart-farm-backend.vercel.app/api/user/all", {
                 method: "GET",
@@ -24,9 +23,9 @@ function UserVerification() {
                 }
             })
             .then((res) => res.json())
-            .then(datas => setDatas(datas.filter((item) => {
+            .then(datas((data) => setDatas(data.filter((item) => {
                 return item.isVerified == false && item.role == "user";
-            })))
+            }))))
                 if(datas.length >= 1) {
                     setHistory(false);
                     setLoadVerification(true);
@@ -68,15 +67,16 @@ function UserVerification() {
         console.log("User verify");
     }
 
-    const handleChange = (index) => (e) => {
+    const handleChange = (e, index) => {
         e.preventDefault();
         // let datas = datas;
-        datas[index] = e.target.datas;
-        setEmailSent = datas[index].email;
-        setId = datas[index].id;
-        console.log((datas[index]).email);
+        // datas[index] = e.target.datas;
+        // setEmailSent = datas[index].email;
+        // setId = datas[index].id;
+        // console.log((datas[index]).email);
+        console.log(e.target.datas[index].email);
         console.log("Email sent");
-        const message = "User Email" + [datas[index].email] + "is verified";
+        const message = "User Email" + e.target.datas[index].email + "is verified";
         console.log(message);
         // sendEmail();
         verification();
@@ -133,6 +133,8 @@ function UserVerification() {
                                         return(
                                             <tr key={index}>
                                                 <td className="id">{index+1}</td>
+                                                {/* <td className="name" name="user_name">{item.name}</td>
+                                                <td className="email" name="user_email">{item.email}</td> */}
                                                 <td className="name">
                                                     <input
                                                         key={index}

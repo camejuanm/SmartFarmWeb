@@ -115,11 +115,11 @@ export default class userVerification extends Component {
         });
     }
 
-    componentWillUpdate(pP,pS,sS) {
-        if(this.state.verify == true) {
-            console.log(pS)
-        }
-    }
+    // componentWillUpdate(pP,pS,sS) {
+    //     if(this.state.verify == true) {
+    //         console.log(pS)
+    //     }
+    // }
 
     componentDidUpdate(nextProps, nextState) {
         if(this.state.email_sent != nextState.email_sent) {
