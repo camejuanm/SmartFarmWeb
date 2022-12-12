@@ -35,7 +35,7 @@ export default class userVerification extends Component {
         console.log("User verified");
     }
     sendEmail() {
-        emailjs.sendForm('service_22rl9vo', 'template_c9ueake', this.form.current, '5qCkTRANrxpqkVp3X')
+        emailjs.sendForm('service_vx432h1', 'template_6wqy28f', this.form.current, '8qOMjr8qfQQ8WZWnz')
         .then((result) => {
             console.log(result.text);
             console.log("message sent to email");
@@ -57,7 +57,7 @@ export default class userVerification extends Component {
             console.log(this.state.datas[index].email);
             console.log('Email sent');
             this.verification();
-            // this.sendEmail();
+            this.sendEmail();
             const message = 'User Email ' + [this.state.datas[index].email] + ' has verified';
             console.log(message);
             this.handleSubmit();
@@ -69,24 +69,24 @@ export default class userVerification extends Component {
 
     handleSubmit() {
         console.log("tester");
-        // let _id = this.state;
-        // const token = window.sessionStorage.getItem("token");
-        // fetch("https://smart-farm-backend.vercel.app/api/user/userVerify", {
-        //     method: "PUT",
-        //     crossdomain: true,
-        //     headers: {
-        //         "x-access-token": token,
-        //         "Content-Type": 'application/json'
-        //     },
-        //     body: JSON.stringify({
-        //         _id
-        //     }),
-        // })
-        // .then((res) => res.json())
-        // .then((data) => {
-        //     console.log(data);
-        //     window.location.reload();
-        // });
+        let _id = this.state;
+        const token = window.sessionStorage.getItem("token");
+        fetch("https://smart-farm-backend.vercel.app/api/user/userVerify", {
+            method: "PUT",
+            crossdomain: true,
+            headers: {
+                "x-access-token": token,
+                "Content-Type": 'application/json'
+            },
+            body: JSON.stringify({
+                _id
+            }),
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            console.log(data);
+            window.location.reload();
+        });
     }
 
     componentDidMount() {

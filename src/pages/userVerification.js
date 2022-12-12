@@ -67,14 +67,14 @@ const UserVerification = () => {
         console.log("User verify");
     }
 
-    const handleChange = (e, index) => {
+    const handleChange = (index) => (e) => {
         e.preventDefault();
         // let datas = datas;
         // datas[index] = e.target.datas;
-        // setEmailSent = datas[index].email;
-        // setId = datas[index].id;
         // console.log((datas[index]).email);
-        console.log(e.target.datas[index].email);
+        setEmailSent = datas[index].email;
+        setId = datas[index].id;
+        console.log(datas[index].email);
         console.log("Email sent");
         const message = "User Email" + e.target.datas[index].email + "is verified";
         console.log(message);
@@ -140,7 +140,6 @@ const UserVerification = () => {
                                                         key={index}
                                                         type="text"
                                                         name="user_name"
-                                                        // value="name"
                                                         value={item.name}
                                                         style={{
                                                             width: "100%",
@@ -155,7 +154,6 @@ const UserVerification = () => {
                                                         key={index}
                                                         type="email"
                                                         name="user_email"
-                                                        // value="email"
                                                         value={item.email}
                                                         style={{
                                                             width: "100%",

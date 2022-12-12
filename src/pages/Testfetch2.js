@@ -14,7 +14,7 @@ function Testfetch2() {
   const [datasets, setDatasets] = useState([]);
   const [dailyswitch, setDailySwitch] = useState('Daily');
   const [filtered, setFiltered] = useState([]);
-  const [chartstatus, setChartStatus] = useState('airhum');
+  const [chartstatus, setChartStatus] = useState('airtemp');
   const [charttype, setChartType] = useState('normal');
   const [nodestate, setNodeState] = useState(102);
   const [lastDate, setLastDate] = useState();
@@ -24,6 +24,7 @@ function Testfetch2() {
   const [dropdown, setDropdown] = useState();
   const [dateEditor, setDateEditor] = useState(false);
   const [chartchange, setChartChange] = useState('Change to Max & Min Chart');
+  const [colorindex, setColorIndex] = useState(-1);
   
   //datastate
   const [fDate, setfDate] = useState([]);
@@ -735,20 +736,20 @@ setOptionData({
   }
 
     //Handle click to change the chartstatus
-    const airHumClick = () => {
-      setChartStatus('airhum');
-      chartData();
-    }
+    // const airHumClick = () => {
+    //   setChartStatus('airhum');
+    //   chartData();
+    // }
 
-    const airTempClick = () => {
-      setChartStatus('airtemp'); 
-      chartData();
-    }
+    // const airTempClick = () => {
+    //   setChartStatus('airtemp'); 
+    //   chartData();
+    // }
 
-    const soilHumClick = () => {
-      setChartStatus('soilhum'); 
-      chartData();
-    }
+    // const soilHumClick = () => {
+    //   setChartStatus('soilhum'); 
+    //   chartData();
+    // }
 
     //set the blastDate and lastDate with the date picker
     const onChangeChart = (e) => {
@@ -796,14 +797,32 @@ setOptionData({
         <div className='button-chart'>
           <div>
           <input onChange={onChangeChart} type="date" className='enddate' value={datedef}></input>
-          <button className='btn-temp' onClick={airTempClick}>Air Temperature</button>
-          <button className='btn-humid'onClick={airHumClick} >Air Humidity</button>
-          <button className='btn-soil' onClick={soilHumClick}>Soil Humidity</button>
+          <button className='btn-temp' onClick={() => {
+             setChartStatus('airtemp');
+             chartData();
+          }}
+          style = {{backgroundColor: chartstatus === 'airtemp' ? 'red' : ''}}>Air Temperature</button>
+          <button className='btn-humid'onClick={() => {
+             setChartStatus('airhum');
+             chartData();
+          }}
+          style = {{backgroundColor: chartstatus === 'airhum' ? 'red' : ''}}  >Air Humidity</button>
+          <button className='btn-soil' onClick={() => {
+             setChartStatus('soilhum');
+             chartData();
+          }}
+          style = {{backgroundColor: chartstatus === 'soilhum' ? 'red' : ''}}>Soil Humidity</button>
           <div className='node-input'>
           {nodelist.map((item, index) => {
                         return (
-                            <button className='input-node' key={index} value={item.node} onClick={onChangeHandler}>{item.node} </button>
-                        )
+                          <button className='input-node' key={index} value={item.node} onClick={(event) => {
+                            setNodeState(event.target.value);
+                            setColorIndex(index)
+                            event.target.style.backgroundColor = 'red';
+                          }}
+                          style={{backgroundColor: colorindex === index ? "red" : ""}}
+                          >{item.node} </button>
+                          )
                     })}
           {/* <input className='input-node' type="text" name="name" onChange={onChangeHandler} value={nodestate} /> */}
 
