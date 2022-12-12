@@ -92,6 +92,16 @@ width: 100%;
     border-radius: 10px;
 }
 
+.input-node2{
+    margin-left: 8%;
+    margin-right: 8%;
+    margin-bottom: 5%;
+    width: 20%;
+    height: 10%;
+    border-radius: 10px;
+    background-color: 'red';
+}
+
 /* .input-node{
     margin-left: 8%;
     margin-right: 8%;
