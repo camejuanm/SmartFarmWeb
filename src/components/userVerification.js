@@ -35,8 +35,7 @@ export default class userVerification extends Component {
         console.log("User verified");
     }
     sendEmail() {
-        // emailjs.sendForm('service_22rl9vo', 'template_c9ueake', this.form.current, '5qCkTRANrxpqkVp3X')
-        emailjs.sendForm('service_vx432h1', 'template_6wqy28f', this.form.current, '8qOMjr8qfQQ8WZWnz')
+        emailjs.sendForm('service_demzptr', 'template_kclf4ln', this.form.current, 'q0GDn7v-mwN_8M8v3')
         .then((result) => {
             console.log(result.text);
             console.log("message sent to email");
@@ -126,13 +125,6 @@ export default class userVerification extends Component {
     //     if(this.state.email_sent != nextState.email_sent) {
     //         console.log(nextState);
     //     }
-    // }
-
-    // shouldComponentUpdate(nextState, nextProps) {
-    //     if(this.state.email_sent != nextState.email_sent) {
-    //         return true;
-    //     }
-    //     return false;
     // }
 
     displayData(datas){

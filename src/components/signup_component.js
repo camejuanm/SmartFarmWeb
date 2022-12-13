@@ -97,7 +97,7 @@ export default class SignUp extends Component {
 
   sendEmail() {
     if(this.state.verified) {
-      emailjs.sendForm('service_22rl9vo', 'template_tqt3buo', this.form.current, '5qCkTRANrxpqkVp3X')
+      emailjs.sendForm('service_demzptr', 'template_uiwql3f', this.form.current, 'q0GDn7v-mwN_8M8v3')
       .then((result) => {
           console.log(result.text);
           console.log("message sent");
