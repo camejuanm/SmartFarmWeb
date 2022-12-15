@@ -121,12 +121,6 @@ export default class userVerification extends Component {
         }
     }
 
-    // componentDidUpdate(nextProps, nextState) {
-    //     if(this.state.email_sent != nextState.email_sent) {
-    //         console.log(nextState);
-    //     }
-    // }
-
     displayData(datas){
         let table = '<table border="1">';
         table += `<tr><th>#</th><th>Name</th><th>Email</th></tr>`;

@@ -34,8 +34,6 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path='/dashboard' element={<Dashboard />} />
             <Route path='/visualize' element={<Testfetch2/>}/>
-            {/* <Route path='/testfetch' element={<Testfetch/>}/>
-            <Route path='/testfetch2' element={<Testfetch2 />} /> */}
             <Route element={<PrivateRoutesAdmin/>}>
               <Route path='/gateway' element={<Gateway/>}/>
               <Route path='/token' element={<Token/>}/>
