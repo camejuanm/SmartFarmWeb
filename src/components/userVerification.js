@@ -105,7 +105,7 @@ export default class userVerification extends Component {
                     return item.isVerified == false && item.role == 'user';
                 }),
             })
-            if(this.state.datas.length >= 1) {
+            if(this.state.datas.length != 0) {
                 this.setState({
                     history: false,
                     loadVerification: true,
