@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./Profile.css";
-import Time from '../time/time';
 
 export default class Profile extends Component {
   constructor(props) {
@@ -34,9 +33,6 @@ export default class Profile extends Component {
         <div className="profile">
           Name<h1>{this.state.userData.name}</h1>
           Email <h1>{this.state.userData.email}</h1>
-        </div>
-        <div className="footer">
-          <Time />
         </div>
       </>
     );

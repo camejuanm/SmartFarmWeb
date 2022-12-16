@@ -15,7 +15,6 @@ export default class SignUp extends Component {
     this.state = {
       name: "",
       email: "",
-      // role: "",
       mobile: "",
       password: "",
       verifyButton: false,
@@ -98,7 +97,7 @@ export default class SignUp extends Component {
 
   sendEmail() {
     if(this.state.verified) {
-      emailjs.sendForm('service_22rl9vo', 'template_tqt3buo', this.form.current, '5qCkTRANrxpqkVp3X')
+      emailjs.sendForm('service_demzptr', 'template_uiwql3f', this.form.current, 'q0GDn7v-mwN_8M8v3')
       .then((result) => {
           console.log(result.text);
           console.log("message sent");
@@ -114,7 +113,7 @@ export default class SignUp extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    // if(this.state.verified) {
+    if(this.state.verified) {
       const { name, email, mobile, password } = this.state;
       console.log(name, email, mobile, password);
       if(name !== undefined && email !== undefined && password.length >= 6) {
@@ -136,15 +135,19 @@ export default class SignUp extends Component {
           .then((res) => res.json())
           .then((data) => {
             console.log(data, "userRegister");
-            alert("User has been registered");
-            window.location.href="./sign-in";
+            if(data.message == "New user successfully registered") {
+              alert("User has been registered");
+              window.location.href="./sign-in";
+            } else {
+              alert("User has already exists");
+            }
           });
       } else {
         alert("Please complete filling in the form");
       }  
-    // } else {
-    //   alert("Please Verify Mobile");
-    // }
+    } else {
+      alert("Please Verify Mobile");
+    }
   }
   render() {
     return (
@@ -180,21 +183,6 @@ export default class SignUp extends Component {
                       required
                     />
                   </div>
-
-                  {/* <div className="mb-3">
-                    <label for="role">Role</label>
-                    <br />
-                    <select
-                      id="role"
-                      className="btn btn-primary"
-                      placeholder="Select Role"
-                      onChange={ (e) => this.setState({ role: e.target.value })}
-                    >
-                      <option></option>
-                      <option id="admin">Admin</option>
-                      <option id="user">User</option>
-                    </select>
-                  </div> */}
 
                   <div className="mb-3">
                     <label for="mobile">Mobile Phone</label>
