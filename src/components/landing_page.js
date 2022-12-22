@@ -1,7 +1,6 @@
 import React from 'react';
 import "./Landing.css";
-import KedairekaUMN from "../images/travel1.PNG";
-import SmartfarmUMN from "../images/smartfarmUMN.JPG";
+import KedairekaUMN from "../images/smartfarmUMN.jpg";
 import Email from "../images/email.jpg";
 import Phone from "../images/phone.jpg";
 
@@ -13,7 +12,7 @@ const LandingPage = () => {
             <div className="landing">
                 <div class="border">
                     <p class="title">
-                        Pengembangan Web App Sebagai Media Pemantauan <br /> Sistem Tumbuh Tanaman Memanfaatkan IoT
+                        Pengembangan Web App Sebagai Media Dashboard <br /> Untuk Pemantauan Sistem Lahan Pertanian Memanfaatkan IoT
                     </p>
                 </div>
                 <div className="border_image">
